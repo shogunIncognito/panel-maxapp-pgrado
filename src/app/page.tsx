@@ -1,113 +1,85 @@
+'use client'
+
+import Button from '@/components/Button'
+import Logo from '@/assets/maxautosicon.png'
+import sideImage from '@/assets/maxHero1.jpg'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { login } from '@/services/api'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
+import Input from '@/components/Input'
+import useSessionStore from '@/hooks/useSessionStore'
+import { loginCodes } from '@/utils/statusCodes'
+import { FiArrowLeft } from 'react-icons/fi'
+import Link from 'next/link'
+import { getToken, setToken } from '@/utils/token'
 
-export default function Home() {
+export default function page (): JSX.Element {
+  const router = useRouter()
+  const { setSession } = useSessionStore()
+  const [loading, setLoading] = useState(false)
+  const [values, setValues] = useState({
+    username: '',
+    password: ''
+  })
+
+  const isButtonDisabled = !values.username || !values.password
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (isButtonDisabled) return toast.error('Hay campos vacíos')
+
+    setLoading(true)
+    login(values)
+      .then(res => {
+        toast.success('Bienvenido')
+        router.replace('/panel')
+        setToken(res.token)
+        setSession({ name: 'admin fake', role: 'admin' })
+      })
+      .catch(err => {
+        toast.error(loginCodes[err.response.status] || 'Error al iniciar sesión')
+      })
+      .finally(() => setLoading(false))
+  }
+
+  const handleChange = (e) => {
+    if (e.target.value === ' ') return
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  useEffect(() => {
+    if (getToken()) router.replace('/panel')
+  }, [])
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <div className='w-full text-black h-screen max-h-screen flex-col md:flex-row overflow-hidden flex justify-center items-center'>
+      <section className='flex w-full justify-center items-center md:w-1/2 lg:w-1/3 bg-neutral-50 h-full relative'>
+        <Link href='/'>
+          <FiArrowLeft size={30} className='absolute m-5 top-0 left-0' />
+        </Link>
+        <form onSubmit={handleSubmit} className='w-3/4 lg:w-1/2 text-black relative rounded-md font-bold gap-4 p-6 py-10 mb-10 flex flex-col'>
+          <Image className='self-center select-none pointer-events-none object-cover h-auto mb-4' alt='loginLogo' src={Logo} width={170} height={120} />
+          <div className='flex flex-col gap-1'>
+            <label className='text-md opacity-70' htmlFor='username'>Usuario</label>
+            <Input className='bg-white shadow dark:text-black text-gray-700 p-1.5' value={values.username} onChange={handleChange} id='username' type='text' name='username' />
+          </div>
+          <div className='flex flex-col gap-1'>
+            <label className='text-md opacity-70' htmlFor='password'>Contraseña</label>
+            <Input className='bg-white shadow dark:text-black text-gray-700 p-1.5' value={values.password} onChange={handleChange} id='password' type='password' name='password' />
+          </div>
+          <Button loading={loading} disabled={isButtonDisabled || loading} className='mt-3 disabled:bg-opacity-70 disabled:cursor-not-allowed'>
+            Iniciar sesión
+          </Button>
+        </form>
+      </section>
+      <section className='h-screen w-full md:w-1/2 lg:w-2/3'>
+        <Image priority src={sideImage} alt='sideimage' className='w-full pointer-events-none select-none h-full object-cover' />
+      </section>
+    </div>
   )
 }
