@@ -4,7 +4,10 @@ import { create } from 'zustand'
 
 interface CarsState {
   cars: CarDTO[]
-  brands: string[]
+  brands: Array<{
+    _id: string
+    name: string
+  }>
   loading: boolean
   addCar: (car: CarDTO) => void
   deleteCar: (id: string) => void

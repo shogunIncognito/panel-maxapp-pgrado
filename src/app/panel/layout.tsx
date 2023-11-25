@@ -14,7 +14,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { useEffect, useState } from 'react'
-import UserSettings from '@/components/panel/UserSettings'
+import UserSettings from '@/components/UserSettings'
 import { BsMoon, BsSun } from 'react-icons/bs'
 import { getToken, removeToken } from '@/utils/token'
 
@@ -56,7 +56,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
   }, [])
 
   useEffect(() => {
-    if (!getToken()) {
+    if (getToken() === undefined) {
       router.push('/')
     }
   }, [path])
@@ -88,7 +88,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         h-screen shadow-xl dark:bg-[#171923] bg-slate-100 text-black dark:text-white'
       >
         <CloseIcon onClick={handleClose} className='w-12 m-2 self-end cursor-pointer' />
-        <Image src={sideImage} width={140} height='auto' priority alt='sideimage' className='pointer-events-none invert dark:invert-0 select-none m-auto my-0 mb-2 object-cover h-auto' />
+        <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert dark:invert-0 select-none m-auto my-0 mb-2 object-cover h-auto' />
 
         <nav className='flex flex-col p-4'>
           <Link className='p-4 px-6 rounded-md hover:bg-gray-900 text-black dark:text-white flex gap-2 items-center transition-color' href='/'>

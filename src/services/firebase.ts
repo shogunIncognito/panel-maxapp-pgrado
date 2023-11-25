@@ -14,50 +14,35 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const storage = getStorage(app)
 
-export const uploadCarImage = async (image, carId) => {
-  try {
-    const imagesRef = ref(storage, `images/proyectoWebMaxautos/${carId}`)
+export const uploadCarImage = async (image: File, carId: number): Promise<string> => {
+  const imagesRef = ref(storage, `images/proyectoWebMaxautos/${carId}`)
+  await uploadBytes(imagesRef, image)
+
+  return await getDownloadURL(imagesRef)
+}
+
+export const uploadCarsImages = async (images: File[], carPlate: string): Promise<string[]> => {
+  if (images?.length === 0) return []
+  const urls = images.map(async image => {
+    const imagesRef = ref(storage, `images/proyectoWebMaxautos/${image.name}_${carPlate}`)
     await uploadBytes(imagesRef, image)
-
     return await getDownloadURL(imagesRef)
-  } catch (error) {
-    console.log(error)
-    return null
-  }
+  })
+
+  return await Promise.all(urls)
 }
 
-export const uploadCarsImages = async (images = [], carPlate) => {
-  try {
-    if (images.length === 0) return []
-    const urls = images.map(async image => {
-      const imagesRef = ref(storage, `images/proyectoWebMaxautos/${image.name}_${carPlate}`)
-      await uploadBytes(imagesRef, image)
-      return getDownloadURL(imagesRef)
-    })
+export const deleteCarsImages = async (images: string[]): Promise<void> => {
+  if (images.length === 0) return
+  const urls = images.map(async (image) => {
+    const delRef = ref(storage, image)
+    return await deleteObject(delRef)
+  })
 
-    return Promise.all(urls)
-  } catch (error) {
-    console.log(error)
-    return null
-  }
+  await Promise.all(urls)
 }
 
-export const deleteCarsImages = async (images = []) => {
-  try {
-    if (images.length === 0) return
-    const urls = images.map((image) => {
-      const delRef = ref(storage, image)
-      return deleteObject(delRef)
-    })
-
-    return Promise.all(urls)
-  } catch (error) {
-    console.log(error)
-    return null
-  }
-}
-
-export const deleteCarImage = async (image) => {
+export const deleteCarImage = async (image: string): Promise<Boolean> => {
   const delRef = ref(storage, image)
   await deleteObject(delRef)
   return true

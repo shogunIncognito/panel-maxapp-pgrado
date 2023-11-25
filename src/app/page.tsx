@@ -15,7 +15,7 @@ import { FiArrowLeft } from 'react-icons/fi'
 import Link from 'next/link'
 import { getToken, setToken } from '@/utils/token'
 
-export default function page (): JSX.Element {
+export default function Login (): JSX.Element {
   const router = useRouter()
   const { setSession } = useSessionStore()
   const [loading, setLoading] = useState(false)
@@ -24,11 +24,15 @@ export default function page (): JSX.Element {
     password: ''
   })
 
-  const isButtonDisabled = !values.username || !values.password
+  const isButtonDisabled = (values.username.length === 0) || (values.password.length === 0)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    if (isButtonDisabled) return toast.error('Hay campos vacíos')
+
+    if (isButtonDisabled) {
+      toast.error('Hay campos vacíos')
+      return
+    }
 
     setLoading(true)
     login(values)
@@ -39,12 +43,15 @@ export default function page (): JSX.Element {
         setSession({ name: 'admin fake', role: 'admin' })
       })
       .catch(err => {
-        toast.error(loginCodes[err.response.status] || 'Error al iniciar sesión')
+        console.log(err)
+        const status: number = err.response?.status
+        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+        toast.error(loginCodes[status] || 'Error al iniciar sesión')
       })
       .finally(() => setLoading(false))
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.value === ' ') return
     setValues({
       ...values,
@@ -53,7 +60,10 @@ export default function page (): JSX.Element {
   }
 
   useEffect(() => {
-    if (getToken()) router.replace('/panel')
+    console.log(getToken())
+    if (getToken() !== undefined) {
+      router.replace('/panel')
+    }
   }, [])
 
   return (

@@ -1,19 +1,19 @@
 'use client'
 
 import Image from 'next/image'
-import CreateCar from '@/components/panel/CreateCar'
+import CreateCar from '@/components/CreateCar'
 import { useEffect } from 'react'
-import UpdateCar from '@/components/panel/UpdateCar'
+import UpdateCar from '@/components/UpdateCar'
 import { tableHeaders } from '@/helpers/data'
-import DeleteCar from '@/components/panel/DeleteCar'
+import DeleteCar from '@/components/DeleteCar'
 import useCarsStore from '@/hooks/useCarsStore'
-import AddBrand from '@/components/panel/Brands'
+import AddBrand from '@/components/Brands'
 import Button from '@/components/Button'
 import Spinner from '@/components/Spinner'
-import CarFilter from '@/components/panel/CarFilter'
+import CarFilter from '@/components/CarFilter'
 import { deleteCar } from '@/services/api'
 import toast from 'react-hot-toast'
-import ChangePreviewCar from '@/components/panel/ChangePreviewCar'
+import ChangePreviewCar from '@/components/ChangePreviewCar'
 import { deleteCarsImages } from '@/services/firebase'
 import usePanelCarsReducer, { ActionTypes } from '@/reducers/panelCarsReducer'
 import { CarDTO } from '@/types'
@@ -121,9 +121,6 @@ export default function page (): JSX.Element {
               <tr key={car._id} className='bg-transparent border-b border-green-800/90 text-neutral-600 dark:text-white'>
                 <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap'>
                   <input onClick={() => addCarToList(car)} type='checkbox' className='form-checkbox h-4 w-4 text-gray-500' />
-                </th>
-                <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap'>
-                  {index + 1}
                 </th>
                 <td className='capitalize px-6 py-4'>
                   {car.plate}

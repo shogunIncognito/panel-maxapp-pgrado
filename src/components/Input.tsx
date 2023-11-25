@@ -1,6 +1,10 @@
 import { twMerge } from 'tailwind-merge'
 
-export default function Input ({ className, ...props }) {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  className?: string
+}
+
+export default function Input ({ className, ...props }: InputProps): JSX.Element {
   return (
     <input
       {...props}

@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
 
-export const getToken = () => Cookies.get('auth-token')
-export const removeToken = () => Cookies.remove('auth-token')
-export const setToken = (token) => Cookies.set('auth-token', token)
+export const getToken = (): string | undefined => Cookies.get('auth-token')
+export const removeToken = (): void => Cookies.remove('auth-token')
+export const setToken = (token: string): string | undefined => Cookies.set('auth-token', token)

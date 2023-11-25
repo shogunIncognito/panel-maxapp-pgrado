@@ -51,10 +51,6 @@ export const carInputs = [
 
 export const tableHeaders = [
   {
-    label: 'ID',
-    value: '_id'
-  },
-  {
     label: 'Placa',
     value: 'plate'
   },
