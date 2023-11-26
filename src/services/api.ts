@@ -10,7 +10,7 @@ const api = axios.create({
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 const auth = (): { headers: { authorization: string } } => ({ headers: { authorization: `Bearer ${getToken()}` } })
 
-export const login = async (values: { username: string, password: string }): Promise<string> => {
+export const login = async (values: { username: string, password: string }): Promise<{ token: string }> => {
   const response = await api.post('/auth/login', values)
   // setToken('auth-token', response.data.token, {
   //   maxAge: 60 * 60 * 24 * 7

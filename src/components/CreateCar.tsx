@@ -11,26 +11,27 @@ import Button from './Button'
 import useDisclosure from '@/hooks/useDisclosure'
 import ModalBackdrop from './ModalBackdrop'
 import { createCarCodes } from '@/utils/statusCodes'
+import { CreateCarDTO } from '@/types'
 
-const carInitialValues = {
-  brandId: '',
+const carInitialValues: CreateCarDTO = {
+  brand: '',
   fuel: 'corriente',
   transmission: 'manual',
   type: 'automovil',
-  owners: '',
-  kilometers: '',
-  price: '',
-  model: '',
+  owners: 4,
+  kilometers: 543534,
+  price: 12312313,
+  model: 2010,
   line: '',
   plate: '',
   description: '',
   color: '',
-  cc: '1.0'
+  cc: 1.0
 }
 
 // testing values
 // const carInitialValues = {
-//   brandId: '4',
+//   brand: '4',
 //   fuel: 'corriente',
 //   transmission: 'manual',
 //   type: 'automovil',
@@ -45,14 +46,16 @@ const carInitialValues = {
 //   cc: '1.4'
 // }
 
-export default function CreateCar () {
+export default function CreateCar (): JSX.Element {
   const { open, handleClose, handleOpen } = useDisclosure()
   const [loading, setLoading] = useState(false)
   const { addCar, brands } = useCarsStore()
   const [values, setValues] = useState(carInitialValues)
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState<Array<{ url: string, file: File }>>([])
 
-  const handleImage = (e) => {
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.files == null) return
+
     const files = Array.from(e.target.files)
     // imágenes que se van a subir
 
@@ -66,16 +69,27 @@ export default function CreateCar () {
     setImages(newUrls)
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
 
-    const { description, preview, ...restOfForm } = values
+    const { description, ...restOfForm } = values
 
-    if (images.length === 0) return toast.error('Debe agregar una imagen')
-    if (objectHasEmptyValues(restOfForm)) return toast.error('Todos los campos son obligatorios')
+    if (images.length === 0) {
+      toast.error('Debe agregar una imagen')
+      return
+    }
+
+    if (objectHasEmptyValues(restOfForm)) {
+      toast.error('Todos los campos son obligatorios')
+      return
+    }
 
     const isValidForm = validateFormValues(restOfForm)
-    if (!isValidForm.valid) return toast.error(isValidForm.message)
+
+    if (!isValidForm.valid) {
+      toast.error(isValidForm.message)
+      return
+    }
 
     const urlsToUpload = images.map(image => image.file)
 
@@ -99,7 +113,7 @@ export default function CreateCar () {
     }
   }
 
-  const handleDeleteImage = async (imageToDel) => {
+  const handleDeleteImage = (imageToDel: { url: string, file: File }): void => {
     const newImages = images.filter(image => image.url !== imageToDel.url)
     setImages(newImages)
   }

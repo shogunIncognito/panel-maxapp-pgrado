@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import useDisclosure from '@/hooks/useDisclosure'
 import Button from './Button'
 import ModalBackdrop from './ModalBackdrop'
@@ -9,16 +10,16 @@ import toast from 'react-hot-toast'
 import Select from './Select'
 import { createBrandCodes, deleteBrandCodes } from '@/utils/statusCodes'
 
-export default function Brands () {
+export default function Brands (): JSX.Element {
   const { open, handleClose, handleOpen } = useDisclosure()
   const { reFetch, brands, loading: brandsLoading } = useCarsStore()
   const [loading, setLoading] = useState(false)
   const [brand, setBrand] = useState({
-    brandToDelete: brands[0]?.id,
+    brandToDelete: brands[0]?._id,
     brandToAdd: ''
   })
 
-  const handleCreate = () => {
+  const handleCreate = (): void => {
     setLoading(true)
 
     createBrand(brand.brandToAdd)
@@ -31,7 +32,7 @@ export default function Brands () {
       .finally(() => setLoading(false))
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.value === ' ') return
     setBrand({
       ...brand,
@@ -39,14 +40,17 @@ export default function Brands () {
     })
   }
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     setLoading(true)
 
-    deleteBrand(Number(brand.brandToDelete))
+    deleteBrand(brand.brandToDelete)
       .then(res => {
         toast.success('Marca eliminada')
         reFetch()
-        setBrand('')
+        setBrand({
+          ...brand,
+          brandToDelete: brands[0]?._id
+        })
       })
       .catch(err => toast.error(deleteBrandCodes[err.response.status] || 'Error al eliminar marca'))
       .finally(() => setLoading(false))
@@ -82,7 +86,7 @@ export default function Brands () {
               <Select className='w-full' name='brandToDelete' value={brand.brandToDelete} onChange={handleChange}>
                 {!brandsLoading
                   ? brands.map(brand => (
-                    <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand.id} value={brand.id}>{brand.name}</option>
+                    <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand._id} value={brand._id}>{brand.name}</option>
                   ))
                   : <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700'>Cargando...</option>}
               </Select>

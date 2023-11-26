@@ -1,3 +1,5 @@
+import { CreateCarDTO, UpdateCarDTO } from '@/types'
+
 export const objectHasEmptyValues = (obj) => {
   for (const key in obj) {
     if (typeof obj[key] === 'string' && !obj[key].trim()) return true
@@ -24,7 +26,7 @@ export const getObjectsDiff = (car, carToUpdate) => {
   return diff
 }
 
-export const validateFormValues = (values) => {
+export const validateFormValues = (values: any): { valid: boolean, message: string } => {
   const currentYear = new Date().getFullYear()
 
   if (values.owners < 0) return { valid: false, message: 'El vehiculo tiene que tener minimo 1 dueño' }
@@ -32,5 +34,5 @@ export const validateFormValues = (values) => {
   if (values.price < 0) return { valid: false, message: 'El precio no puede ser negativo' }
   if (values.model < 2000 || values.model > currentYear) return { valid: false, message: `El año tiene que estar entre 2000 y ${currentYear}` }
 
-  return { valid: true }
+  return { valid: true, message: '' }
 }

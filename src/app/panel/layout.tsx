@@ -49,7 +49,14 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
   }
 
   useEffect(() => {
-    const panelTheme = window.localStorage.getItem('panelTheme') || 'dark'
+    const panelTheme = window.localStorage.getItem('panelTheme')
+
+    if (panelTheme === null) {
+      window.localStorage.setItem('panelTheme', 'dark')
+      setTheme('dark')
+      return
+    }
+
     document.documentElement.classList.add(panelTheme)
     document.documentElement.classList.remove(panelTheme === 'dark' ? 'light' : 'dark')
     setTheme(panelTheme)
@@ -121,7 +128,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
       {/* Desktop Layout */}
       <aside className='lg:w-1/6 border-gray-200/10 border-r-2 dark:bg-[#171923] bg-slate-100 md:w-1/3 hidden relative md:flex md:flex-col h-screen px-3 shadow-xl dark:text-white'>
 
-        <Image src={sideImage} width={140} height='auto' priority alt='sideimage' className='pointer-events-none invert dark:invert-0 select-none m-auto h-auto my-8 object-cover' />
+        <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert dark:invert-0 select-none m-auto h-auto my-8 object-cover' />
 
         <nav className='flex flex-col gap-2'>
 
@@ -159,7 +166,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
             {theme === 'dark' ? <BsSun /> : <BsMoon />}
           </span>
           <UserIcon className='w-10 bg-white invert dark:invert-0 rounded-full' />
-          <h2 className='opacity-80 capitalize text-black dark:text-white'>{session?.name || 'Cargando...'}</h2>
+          <h2 className='opacity-80 capitalize text-black dark:text-white'>{(session != null) ? session.name : 'Cargando...'}</h2>
           <UserSettings />
         </header>
 

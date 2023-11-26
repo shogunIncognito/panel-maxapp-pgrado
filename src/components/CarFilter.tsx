@@ -4,8 +4,14 @@ import { useState } from 'react'
 import { filterCars } from '@/utils/functions'
 import { useDebouncedCallback } from 'use-debounce'
 import Select from './Select'
+import { CarDTO } from '@/types'
 
-export default function CarFilter ({ cars, setCars }) {
+interface Props {
+  cars: CarDTO[]
+  setCars: any
+}
+
+export default function CarFilter ({ cars, setCars }: Props): JSX.Element {
   const headersToFilter = tableHeaders.filter(header => header.label !== 'Acciones' && header.label !== 'Imagen')
   const [filters, setFilter] = useState({
     value: '',
@@ -17,7 +23,7 @@ export default function CarFilter ({ cars, setCars }) {
     setCars('SET_FILTERED_CARS', newCars)
   }, 500)
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.value === ' ') return
 
     setFilter(prev => ({

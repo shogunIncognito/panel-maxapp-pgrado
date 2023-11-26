@@ -40,7 +40,7 @@ export default function Login (): JSX.Element {
         toast.success('Bienvenido')
         router.replace('/panel')
         setToken(res.token)
-        setSession({ name: 'admin fake', role: 'admin' })
+        setSession({ _id: 'dsad76s87adad', name: 'admin fake', role: 'admin' })
       })
       .catch(err => {
         console.log(err)

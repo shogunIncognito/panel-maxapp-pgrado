@@ -47,7 +47,7 @@ export default function page (): JSX.Element {
   }
 
   const deleteSelectedCars = async (): Promise<void> => {
-    const carsImages = carsSelected.reduce<CarDTO[]>((acc, curr) => [...acc, ...curr.images], [])
+    const carsImages = carsSelected.reduce<string[]>((acc, curr) => [...acc, ...curr.images], [])
 
     try {
       await Promise.all([deleteCarsImages(carsImages), deleteCar(carsSelected)])

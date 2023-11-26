@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
 interface Session {
+  _id: string
   name: string
   role: string
 }

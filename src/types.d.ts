@@ -37,7 +37,7 @@ export interface UpdateCarDTO {
   color?: string
 }
 
-export interface CreateCarDTO extends Omit<CarDTO, '_id' | 'createdAt' | 'updatedAt' | 'images'> {}
+export interface CreateCarDTO extends Omit<CarDTO, '_id' | 'createdAt' | 'updatedAt' | 'images' | 'preview'> {}
 
 export interface UserDTO {
   _id: string

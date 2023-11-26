@@ -1,7 +1,13 @@
 import { twMerge } from 'tailwind-merge'
 
-export default function ModalBackdrop ({ children, open, className, ...props }) {
-  if (!open) return
+type ModalBackdropProps = {
+  children: React.ReactNode
+  open: boolean
+  className?: string
+} & React.HTMLAttributes<HTMLDivElement>
+
+export default function ModalBackdrop ({ children, open, className, ...props }: ModalBackdropProps): JSX.Element | null {
+  if (!open) return null
 
   return (
     <div className='z-40 absolute bg-black/60 backdrop-blur h-screen w-screen top-0 left-0 flex justify-center items-center'>

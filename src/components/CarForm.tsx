@@ -4,17 +4,32 @@ import Image from 'next/image'
 import { carInputs, selectOptionsCC } from '@/helpers/data'
 import Select from './Select'
 import { AiFillDelete } from 'react-icons/ai'
+import { BrandType, CreateCarDTO } from '@/types'
+
+interface Props {
+  setValues: any
+  values: CreateCarDTO
+  handleImage: () => void
+  handleSubmit: () => void
+  loading: boolean
+  images: Array<{ url: string, file: File }>
+  handleDeleteImage: (image: { url: string, file: File }) => void
+  handleClose: () => void
+  brands: BrandType[]
+  children: React.ReactNode
+}
 
 export default function CarForm ({
   setValues, values, handleImage, handleSubmit,
   loading, images, handleDeleteImage, handleClose, brands, children
-}) {
-  const handleChange = (e) => {
+}: Props): JSX.Element {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (!setValues) return
-    if (name === 'brandId') return setValues(prev => ({ ...prev, brandId: Number(value) }))
+    if (name === 'brandId') return setValues((prev: CreateCarDTO) => ({ ...prev, brandId: Number(value) }))
 
-    setValues(prev => ({
+    setValues((prev: CreateCarDTO) => ({
       ...prev,
       [name]: name === 'plate' ? value.toUpperCase() : value
     }))
@@ -26,10 +41,10 @@ export default function CarForm ({
         <div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
           <div className='flex flex-col gap-1 overflow-ellipsis'>
             <label className='dark:text-white after:content-["*"] text-black whitespace-nowrap text-ellipsis overflow-hidden'>Marca</label>
-            <Select onChange={handleChange} value={values.brandId} name='brandId' id='brandId'>
+            <Select onChange={handleChange} value={values.brand} name='brandId' id='brandId'>
               <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value='' disabled>Seleccione una marca</option>
               {brands.map(brand => (
-                <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand.id} value={brand.id}>{brand.name}</option>
+                <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand._id} value={brand._id}>{brand.name}</option>
               ))}
             </Select>
           </div>
@@ -78,7 +93,7 @@ export default function CarForm ({
                 </label>
                 <Input
                   onChange={handleChange}
-                  value={values[input.name]}
+                  value={values[input.name as keyof CreateCarDTO]}
                   required={input.name !== 'description'}
                   className='p-2 '
                   type={input.type}
