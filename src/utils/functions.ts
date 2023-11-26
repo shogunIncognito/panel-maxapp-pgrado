@@ -14,8 +14,8 @@ export const filterCars = (cars, filters) => (
   })
 )
 
-export const getObjectsDiff = (car, carToUpdate) => {
-  const diff = {}
+export const getObjectsDiff = (car, carToUpdate): UpdateCarDTO => {
+  const diff: { [key: string]: any } = {}
 
   for (const key in car) {
     if (carToUpdate[key] !== car[key]) {

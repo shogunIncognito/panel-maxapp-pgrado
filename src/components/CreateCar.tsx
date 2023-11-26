@@ -97,23 +97,27 @@ export default function CreateCar (): JSX.Element {
       setLoading(true)
       const newCar = await createCar({ ...restOfForm, description })
       const uploadedCarImage = await uploadCarsImages(urlsToUpload, newCar.plate)
-      const carWithImages = await updateCar(newCar.id, { image: uploadedCarImage.join('&&&') })
+      const carWithImages = await updateCar(newCar._id, { images: uploadedCarImage })
 
       setImages([])
-      addCar({ ...carWithImages, image: uploadedCarImage })
+
+      addCar(carWithImages)
 
       toast.success('Auto agregado')
-    } catch (error) {
+    } catch (error: any) {
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       toast.error(createCarCodes[error.response.status] || 'Error al agregar auto')
       console.log(error)
     } finally {
-      setLoading(false)
-      e.target.reset()
+      setLoading(false);
+
+      (e.target as HTMLFormElement).reset()
       setValues(carInitialValues)
     }
   }
 
-  const handleDeleteImage = (imageToDel: { url: string, file: File }): void => {
+  const handleDeleteImage = (imageToDel: { url: string, file: File } | string): void => {
+    if (typeof imageToDel === 'string') return
     const newImages = images.filter(image => image.url !== imageToDel.url)
     setImages(newImages)
   }

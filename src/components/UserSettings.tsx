@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import useDisclosure from '@/hooks/useDisclosure'
 import { IoMdSettings } from 'react-icons/io'
 import { FaExchangeAlt } from 'react-icons/fa'
@@ -11,6 +12,18 @@ import toast from 'react-hot-toast'
 import { updateUser } from '@/services/api'
 import useSessionStore from '@/hooks/useSessionStore'
 import { updatePasswordCodes, updateUsernameCodes } from '@/utils/statusCodes'
+import { TypeUserUpdate } from '@/types'
+
+interface FormValues {
+  toPassword: {
+    currentPassword: string
+    newPassword: string
+    confirmPassword: string
+  }
+  toUsername: {
+    username: string
+  }
+}
 
 const initialFormValues = {
   toPassword: {
@@ -23,39 +36,58 @@ const initialFormValues = {
   }
 }
 
-export default function UserSettings () {
+export default function UserSettings (): JSX.Element {
   const { open, handleClose, handleOpen } = useDisclosure()
   const { session, setSession } = useSessionStore()
-  const [values, setValues] = useState(initialFormValues)
+  const [values, setValues] = useState<FormValues>(initialFormValues)
   const [settingsView, setSettingsView] = useState('username')
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    const data = Object.fromEntries(new FormData(e.target))
+    const data = Object.fromEntries(new FormData(e.target as HTMLFormElement))
+    const formType = e.currentTarget.name as TypeUserUpdate
 
-    if (objectHasEmptyValues(data)) return toast.error('Todos los campos son obligatorios')
-
-    if (e.target.name === 'toPassword') {
-      if (data.newPassword !== data.confirmPassword) return toast.error('Confirmar contraseña no coinciden')
-      if (data.newPassword === data.currentPassword) return toast.error('La nueva contraseña no puede ser igual a la actual')
+    if (objectHasEmptyValues(data)) {
+      toast.error('Todos los campos son obligatorios')
+      return
     }
 
+    // target -> currentTarget
+    if (formType === TypeUserUpdate.toPassword) {
+      const { newPassword, confirmPassword, currentPassword } = data
+
+      if (newPassword !== confirmPassword) {
+        toast.error('Confirmar contraseña no coinciden')
+        return
+      }
+      if (newPassword === currentPassword) {
+        toast.error('La nueva contraseña no puede ser igual a la actual')
+        return
+      }
+    }
+
+    if (session == null) return
+
     setLoading(true)
-    updateUser(session.id, data, e.target.name)
+    updateUser(session._id, data, formType)
       .then(res => {
         toast.success('Usuario actualizado')
 
-        if (e.target.name === 'toUsername') {
-          setSession({ ...session, name: data.username })
+        if (formType === TypeUserUpdate.toUsername) {
+          setSession({ ...session, name: data.username as string })
         }
 
         setValues(initialFormValues)
         handleClose()
       })
       .catch(err => {
-        if (e.target.name === 'toPassword') return toast.error(updatePasswordCodes[err.response.status] || 'Error al actualizar contraseña')
+        if (e.currentTarget.name === 'toPassword') {
+          toast.error(updatePasswordCodes[err.response.status] || 'Error al actualizar contraseña')
+          return
+        }
+
         toast.error(updateUsernameCodes[err.response.status] || 'Error al actualizar nombre de usuario')
       })
       .finally(() => {
@@ -63,11 +95,17 @@ export default function UserSettings () {
       })
   }
 
-  const handleToggleView = () => setSettingsView(settingsView === 'username' ? 'password' : 'username')
+  const handleToggleView = (): void => setSettingsView(settingsView === 'username' ? 'password' : 'username')
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setValues({ ...values, [e.target.form.name]: { ...values[e.target.form.name], [name]: value } })
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value, form } = e.target as HTMLInputElement
+
+    if (!form) return
+
+    setValues(prev => ({
+      ...prev,
+      [form.name]: { ...prev[form.name as keyof FormValues], [name]: value }
+    }))
   }
 
   return (

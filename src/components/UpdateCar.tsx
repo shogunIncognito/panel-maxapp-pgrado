@@ -9,55 +9,82 @@ import { getObjectsDiff, objectHasEmptyValues, validateFormValues } from '@/util
 import { deleteCarImage, uploadCarsImages } from '@/services/firebase'
 import CarForm from './CarForm'
 import { updateCarCodes } from '@/utils/statusCodes'
+import { CarDTO } from '@/types'
+import { ActionTypes } from '@/reducers/panelCarsReducer'
 
-export default function UpdateCar ({ selectedCar, setSelectedCar }) {
+interface UpdateCarProps {
+  selectedCar: CarDTO
+  setSelectedCar: (type: ActionTypes, payload: any) => void
+}
+
+export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarProps): JSX.Element {
   const { reFetch, brands } = useCarsStore()
   const [values, setValues] = useState(selectedCar)
   const [loading, setLoading] = useState(false)
-  const [images, setImages] = useState(selectedCar.image)
+  const [images, setImages] = useState<Array<string | { url: string, file: File }>>(selectedCar.images)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
 
     // el id no se actualiza
-    const { description, preview, id, brand, ...restOfForm } = values
+    const { description, preview, _id, brand, ...restOfForm } = values
 
-    if (!values.image) return toast.error('Debe agregar una imagen')
-    if (objectHasEmptyValues(restOfForm)) return toast.error('Todos los campos son obligatorios')
+    if (values.images.length === 0) {
+      toast.error('Debe agregar una imagen')
+      return
+    }
 
-    const urlsToUpload = images.reduce((acc, curr) => {
+    if (objectHasEmptyValues(restOfForm)) {
+      toast.error('Todos los campos son obligatorios')
+      return
+    }
+
+    const urlsToUpload = images.reduce<File[]>((acc, curr) => {
       if (typeof curr === 'string') return acc
       return [...acc, curr.file]
     }, [])
 
     const valuesToUpdate = getObjectsDiff(selectedCar, { ...values, description })
 
-    if (Object.keys(valuesToUpdate).length === 0 && urlsToUpload.length === 0) return toast.error('No hay cambios')
+    if (Object.keys(valuesToUpdate).length === 0 && urlsToUpload.length === 0) {
+      toast.error('No hay cambios')
+      return
+    }
 
     const isValidForm = validateFormValues(restOfForm)
-    if (!isValidForm.valid) return toast.error(isValidForm.message)
+
+    if (!isValidForm.valid) {
+      toast.error(isValidForm.message)
+      return
+    }
 
     try {
       setLoading(true)
       const newImages = await uploadCarsImages(urlsToUpload, selectedCar.plate)
 
       if (newImages.length > 0) {
-        valuesToUpdate.image = newImages.join('&&&')
+        valuesToUpdate.images = newImages
       }
 
-      await updateCar(selectedCar.id, valuesToUpdate)
+      await updateCar(selectedCar._id, valuesToUpdate)
 
       reFetch()
       handleClose()
       toast.success('Auto actualizado')
-    } catch (error) {
+    } catch (error: any) {
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       toast.error(updateCarCodes[error.response.status] || 'Error al actualizar auto')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleImage = (e) => {
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.files == null) {
+      toast.error('Error al cargar imagen')
+      return
+    }
+
     const files = Array.from(e.target.files)
     // imágenes que se van a subir
 
@@ -71,19 +98,26 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }) {
     setImages(newUrls)
   }
 
-  const handleDeleteImage = async (img) => {
+  const handleDeleteImage = async (img: { url: string, file: File } | string): Promise<void> => {
     try {
       setLoading(true)
       if (typeof img === 'object') {
-        setImages(prev => prev.filter(image => image.url !== img.url))
+        setImages(prev => prev.filter(image => {
+          // con if la otra forma por si no funciona esta
+          return typeof image === 'string' || image.url !== img.url
+        }))
         toast.success('Imagen eliminada')
         return
       }
 
       const realCarImages = images.filter(imag => typeof imag !== 'object')
-      if (realCarImages.length === 1) return toast.error('El carro debe tener al menos una imagen')
 
-      await deleteCarImageFromApi(selectedCar.id, img)
+      if (realCarImages.length === 1) {
+        toast.error('El carro debe tener al menos una imagen')
+        return
+      }
+
+      await deleteCarImageFromApi(selectedCar._id, img)
       await deleteCarImage(img)
 
       setImages(prev => prev.filter(image => image !== img))
@@ -97,7 +131,7 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }) {
     }
   }
 
-  const handleClose = () => setSelectedCar('SET_SELECTED_CAR', null)
+  const handleClose = (): void => setSelectedCar(ActionTypes.SET_SELECTED_CAR, null)
 
   return (
     <>
@@ -105,6 +139,7 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }) {
         <h2 className='text-2xl font-bold opacity-80 mb-3'>Actualizar auto</h2>
         <CarForm
           setValues={setValues}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           handleDeleteImage={handleDeleteImage}
           handleImage={handleImage}
           handleSubmit={handleSubmit}

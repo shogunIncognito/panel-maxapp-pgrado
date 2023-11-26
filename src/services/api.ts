@@ -28,12 +28,12 @@ export const createCar = async (values: CreateCarDTO): Promise<CarDTO> => {
   return response.data
 }
 
-export const updateCar = async (id: number, values: UpdateCarDTO): Promise<CarDTO> => {
+export const updateCar = async (id: string, values: UpdateCarDTO): Promise<CarDTO> => {
   const response = await api.put(`/cars/${id}`, values, auth())
   return response.data
 }
 
-export const deleteCar = async (id: number | CarDTO[]): Promise<CarDTO> => {
+export const deleteCar = async (id: string | CarDTO[]): Promise<CarDTO> => {
   const ids = typeof id === 'object' ? id.map(car => `ids=${car._id}`).join('&') : `ids=${id}`
   const response = await api.delete(`/cars?${ids}`, auth())
   return response.data
@@ -49,12 +49,12 @@ export const createUser = async (values: CreateUserDTO): Promise<UserDTO> => {
   return response.data
 }
 
-export const deleteUser = async (id: number): Promise<UserDTO> => {
+export const deleteUser = async (id: string): Promise<UserDTO> => {
   const response = await api.delete(`/admins/${id}`, auth())
   return response.data
 }
 
-export const updateUser = async (id: number, values: UpdateUserDTO, type: TypeUserUpdate): Promise<UserDTO> => {
+export const updateUser = async (id: string, values: UpdateUserDTO, type: TypeUserUpdate): Promise<UserDTO> => {
   const response = await api.put(`/admins/${id}?type=${type}`, values, auth())
   return response.data
 }

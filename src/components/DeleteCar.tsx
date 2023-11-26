@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteCar as deleteCarApi } from '@/services/api'
+import { deleteCar as deleteCarDB } from '@/services/api'
 import Button from './Button'
 import ModalBackdrop from './ModalBackdrop'
 import useCarsStore from '@/hooks/useCarsStore'
@@ -8,25 +8,33 @@ import toast from 'react-hot-toast'
 import { useState } from 'react'
 import { deleteCarsImages } from '@/services/firebase'
 import { deleteCarCodes } from '@/utils/statusCodes'
+import { CarDTO } from '@/types'
+import { ActionTypes } from '@/reducers/panelCarsReducer'
 
-export default function DeleteCar ({ carToDelete, setCarToDelete }) {
+interface DeleteCarProps {
+  carToDelete: CarDTO
+  setCarToDelete: (type: ActionTypes, payload: any) => void
+}
+
+export default function DeleteCar ({ carToDelete, setCarToDelete }: DeleteCarProps): JSX.Element {
   const { deleteCar } = useCarsStore()
   const [loading, setLoading] = useState(false)
 
-  const handleDeleteCar = () => {
+  const handleDeleteCar = (): void => {
     setLoading(true)
 
-    Promise.all([deleteCarsImages(carToDelete.image), deleteCarApi(carToDelete.id)])
+    Promise.all([deleteCarsImages(carToDelete.images), deleteCarDB(carToDelete._id)])
       .then(() => {
-        deleteCar(carToDelete.id)
+        deleteCar(carToDelete._id)
         toast.success('Auto eliminado')
         handleDispatch()
       })
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       .catch(err => toast.error(deleteCarCodes[err.response?.status] || 'Error al eliminar auto'))
       .finally(() => setLoading(false))
   }
 
-  const handleDispatch = () => setCarToDelete('SET_CAR_TO_DELETE', null)
+  const handleDispatch = (): void => setCarToDelete(ActionTypes.SET_CAR_TO_DELETE, null)
 
   return (
     <ModalBackdrop open>

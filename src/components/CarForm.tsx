@@ -9,11 +9,11 @@ import { BrandType, CreateCarDTO } from '@/types'
 interface Props {
   setValues: any
   values: CreateCarDTO
-  handleImage: () => void
-  handleSubmit: () => void
+  handleImage: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>
   loading: boolean
-  images: Array<{ url: string, file: File }>
-  handleDeleteImage: (image: { url: string, file: File }) => void
+  images: Array<{ url: string, file: File } | string>
+  handleDeleteImage: (image: { url: string, file: File } | string) => void
   handleClose: () => void
   brands: BrandType[]
   children: React.ReactNode
@@ -25,8 +25,7 @@ export default function CarForm ({
 }: Props): JSX.Element {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    if (!setValues) return
+
     if (name === 'brandId') return setValues((prev: CreateCarDTO) => ({ ...prev, brandId: Number(value) }))
 
     setValues((prev: CreateCarDTO) => ({
@@ -37,6 +36,7 @@ export default function CarForm ({
 
   return (
     <>
+      {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form onSubmit={handleSubmit} className='overflow-auto lg:max-h-90[dvh] max-h-[80dvh]'>
         <div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
           <div className='flex flex-col gap-1 overflow-ellipsis'>
