@@ -1,9 +1,9 @@
-import { CreateCarDTO, UpdateCarDTO } from '@/types'
+import { UpdateCarDTO } from '@/types'
 
-export const objectHasEmptyValues = (obj) => {
+export const objectHasEmptyValues = (obj: { [key: string]: any }): boolean => {
   for (const key in obj) {
     if (typeof obj[key] === 'string' && !obj[key].trim()) return true
-    if (!obj[key]) return true
+    if (!(obj[key])) return true
   }
   return false
 }

@@ -24,27 +24,27 @@ interface State {
 
 const panelCarsReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'SET_SELECTED_CAR':
+    case ActionTypes.SET_SELECTED_CAR:
       return {
         ...state,
         selectedCar: action.payload
       }
-    case 'SET_CAR_TO_DELETE':
+    case ActionTypes.SET_CAR_TO_DELETE:
       return {
         ...state,
         carToDelete: action.payload
       }
-    case 'SET_FILTERED_CARS':
+    case ActionTypes.SET_FILTERED_CARS:
       return {
         ...state,
         filteredCars: action.payload
       }
-    case 'SET_CARS_SELECTED':
+    case ActionTypes.SET_CARS_SELECTED:
       return {
         ...state,
         carsSelected: action.payload
       }
-    case 'SET_CAR_PREVIEW_TO_CHANGE':
+    case ActionTypes.SET_CAR_PREVIEW_TO_CHANGE:
       return {
         ...state,
         carPreviewToChange: action.payload

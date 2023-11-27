@@ -23,7 +23,7 @@ export default function CarFilter ({ cars, setCars }: Props): JSX.Element {
     setCars('SET_FILTERED_CARS', newCars)
   }, 500)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     if (e.target.value === ' ') return
 
     setFilter(prev => ({
