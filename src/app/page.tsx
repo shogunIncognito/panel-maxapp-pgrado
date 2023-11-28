@@ -11,8 +11,6 @@ import toast from 'react-hot-toast'
 import Input from '@/components/Input'
 import useSessionStore from '@/hooks/useSessionStore'
 import { loginCodes } from '@/utils/statusCodes'
-import { FiArrowLeft } from 'react-icons/fi'
-import Link from 'next/link'
 import { getToken, setToken } from '@/utils/token'
 
 export default function Login (): JSX.Element {
@@ -60,7 +58,6 @@ export default function Login (): JSX.Element {
   }
 
   useEffect(() => {
-    console.log(getToken())
     if (getToken() !== undefined) {
       router.replace('/panel')
     }
@@ -69,9 +66,6 @@ export default function Login (): JSX.Element {
   return (
     <div className='w-full text-black h-screen max-h-screen flex-col md:flex-row overflow-hidden flex justify-center items-center'>
       <section className='flex w-full justify-center items-center md:w-1/2 lg:w-1/3 bg-neutral-50 h-full relative'>
-        <Link href='/'>
-          <FiArrowLeft size={30} className='absolute m-5 top-0 left-0' />
-        </Link>
         <form onSubmit={handleSubmit} className='w-3/4 lg:w-1/2 text-black relative rounded-md font-bold gap-4 p-6 py-10 mb-10 flex flex-col'>
           <Image className='self-center select-none pointer-events-none object-cover h-auto mb-4' alt='loginLogo' src={Logo} width={170} height={120} />
           <div className='flex flex-col gap-1'>

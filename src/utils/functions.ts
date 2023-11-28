@@ -1,32 +1,36 @@
-import { UpdateCarDTO } from '@/types'
+import { CarDTO } from '@/types'
 
-export const objectHasEmptyValues = (obj: { [key: string]: any }): boolean => {
+interface UnknowObject {
+  [key: string]: any
+}
+
+export const objectHasEmptyValues = (obj: UnknowObject): boolean => {
   for (const key in obj) {
-    if (typeof obj[key] === 'string' && !obj[key].trim()) return true
-    if (!(obj[key])) return true
+    if (typeof obj[key] === 'string' && obj[key].trim() === '') return true
+    if (obj[key] === undefined) return true
   }
   return false
 }
 
-export const filterCars = (cars, filters) => (
+export const filterCars = (cars: CarDTO[], filters: { value: string, option: string }): CarDTO[] => (
   cars.filter(car => {
-    return String(car[filters.option]).toLocaleLowerCase().includes(filters.value.toLowerCase())
+    return String(car[filters.option as keyof CarDTO]).toLocaleLowerCase().includes(filters.value.toLowerCase())
   })
 )
 
-export const getObjectsDiff = (car, carToUpdate): UpdateCarDTO => {
-  const diff: { [key: string]: any } = {}
+export const getObjectsDiff = (obj: UnknowObject, objTwo: UnknowObject): UnknowObject => {
+  const diff: UnknowObject = {}
 
-  for (const key in car) {
-    if (carToUpdate[key] !== car[key]) {
-      diff[key] = carToUpdate[key]
+  for (const key in obj) {
+    if (objTwo[key] !== obj[key]) {
+      diff[key] = objTwo[key]
     }
   }
 
   return diff
 }
 
-export const validateFormValues = (values: any): { valid: boolean, message: string } => {
+export const validateFormValues = (values: UnknowObject): { valid: boolean, message: string } => {
   const currentYear = new Date().getFullYear()
 
   if (values.owners < 0) return { valid: false, message: 'El vehiculo tiene que tener minimo 1 dueño' }

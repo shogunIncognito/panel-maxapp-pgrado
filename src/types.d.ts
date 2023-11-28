@@ -54,12 +54,7 @@ export interface UpdateUserDTO {
   image?: string
 }
 
-export interface CreateUserDTO extends Omit<UserDTO, '_id' | 'createdAt' | 'updatedAt'> {}
-
-export enum TypeUserUpdate {
-  toUsername = 'toUsername',
-  toPassword = 'toPassword',
-}
+export interface CreateUserDTO extends Omit<UserDTO, '_id' | 'createdAt' | 'updatedAt'> { }
 
 export interface BrandType {
   _id: string

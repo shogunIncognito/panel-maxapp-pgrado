@@ -32,7 +32,7 @@ export default function Brands (): JSX.Element {
       .finally(() => setLoading(false))
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     if (e.target.value === ' ') return
     setBrand({
       ...brand,

@@ -4,21 +4,31 @@ import { updatePreviewImage } from '@/services/api'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import useCarsStore from '@/hooks/useCarsStore'
+import { CarDTO } from '@/types'
+import { ActionTypes } from '@/reducers/panelCarsReducer'
 
 const selectedClass = 'border-4 dark:border-green-500 border-purple-500 shadow-xl'
 
-export default function ChangePreviewCar ({ car, setCar }) {
+interface ChangePreviewCarProps {
+  car: CarDTO
+  setCar: (type: ActionTypes, payload: any) => void
+}
+
+export default function ChangePreviewCar ({ car, setCar }: ChangePreviewCarProps): JSX.Element {
   const { reFetch } = useCarsStore()
   const [selectedImage, setSelectedImage] = useState(car.preview)
   const [loading, setLoading] = useState(false)
 
   const isValidImage = selectedImage !== car.preview
 
-  const handleChangePreview = () => {
-    if (!isValidImage) return toast.error('La imagen seleccionada ya es la previsualización')
+  const handleChangePreview = (): void => {
+    if (!isValidImage) {
+      toast.error('La imagen seleccionada ya es la previsualización')
+      return
+    }
 
     setLoading(true)
-    updatePreviewImage(car.id, selectedImage)
+    updatePreviewImage(car._id, selectedImage)
       .then(() => {
         toast.success('Imagen de previsualización cambiada')
         reFetch()
@@ -33,14 +43,14 @@ export default function ChangePreviewCar ({ car, setCar }) {
       })
   }
 
-  const handleDispatch = () => setCar('SET_CAR_PREVIEW_TO_CHANGE', null)
+  const handleDispatch = (): void => setCar(ActionTypes.SET_CAR_PREVIEW_TO_CHANGE, null)
 
   return (
     <ModalBackdrop open>
       <h2 className='text-center text-xl opacity-75 mb-6'>Selecciona una imagen de previsualización</h2>
       <section className='grid grid-rows-3 grid-flow-col overflow-x-auto p-1 gap-2 md:place-content-center'>
-        {car.image.map((image, index) => (
-          <img onClick={() => setSelectedImage(image)} key={index} className={`md:w-44 w-24 max-w-fit cursor-pointer hover:opacity-60 select-none max-h-44 rounded ${selectedImage === image && selectedClass} h-auto object-contain`} src={image} alt={car.name} />
+        {car.images.map((image, index) => (
+          <img onClick={() => setSelectedImage(image)} key={index} className={`md:w-44 w-24 max-w-fit cursor-pointer hover:opacity-60 select-none max-h-44 rounded ${selectedImage === image ? selectedClass : ''} h-auto object-contain`} src={image} alt={car.line} />
         ))}
       </section>
       <div className='flex mt-5 gap-2 justify-center items-center'>

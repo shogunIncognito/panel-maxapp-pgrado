@@ -4,7 +4,6 @@ import sideImage from '@/assets/maxautoslogoblanco.png'
 import useDisclosure from '@/hooks/useDisclosure'
 import useSessionStore from '@/hooks/useSessionStore'
 import { CloseIcon, MenuIcon, UserIcon } from '@/libs/Icons'
-import { FiArrowLeft } from 'react-icons/fi'
 import { AiFillHome } from 'react-icons/ai'
 import { FaCarAlt } from 'react-icons/fa'
 import { BiSolidUser } from 'react-icons/bi'
@@ -98,10 +97,6 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert dark:invert-0 select-none m-auto my-0 mb-2 object-cover h-auto' />
 
         <nav className='flex flex-col p-4'>
-          <Link className='p-4 px-6 rounded-md hover:bg-gray-900 text-black dark:text-white flex gap-2 items-center transition-color' href='/'>
-            <FiArrowLeft size={28} className='opacity-75 ' />
-            <p className=''>Volver a pagina inicial</p>
-          </Link>
           <Link onClick={handleClose} className={`p-4 px-6 rounded-md hover:bg-gray-900 text-black dark:text-white flex gap-2 items-center transition-colors ${path === '/panel' ? 'bg-gray-700 text-white' : ''}`} href='/panel'>
             <AiFillHome size={28} className='opacity-75' />
             <p className=''>Inicio</p>
@@ -132,10 +127,6 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
 
         <nav className='flex flex-col gap-2'>
 
-          <Link className='p-4 px-6 rounded-md lg:p-4 md:p-3 hover:bg-[#0987A0] hover:text-white dark:text-white flex gap-2 items-center transition-color' href='/'>
-            <FiArrowLeft size={20} className='opacity-75 ' />
-            <p className=''>Volver a pagina inicial</p>
-          </Link>
           <Link className={`p-4 px-6 rounded-md lg:p-4 md:p-3 hover:bg-[#0987A0] hover:text-white dark:text-white flex gap-2 items-center transition-colors ${path === '/panel' ? 'bg-sky-700/60' : ''}`} href='/panel'>
             <AiFillHome size={20} className='opacity-75' />
             <p className=''>Inicio</p>

@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import CreateCar from '@/components/CreateCar'
 import { useEffect } from 'react'
 import UpdateCar from '@/components/UpdateCar'
@@ -109,7 +108,7 @@ export default function page (): JSX.Element {
               </tr>
             )}
 
-            {filteredCars.length === 0 && !loading && (
+            {filteredCars.length === 0 && !loading && cars.length > 0 && (
               <tr className='border-b border-green-800/90'>
                 <td colSpan={11} className='px-6 py-4 font-medium whitespace-nowrap text-white'>
                   No hay autos que coincidan con el filtro
@@ -148,7 +147,7 @@ export default function page (): JSX.Element {
                 </td>
                 <td className='px-6 py-4'>
                   <div className='cursor-pointer flex justify-center items-center relative group'>
-                    <Image src={car.preview !== '' ? car.preview : car.images[0]} priority alt='carro' width={160} height={160} className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[160px] max-h-[160px] min-w-[160px] min-h-[160px]' />
+                    <img src={car.preview !== '' ? car.preview : car.images[0]} alt={car.plate} width={160} height={160} className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[160px] max-h-[160px] min-w-[160px] min-h-[160px]' />
                     <div onClick={() => dispatchAction(ActionTypes.SET_CAR_PREVIEW_TO_CHANGE, car)} className='absolute top-0 w-full h-full bg-black/50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 max-w-[160px] max-h-[160px] min-w-[160px] min-h-[160px] transition-all duration-300'>
                       <span className='text-white font-bold'>
                         Cambiar imagen

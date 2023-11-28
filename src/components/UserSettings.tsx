@@ -12,7 +12,7 @@ import toast from 'react-hot-toast'
 import { updateUser } from '@/services/api'
 import useSessionStore from '@/hooks/useSessionStore'
 import { updatePasswordCodes, updateUsernameCodes } from '@/utils/statusCodes'
-import { TypeUserUpdate } from '@/types'
+import { TypeUserUpdate } from '@/enums'
 
 interface FormValues {
   toPassword: {

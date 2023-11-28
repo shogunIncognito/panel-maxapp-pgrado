@@ -18,10 +18,10 @@ const carInitialValues: CreateCarDTO = {
   fuel: 'corriente',
   transmission: 'manual',
   type: 'automovil',
-  owners: 4,
-  kilometers: 543534,
-  price: 12312313,
-  model: 2010,
+  owners: 0,
+  kilometers: 0,
+  price: 0,
+  model: 0,
   line: '',
   plate: '',
   description: '',
@@ -30,20 +30,20 @@ const carInitialValues: CreateCarDTO = {
 }
 
 // testing values
-// const carInitialValues = {
-//   brand: '4',
+// const carInitialValues: CreateCarDTO = {
+//   brand: '64892a394a4191a34605c109',
 //   fuel: 'corriente',
 //   transmission: 'manual',
 //   type: 'automovil',
-//   owners: '2',
-//   kilometers: '25000',
-//   price: '35000000',
-//   model: '2022',
+//   owners: 2,
+//   kilometers: 25000,
+//   price: 35000000,
+//   model: 2022,
 //   line: 'captiva sport',
 //   plate: 'xhg345',
 //   description: 'pelo',
 //   color: 'rojo',
-//   cc: '1.4'
+//   cc: 1.4
 // }
 
 export default function CreateCar (): JSX.Element {
@@ -95,7 +95,9 @@ export default function CreateCar (): JSX.Element {
 
     try {
       setLoading(true)
-      const newCar = await createCar({ ...restOfForm, description })
+      const newCar = await createCar({ ...restOfForm, description, brand: restOfForm.brand.toUpperCase() })
+      console.log(newCar)
+
       const uploadedCarImage = await uploadCarsImages(urlsToUpload, newCar.plate)
       const carWithImages = await updateCar(newCar._id, { images: uploadedCarImage })
 

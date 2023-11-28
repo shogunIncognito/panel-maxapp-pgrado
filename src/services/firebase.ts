@@ -14,17 +14,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const storage = getStorage(app)
 
-export const uploadCarImage = async (image: File, carId: number): Promise<string> => {
-  const imagesRef = ref(storage, `images/proyectoWebMaxautos/${carId}`)
-  await uploadBytes(imagesRef, image)
-
-  return await getDownloadURL(imagesRef)
-}
-
 export const uploadCarsImages = async (images: File[], carPlate: string): Promise<string[]> => {
   if (images?.length === 0) return []
   const urls = images.map(async image => {
-    const imagesRef = ref(storage, `images/proyectoWebMaxautos/${image.name}_${carPlate}`)
+    const imagesRef = ref(storage, `images/Proyecto-grado-panel/${carPlate}/${crypto.randomUUID()}`)
     await uploadBytes(imagesRef, image)
     return await getDownloadURL(imagesRef)
   })

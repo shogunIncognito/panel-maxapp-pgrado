@@ -26,7 +26,12 @@ export default function CarForm ({
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
 
-    if (name === 'brandId') return setValues((prev: CreateCarDTO) => ({ ...prev, brandId: Number(value) }))
+    console.log(name, value)
+
+    if (['dasdhasuo'].includes(name)) {
+      setValues((prev: CreateCarDTO) => ({ ...prev, brand: Number(value) }))
+      return console.log('blud go in')
+    }
 
     setValues((prev: CreateCarDTO) => ({
       ...prev,
@@ -41,10 +46,10 @@ export default function CarForm ({
         <div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
           <div className='flex flex-col gap-1 overflow-ellipsis'>
             <label className='dark:text-white after:content-["*"] text-black whitespace-nowrap text-ellipsis overflow-hidden'>Marca</label>
-            <Select onChange={handleChange} value={values.brand} name='brandId' id='brandId'>
+            <Select onChange={handleChange} value={values.brand} name='brand' id='brand'>
               <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value='' disabled>Seleccione una marca</option>
               {brands.map(brand => (
-                <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand._id} value={brand._id}>{brand.name}</option>
+                <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand.name} value={brand.name}>{brand.name}</option>
               ))}
             </Select>
           </div>
@@ -95,7 +100,7 @@ export default function CarForm ({
                   onChange={handleChange}
                   value={values[input.name as keyof CreateCarDTO]}
                   required={input.name !== 'description'}
-                  className='p-2 '
+                  className='p-2'
                   type={input.type}
                   name={input.name}
                   placeholder={input.placeholder}

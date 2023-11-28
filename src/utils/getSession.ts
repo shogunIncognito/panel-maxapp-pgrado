@@ -1,15 +1,11 @@
 import { getUserInfo } from '@/services/api'
 import { getToken } from './token'
-import { jwtVerify } from 'jose'
-import { SECRET } from './envconfig'
 
-export default async function getSession () {
+export default async function getSession (): Promise<any> {
   const token = getToken()
-  if (!token) return null
+  if (token === undefined) return null
   try {
-    const { payload } = await jwtVerify(token, new TextEncoder().encode(SECRET))
-    const user = await getUserInfo(payload.userId)
-    return user
+    return await getUserInfo()
   } catch (error) {
     console.log(error)
     return null
