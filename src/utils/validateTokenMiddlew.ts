@@ -1,9 +1,17 @@
-import { jwtVerify } from 'jose'
+import { JWTPayload, jwtVerify } from 'jose'
 import { removeToken } from './token'
 
-export default async function validateTokenMiddlew (token: { value: string }): Promise<object | boolean> {
+interface UserData {
+  userId: string
+  username: string
+  role: string
+  image: string
+}
+
+export default async function validateTokenMiddlew (token: string | undefined): Promise<UserData | undefined | false | JWTPayload> {
   try {
-    const { payload } = await jwtVerify(token?.value, new TextEncoder().encode(process.env.SECRET))
+    if (token === undefined) return undefined
+    const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.SECRET))
     return payload
   } catch (err) {
     removeToken()
