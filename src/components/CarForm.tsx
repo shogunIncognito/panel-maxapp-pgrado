@@ -26,11 +26,9 @@ export default function CarForm ({
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
 
-    console.log(name, value)
-
-    if (['dasdhasuo'].includes(name)) {
-      setValues((prev: CreateCarDTO) => ({ ...prev, brand: Number(value) }))
-      return console.log('blud go in')
+    if (['price', 'kilometers', 'owners', 'model', 'cc'].includes(name)) {
+      setValues((prev: CreateCarDTO) => ({ ...prev, [name]: Number(value) }))
+      return
     }
 
     setValues((prev: CreateCarDTO) => ({

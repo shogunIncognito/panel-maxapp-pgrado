@@ -3,7 +3,7 @@
 import sideImage from '@/assets/maxautoslogoblanco.png'
 import useDisclosure from '@/hooks/useDisclosure'
 import useSessionStore from '@/hooks/useSessionStore'
-import { CloseIcon, MenuIcon, UserIcon } from '@/libs/Icons'
+import { CloseIcon, MenuIcon } from '@/libs/Icons'
 import { AiFillHome } from 'react-icons/ai'
 import { FaCarAlt } from 'react-icons/fa'
 import { BiSolidUser } from 'react-icons/bi'
@@ -16,10 +16,11 @@ import { useEffect, useState } from 'react'
 import UserSettings from '@/components/UserSettings'
 import { BsMoon, BsSun } from 'react-icons/bs'
 import { getToken, removeToken } from '@/utils/token'
+import UserImage from '@/components/UserImage'
 
 export default function Layout ({ children }: { children: React.ReactNode }): JSX.Element {
   const { open, handleOpen, handleClose } = useDisclosure()
-  const { session, setSession } = useSessionStore()
+  const { session, deleteSession, validateSession } = useSessionStore()
   const [theme, setTheme] = useState('dark')
 
   const router = useRouter()
@@ -28,7 +29,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
   const closeSession = (): void => {
     window.localStorage.removeItem('session')
     removeToken()
-    setSession(null)
+    deleteSession()
     router.push('/')
 
     toast('Sesión cerrada', {
@@ -48,6 +49,10 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
   }
 
   useEffect(() => {
+    const validate = async (): Promise<void> => await validateSession()
+    void validate()
+
+    // theme logic
     const panelTheme = window.localStorage.getItem('panelTheme')
 
     if (panelTheme === null) {
@@ -77,7 +82,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
           </div>
           <h2 className='text-center absolute w-full m-auto mt-0 text-2xl -z-0 font-bold'>Max<span className='text-blue-500'>Autos</span></h2>
           <div className='flex items-center gap-2 mr-3 z-20'>
-            <UserIcon className='w-10 bg-white rounded-full' />
+            <UserImage image={session?.image} />
             <UserSettings />
           </div>
         </header>
@@ -156,8 +161,8 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
           <span className='w-9 h-9 flex items-center justify-center cursor-pointer bg-slate-300 text-black dark:text-white dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-600 transition-colors p-1.5 rounded-md' onClick={changeTheme}>
             {theme === 'dark' ? <BsSun /> : <BsMoon />}
           </span>
-          <UserIcon className='w-10 bg-white invert dark:invert-0 rounded-full' />
-          <h2 className='opacity-80 capitalize text-black dark:text-white'>{(session != null) ? session.name : 'Cargando...'}</h2>
+          <UserImage image={session?.image} />
+          <h2 className='opacity-80 capitalize text-black dark:text-white'>{(session !== null) ? session.username : 'Cargando...'}</h2>
           <UserSettings />
         </header>
 

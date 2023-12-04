@@ -15,7 +15,7 @@ import { getToken, setToken } from '@/utils/token'
 
 export default function Login (): JSX.Element {
   const router = useRouter()
-  const { setSession } = useSessionStore()
+  const { validateSession } = useSessionStore()
   const [loading, setLoading] = useState(false)
   const [values, setValues] = useState({
     username: '',
@@ -34,11 +34,11 @@ export default function Login (): JSX.Element {
 
     setLoading(true)
     login(values)
-      .then(res => {
+      .then(async res => {
         toast.success('Bienvenido')
         router.replace('/panel')
         setToken(res.token)
-        setSession({ _id: 'dsad76s87adad', name: 'admin fake', role: 'admin' })
+        await validateSession()
       })
       .catch(err => {
         console.log(err)

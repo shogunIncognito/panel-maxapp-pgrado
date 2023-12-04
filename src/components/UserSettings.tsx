@@ -38,7 +38,7 @@ const initialFormValues = {
 
 export default function UserSettings (): JSX.Element {
   const { open, handleClose, handleOpen } = useDisclosure()
-  const { session, setSession } = useSessionStore()
+  const { session } = useSessionStore()
   const [values, setValues] = useState<FormValues>(initialFormValues)
   const [settingsView, setSettingsView] = useState('username')
   const [loading, setLoading] = useState(false)
@@ -74,10 +74,7 @@ export default function UserSettings (): JSX.Element {
     updateUser(session._id, data, formType)
       .then(res => {
         toast.success('Usuario actualizado')
-
-        if (formType === TypeUserUpdate.toUsername) {
-          setSession({ ...session, name: data.username as string })
-        }
+        toast.success('Inicia sesión nuevamente para ver los cambios')
 
         setValues(initialFormValues)
         handleClose()
