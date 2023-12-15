@@ -36,7 +36,7 @@ export const validateFormValues = (values: UnknowObject): { valid: boolean, mess
   if (values.owners < 0) return { valid: false, message: 'El vehiculo tiene que tener minimo 1 dueño' }
   if (values.kilometers < 0) return { valid: false, message: 'Los kilometros no pueden ser negativos' }
   if (values.price < 0) return { valid: false, message: 'El precio no puede ser negativo' }
-  if (values.model < 2000 || values.model > currentYear) return { valid: false, message: `El año tiene que estar entre 2000 y ${currentYear}` }
+  if (values.model < 2000 || values.model > currentYear) return { valid: false, message: `El modelo tiene que estar entre 2000 y ${currentYear}` }
 
   return { valid: true, message: '' }
 }

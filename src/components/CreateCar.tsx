@@ -14,24 +14,24 @@ import { createCarCodes } from '@/utils/statusCodes'
 import { CreateCarDTO } from '@/types'
 
 const carInitialValues: CreateCarDTO = {
-  brand: '',
+  brand: 'Mazda',
   fuel: 'corriente',
   transmission: 'manual',
   type: 'automovil',
-  owners: 0,
-  kilometers: 0,
-  price: 0,
-  model: 0,
+  owners: '',
+  kilometers: '',
+  price: '',
+  model: '',
   line: '',
   plate: '',
   description: '',
   color: '',
-  cc: 1.0
+  cc: '1.0'
 }
 
 // testing values
 // const carInitialValues: CreateCarDTO = {
-//   brand: '64892a394a4191a34605c109',
+//   brand: 'Mazda',
 //   fuel: 'corriente',
 //   transmission: 'manual',
 //   type: 'automovil',
@@ -95,7 +95,7 @@ export default function CreateCar (): JSX.Element {
 
     try {
       setLoading(true)
-      const newCar = await createCar({ ...restOfForm, description, brand: restOfForm.brand.toUpperCase() })
+      const newCar = await createCar({ ...restOfForm, description })
       console.log(newCar)
 
       const uploadedCarImage = await uploadCarsImages(urlsToUpload, newCar.plate)

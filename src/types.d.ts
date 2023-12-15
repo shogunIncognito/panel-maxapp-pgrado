@@ -1,18 +1,18 @@
 export interface CarDTO {
   _id: string
   brand: string
-  model: number
+  model: string
   description: string
   line: string
-  kilometers: number
+  kilometers: string
   images: string[]
-  price: number
+  price: string
   preview: string
   fuel: string
   transmission: string
-  cc: number
+  cc: string
   type: string
-  owners: number
+  owners: string
   plate: string
   color: string
   createdAt: string
@@ -21,18 +21,18 @@ export interface CarDTO {
 
 export interface UpdateCarDTO {
   brand?: string
-  model?: number
+  model?: string
   description?: string
   line?: string
-  kilometers?: number
+  kilometers?: string
   images?: string[]
-  price?: number
+  price?: string
   preview?: string
   fuel?: string
   transmission?: string
-  cc?: number
+  cc?: string
   type?: string
-  owners?: number
+  owners?: string
   plate?: string
   color?: string
 }

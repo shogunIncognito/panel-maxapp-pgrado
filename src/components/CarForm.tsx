@@ -26,14 +26,9 @@ export default function CarForm ({
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
 
-    if (['price', 'kilometers', 'owners', 'model', 'cc'].includes(name)) {
-      setValues((prev: CreateCarDTO) => ({ ...prev, [name]: Number(value) }))
-      return
-    }
-
     setValues((prev: CreateCarDTO) => ({
       ...prev,
-      [name]: name === 'plate' ? value.toUpperCase() : value
+      [name]: value
     }))
   }
 

@@ -63,7 +63,7 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
       const newImages = await uploadCarsImages(urlsToUpload, selectedCar.plate)
 
       if (newImages.length > 0) {
-        valuesToUpdate.images = newImages
+        valuesToUpdate.images = [...newImages, ...selectedCar.images]
       }
 
       await updateCar(selectedCar._id, valuesToUpdate)

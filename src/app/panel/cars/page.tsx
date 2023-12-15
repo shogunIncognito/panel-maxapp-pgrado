@@ -143,7 +143,7 @@ export default function page (): JSX.Element {
                   {car.color}
                 </td>
                 <td className='capitalize px-6 py-4'>
-                  $ {Math.round(car.price).toLocaleString()}
+                  $ {Math.round(Number(car.price)).toLocaleString()}
                 </td>
                 <td className='px-6 py-4'>
                   <div className='cursor-pointer flex justify-center items-center relative group'>
