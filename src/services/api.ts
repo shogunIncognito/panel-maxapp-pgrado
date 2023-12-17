@@ -56,6 +56,10 @@ export const updateUser = async (id: string, values: UpdateUserDTO, type: TypeUs
   const response = await api.patch(`/users/${id}?type=${String(type)}`, values, auth())
   return response.data
 }
+export const updateUserImage = async (id: string, image: string): Promise<UserDTO> => {
+  const response = await api.patch(`/users/${id}/image`, { image }, auth())
+  return response.data
+}
 
 export const getUserInfo = async (): Promise<UserDTO> => {
   const response = await api.get('/users/info', auth())

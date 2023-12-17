@@ -13,7 +13,9 @@ import { objectHasEmptyValues } from '@/utils/functions'
 import { createUserCodes } from '@/utils/statusCodes'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import SampleUserImage from '@/assets/unknown-userimage.png'
 import { CreateUserDTO, UserDTO } from '@/types'
+import Select from '@/components/Select'
 
 export default function Users (): JSX.Element {
   const [users, setUsers] = useState<UserDTO[]>([])
@@ -82,9 +84,11 @@ export default function Users (): JSX.Element {
               <Input required className='p-2' name='password' type='password' id='password' placeholder='*******' />
             </div>
           </div>
-          <div className='w-full flex flex-col gap-1 mt-3'>
-            <label className='opacity-80 font-bold mx-auto' htmlFor='cedula'>Cedula</label>
-            <Input minLength={10} required className='p-2 w-full md:w-1/2 mx-auto' name='cedula' type='number' id='cedula' placeholder='1234567890' />
+          <div className='w-1/2 flex flex-col gap-1 mt-3'>
+            <Select name='role' id='role'>
+              <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value='admin'>Admin</option>
+              <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value='usuario'>Usuario</option>
+            </Select>
           </div>
 
           <div className='flex items-center gap-2 mt-3'>
@@ -103,10 +107,13 @@ export default function Users (): JSX.Element {
               <thead className='text-xs dark:bg-[#171923] bg-slate-300/70 sticky top-0 uppercase text-gray-800 dark:text-gray-400'>
                 <tr className='p-0.5'>
                   <th scope='col' className='px-6 py-3'>
+                    Imagen
+                  </th>
+                  <th scope='col' className='px-6 py-3'>
                     Nombre
                   </th>
                   <th scope='col' className='px-6 py-3'>
-                    Role
+                    Rol
                   </th>
                   <th scope='col' className='px-6 py-3'>
                     Acciones
@@ -125,10 +132,15 @@ export default function Users (): JSX.Element {
 
                 {filteredUsers.map(user => (
                   <tr key={user._id} className='border-b bg-transparent border-gray-700'>
+                    <th scope='row' className='px-6 py-4 grid place-content-center font-medium whitespace-nowrap dark:text-white'>
+                      {user.image !== undefined
+                        ? <img src={user.image} alt='user' className='w-14 h-14 select-none pointer-events-none object-cover rounded-full' />
+                        : <img src={SampleUserImage.src} alt='user' className='w-14 h-14 dark:invert select-none pointer-events-none dark:bg-neutral-200 ring-2 ring-black dark:ring-slate-800 object-cover rounded-full' />}
+                    </th>
                     <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap dark:text-white'>
                       {user.username}
                     </th>
-                    <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap dark:text-white'>
+                    <th scope='row' className='px-6 py-4 font-medium capitalize whitespace-nowrap dark:text-white'>
                       {user.role}
                     </th>
                     <td className='px-6 py-4 h-full w-1/6 m-auto'>

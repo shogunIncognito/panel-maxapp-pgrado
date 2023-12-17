@@ -17,7 +17,7 @@ import { TypeUserUpdate } from '@/enums'
 interface FormValues {
   toPassword: {
     currentPassword: string
-    newPassword: string
+    password: string
     confirmPassword: string
   }
   toUsername: {
@@ -28,7 +28,7 @@ interface FormValues {
 const initialFormValues = {
   toPassword: {
     currentPassword: '',
-    newPassword: '',
+    password: '',
     confirmPassword: ''
   },
   toUsername: {
@@ -56,13 +56,13 @@ export default function UserSettings (): JSX.Element {
 
     // target -> currentTarget
     if (formType === TypeUserUpdate.toPassword) {
-      const { newPassword, confirmPassword, currentPassword } = data
+      const { password, confirmPassword, currentPassword } = data
 
-      if (newPassword !== confirmPassword) {
+      if (password !== confirmPassword) {
         toast.error('Confirmar contraseña no coinciden')
         return
       }
-      if (newPassword === currentPassword) {
+      if (password === currentPassword) {
         toast.error('La nueva contraseña no puede ser igual a la actual')
         return
       }
@@ -158,7 +158,7 @@ export default function UserSettings (): JSX.Element {
                   </div>
                   <div className='grid grid-cols-2'>
                     <label>Nueva contraseña</label>
-                    <Input value={values.toPassword.newPassword} onChange={handleChange} name='newPassword' type={showPassword ? 'text' : 'password'} />
+                    <Input value={values.toPassword.password} onChange={handleChange} name='password' type={showPassword ? 'text' : 'password'} />
                   </div>
                   <div className='grid grid-cols-2'>
                     <label>Confirmar contraseña</label>
