@@ -76,7 +76,7 @@ export default function Login (): JSX.Element {
             <label className='text-md opacity-70' htmlFor='password'>Contraseña</label>
             <Input className='bg-white shadow dark:text-black text-gray-700 p-1.5' value={values.password} onChange={handleChange} id='password' type='password' name='password' />
           </div>
-          <Button loading={loading} disabled={isButtonDisabled || loading} className='mt-3 disabled:bg-opacity-70 disabled:cursor-not-allowed'>
+          <Button loading={loading} disabled={isButtonDisabled || loading} className='mt-3 disabled:bg-blue-400 disabled:bg-opacity-70  disabled:cursor-not-allowed'>
             Iniciar sesión
           </Button>
         </form>
