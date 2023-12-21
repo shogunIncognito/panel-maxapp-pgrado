@@ -11,6 +11,7 @@ import CarForm from './CarForm'
 import { updateCarCodes } from '@/utils/statusCodes'
 import { CarDTO } from '@/types'
 import { ActionTypes } from '@/reducers/panelCarsReducer'
+import { useSession } from 'next-auth/react'
 
 interface UpdateCarProps {
   selectedCar: CarDTO
@@ -19,6 +20,7 @@ interface UpdateCarProps {
 
 export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarProps): JSX.Element {
   const { reFetch, brands } = useCarsStore()
+  const { data: session } = useSession()
   const [values, setValues] = useState(selectedCar)
   const [loading, setLoading] = useState(false)
   const [images, setImages] = useState<Array<string | { url: string, file: File }>>(selectedCar.images)
@@ -66,9 +68,9 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
         valuesToUpdate.images = [...newImages, ...selectedCar.images]
       }
 
-      await updateCar(selectedCar._id, valuesToUpdate)
+      await updateCar(selectedCar._id, valuesToUpdate, session?.user.token)
 
-      reFetch()
+      reFetch(session?.user.token)
       handleClose()
       toast.success('Auto actualizado')
     } catch (error: any) {
@@ -117,7 +119,7 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
         return
       }
 
-      await deleteCarImageFromApi(selectedCar._id, img)
+      await deleteCarImageFromApi(selectedCar._id, img, session?.user.token)
       await deleteCarImage(img)
 
       setImages(prev => prev.filter(image => image !== img))
@@ -127,7 +129,7 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
       toast.error('Error al eliminar imagen')
     } finally {
       setLoading(false)
-      reFetch()
+      reFetch(session?.user.token)
     }
   }
 

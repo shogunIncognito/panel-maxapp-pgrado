@@ -10,6 +10,7 @@ import { deleteCarsImages } from '@/services/firebase'
 import { deleteCarCodes } from '@/utils/statusCodes'
 import { CarDTO } from '@/types'
 import { ActionTypes } from '@/reducers/panelCarsReducer'
+import { useSession } from 'next-auth/react'
 
 interface DeleteCarProps {
   carToDelete: CarDTO
@@ -18,12 +19,13 @@ interface DeleteCarProps {
 
 export default function DeleteCar ({ carToDelete, setCarToDelete }: DeleteCarProps): JSX.Element {
   const { deleteCar } = useCarsStore()
+  const { data: session } = useSession()
   const [loading, setLoading] = useState(false)
 
   const handleDeleteCar = (): void => {
     setLoading(true)
 
-    Promise.all([deleteCarsImages(carToDelete.images), deleteCarDB(carToDelete._id)])
+    Promise.all([deleteCarsImages(carToDelete.images), deleteCarDB(carToDelete._id, session?.user.token)])
       .then(() => {
         deleteCar(carToDelete._id)
         toast.success('Auto eliminado')

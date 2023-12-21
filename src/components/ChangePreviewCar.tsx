@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import useCarsStore from '@/hooks/useCarsStore'
 import { CarDTO } from '@/types'
 import { ActionTypes } from '@/reducers/panelCarsReducer'
+import { useSession } from 'next-auth/react'
 
 const selectedClass = 'border-4 dark:border-green-500 border-purple-500 shadow-xl'
 
@@ -16,6 +17,7 @@ interface ChangePreviewCarProps {
 
 export default function ChangePreviewCar ({ car, setCar }: ChangePreviewCarProps): JSX.Element {
   const { reFetch } = useCarsStore()
+  const { data: session } = useSession()
   const [selectedImage, setSelectedImage] = useState(car.preview)
   const [loading, setLoading] = useState(false)
 
@@ -28,10 +30,10 @@ export default function ChangePreviewCar ({ car, setCar }: ChangePreviewCarProps
     }
 
     setLoading(true)
-    updatePreviewImage(car._id, selectedImage)
+    updatePreviewImage(car._id, selectedImage, session?.user.token)
       .then(() => {
         toast.success('Imagen de previsualización cambiada')
-        reFetch()
+        reFetch(session?.user.token)
       })
       .catch((err) => {
         console.log(err)

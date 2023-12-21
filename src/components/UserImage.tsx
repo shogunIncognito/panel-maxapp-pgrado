@@ -7,9 +7,9 @@ import useDisclosure from '@/hooks/useDisclosure'
 import { useState } from 'react'
 import Button from './Button'
 import { updateUserImage } from '@/services/api'
-import useSessionStore from '@/hooks/useSessionStore'
 import { uploadUserImage } from '@/services/firebase'
 import toast from 'react-hot-toast'
+import { useSession } from 'next-auth/react'
 
 interface UserImageInterface {
   newImage: File | undefined
@@ -18,7 +18,7 @@ interface UserImageInterface {
 }
 
 export default function UserImage ({ image }: { image: string | undefined }): JSX.Element {
-  const { session } = useSessionStore()
+  const { data: session, status } = useSession()
   const { open, handleClose, handleOpen } = useDisclosure()
   const [imageValues, setImage] = useState<UserImageInterface>({
     newImage: undefined,
@@ -42,11 +42,11 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
 
   const handleUpdate = async (): Promise<void> => {
     try {
-      if (!session || !imageValues.newImage) return
+      if (status === 'unauthenticated' || !imageValues.newImage || !session?.user) return
       setImage(prev => ({ ...prev, loading: true }))
 
-      const newImage = await uploadUserImage(session._id, imageValues.newImage)
-      await updateUserImage(session._id, newImage)
+      const newImage = await uploadUserImage(session.user._id, imageValues.newImage)
+      await updateUserImage(session.user._id, newImage, session.user.token)
 
       toast.success('Imagen actualizada, vuelve a iniciar sesión para ver los cambios')
     } catch (error) {

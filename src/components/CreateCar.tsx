@@ -12,6 +12,7 @@ import useDisclosure from '@/hooks/useDisclosure'
 import ModalBackdrop from './ModalBackdrop'
 import { createCarCodes } from '@/utils/statusCodes'
 import { CreateCarDTO } from '@/types'
+import { useSession } from 'next-auth/react'
 
 const carInitialValues: CreateCarDTO = {
   brand: 'Mazda',
@@ -47,6 +48,7 @@ const carInitialValues: CreateCarDTO = {
 // }
 
 export default function CreateCar (): JSX.Element {
+  const { data: session } = useSession()
   const { open, handleClose, handleOpen } = useDisclosure()
   const [loading, setLoading] = useState(false)
   const { addCar, brands } = useCarsStore()
@@ -95,11 +97,11 @@ export default function CreateCar (): JSX.Element {
 
     try {
       setLoading(true)
-      const newCar = await createCar({ ...restOfForm, description })
+      const newCar = await createCar({ ...restOfForm, description }, session?.user.token)
       console.log(newCar)
 
       const uploadedCarImage = await uploadCarsImages(urlsToUpload, newCar.plate)
-      const carWithImages = await updateCar(newCar._id, { images: uploadedCarImage })
+      const carWithImages = await updateCar(newCar._id, { images: uploadedCarImage }, session?.user.token)
 
       setImages([])
 

@@ -10,9 +10,9 @@ import { useState } from 'react'
 import { objectHasEmptyValues } from '@/utils/functions'
 import toast from 'react-hot-toast'
 import { updateUser } from '@/services/api'
-import useSessionStore from '@/hooks/useSessionStore'
 import { updatePasswordCodes, updateUsernameCodes } from '@/utils/statusCodes'
 import { TypeUserUpdate } from '@/enums'
+import { useSession } from 'next-auth/react'
 
 interface FormValues {
   toPassword: {
@@ -38,7 +38,7 @@ const initialFormValues = {
 
 export default function UserSettings (): JSX.Element {
   const { open, handleClose, handleOpen } = useDisclosure()
-  const { session } = useSessionStore()
+  const { data: session } = useSession()
   const [values, setValues] = useState<FormValues>(initialFormValues)
   const [settingsView, setSettingsView] = useState('username')
   const [loading, setLoading] = useState(false)
@@ -68,10 +68,10 @@ export default function UserSettings (): JSX.Element {
       }
     }
 
-    if (session == null) return
+    if (session === null) return
 
     setLoading(true)
-    updateUser(session._id, data, formType)
+    updateUser(session.user._id, data, formType, session.user.token)
       .then(res => {
         toast.success('Usuario actualizado')
         toast.success('Inicia sesión nuevamente para ver los cambios')

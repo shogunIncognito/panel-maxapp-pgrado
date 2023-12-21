@@ -11,7 +11,7 @@ interface CarsState {
   loading: boolean
   addCar: (car: CarDTO) => void
   deleteCar: (id: string) => void
-  reFetch: () => void
+  reFetch: (token: string | undefined) => void
 }
 
 const useCarsStore = create<CarsState>((set) => ({
@@ -20,8 +20,8 @@ const useCarsStore = create<CarsState>((set) => ({
   loading: true,
   addCar: (car) => set((state) => ({ cars: [...state.cars, car] })),
   deleteCar: (id) => set((state) => ({ cars: state.cars.filter((car) => car._id !== id) })),
-  reFetch: () => {
-    Promise.all([getCars(), getBrands()])
+  reFetch: (token) => {
+    Promise.all([getCars(), getBrands(token)])
       .then(([cars, brands]) => set({ cars, brands }))
       .catch((err) => console.log(err))
       .finally(() => set({ loading: false }))

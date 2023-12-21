@@ -5,18 +5,15 @@ import Logo from '@/assets/maxautosicon.png'
 import sideImage from '@/assets/maxHero1.jpg'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { login } from '@/services/api'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import Input from '@/components/Input'
-import useSessionStore from '@/hooks/useSessionStore'
-import { loginCodes } from '@/utils/statusCodes'
-import { getToken, setToken } from '@/utils/token'
+import { signIn, useSession } from 'next-auth/react'
 
 export default function Login (): JSX.Element {
   const router = useRouter()
-  const { validateSession } = useSessionStore()
   const [loading, setLoading] = useState(false)
+  const { status } = useSession()
   const [values, setValues] = useState({
     username: '',
     password: ''
@@ -33,18 +30,14 @@ export default function Login (): JSX.Element {
     }
 
     setLoading(true)
-    login(values)
-      .then(async res => {
+    signIn('credentials', { ...values, redirect: false })
+      .then(res => {
+        if (res?.error !== null) throw new Error(String(res?.status))
         toast.success('Bienvenido')
         router.replace('/panel')
-        setToken(res.token)
-        await validateSession()
       })
-      .catch(err => {
-        console.log(err)
-        const status: number = err.response?.status
-        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-        toast.error(loginCodes[status] || 'Error al iniciar sesión')
+      .catch(() => {
+        toast.error('Usuario o contraseña incorrectos')
       })
       .finally(() => setLoading(false))
   }
@@ -58,10 +51,10 @@ export default function Login (): JSX.Element {
   }
 
   useEffect(() => {
-    if (getToken() !== undefined) {
+    if (status === 'authenticated') {
       router.replace('/panel')
     }
-  }, [])
+  }, [status])
 
   return (
     <div className='w-full text-black h-screen max-h-screen flex-col md:flex-row overflow-hidden flex justify-center items-center'>

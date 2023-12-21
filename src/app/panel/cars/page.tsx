@@ -16,6 +16,7 @@ import ChangePreviewCar from '@/components/ChangePreviewCar'
 import { deleteCarsImages } from '@/services/firebase'
 import usePanelCarsReducer, { ActionTypes } from '@/reducers/panelCarsReducer'
 import { CarDTO } from '@/types'
+import { useSession } from 'next-auth/react'
 
 export default function page (): JSX.Element {
   const { cars, reFetch, loading } = useCarsStore()
@@ -26,6 +27,7 @@ export default function page (): JSX.Element {
     carsSelected,
     carPreviewToChange
   }, dispatch] = usePanelCarsReducer()
+  const { data: session } = useSession()
 
   const dispatchAction = (type: ActionTypes, payload: any): void => dispatch({ type, payload })
 
@@ -34,7 +36,7 @@ export default function page (): JSX.Element {
   }, [cars])
 
   useEffect(() => {
-    reFetch()
+    reFetch(session?.user.token)
   }, [])
 
   if (loading) return <Spinner />
@@ -49,10 +51,10 @@ export default function page (): JSX.Element {
     const carsImages = carsSelected.reduce<string[]>((acc, curr) => [...acc, ...curr.images], [])
 
     try {
-      await Promise.all([deleteCarsImages(carsImages), deleteCar(carsSelected)])
+      await Promise.all([deleteCarsImages(carsImages), deleteCar(carsSelected, session?.user.token)])
 
       toast.success('Autos eliminados')
-      reFetch()
+      reFetch(session?.user.token)
     } catch (error) {
       toast.error('Error al eliminar los autos')
     } finally {

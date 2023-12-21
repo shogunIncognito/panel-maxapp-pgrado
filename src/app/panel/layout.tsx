@@ -2,7 +2,6 @@
 
 import sideImage from '@/assets/maxautoslogoblanco.png'
 import useDisclosure from '@/hooks/useDisclosure'
-import useSessionStore from '@/hooks/useSessionStore'
 import { CloseIcon, MenuIcon } from '@/libs/Icons'
 import { AiFillHome } from 'react-icons/ai'
 import { FaCarAlt } from 'react-icons/fa'
@@ -10,31 +9,33 @@ import { BiSolidUser } from 'react-icons/bi'
 import { RiLogoutBoxRLine as RxExit } from 'react-icons/ri'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { useEffect, useState } from 'react'
 import UserSettings from '@/components/UserSettings'
 import { BsMoon, BsSun } from 'react-icons/bs'
-import { getToken, removeToken } from '@/utils/token'
 import UserImage from '@/components/UserImage'
+import { signOut, useSession } from 'next-auth/react'
+import Spinner from '@/components/Spinner'
 
 export default function Layout ({ children }: { children: React.ReactNode }): JSX.Element {
   const { open, handleOpen, handleClose } = useDisclosure()
-  const { session, deleteSession, validateSession } = useSessionStore()
+  const { data: session, status } = useSession()
+
   const [theme, setTheme] = useState('dark')
 
-  const router = useRouter()
   const path = usePathname()
 
   const closeSession = (): void => {
-    window.localStorage.removeItem('session')
-    removeToken()
-    deleteSession()
-    router.push('/')
-
-    toast('Sesión cerrada', {
-      icon: '👋'
-    })
+    signOut()
+      .then(() => {
+        toast('Sesión cerrada', {
+          icon: '👋'
+        })
+      })
+      .catch(() => {
+        toast.error('Ha ocurrido un error')
+      })
   }
 
   const changeTheme = (): void => {
@@ -49,10 +50,6 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
   }
 
   useEffect(() => {
-    const validate = async (): Promise<void> => await validateSession()
-    void validate()
-
-    // theme logic
     const panelTheme = window.localStorage.getItem('panelTheme')
 
     if (panelTheme === null) {
@@ -66,11 +63,13 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
     setTheme(panelTheme)
   }, [])
 
-  useEffect(() => {
-    if (getToken() === undefined) {
-      router.push('/')
-    }
-  }, [path])
+  if (status === 'loading') {
+    return (
+      <div className='flex justify-center bg-neutral-950 items-center w-full h-screen'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <main className='flex-col max-w-full max-h-screen md:flex-row flex h-screen w-full dark:bg-[#171923]'>
@@ -82,7 +81,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
           </div>
           <h2 className='text-center absolute w-full m-auto mt-0 text-2xl -z-0 font-bold'>Max<span className='text-blue-500'>Autos</span></h2>
           <div className='flex items-center gap-2 mr-3 z-20'>
-            <UserImage image={session?.image} />
+            <UserImage image={session?.user.image} />
             <UserSettings />
           </div>
         </header>
@@ -161,8 +160,8 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
           <span className='w-9 h-9 flex items-center justify-center cursor-pointer bg-slate-300 text-black dark:text-white dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-600 transition-colors p-1.5 rounded-md' onClick={changeTheme}>
             {theme === 'dark' ? <BsSun /> : <BsMoon />}
           </span>
-          <UserImage image={session?.image} />
-          <h2 className='opacity-80 capitalize text-black dark:text-white'>{(session !== null) ? session.username : 'Cargando...'}</h2>
+          <UserImage image={session?.user.image} />
+          <h2 className='opacity-80 capitalize text-black dark:text-white'>{(session !== null) ? session.user.username : 'Cargando...'}</h2>
           <UserSettings />
         </header>
 

@@ -7,7 +7,6 @@ import ModalBackdrop from '@/components/ModalBackdrop'
 import Spinner from '@/components/Spinner'
 import DeleteUser from '@/components/DeleteUser'
 import useDisclosure from '@/hooks/useDisclosure'
-import useSessionStore from '@/hooks/useSessionStore'
 import { createUser, getUsers } from '@/services/api'
 import { objectHasEmptyValues } from '@/utils/functions'
 import { createUserCodes } from '@/utils/statusCodes'
@@ -16,6 +15,7 @@ import toast from 'react-hot-toast'
 import SampleUserImage from '@/assets/unknown-userimage.png'
 import { CreateUserDTO, UserDTO } from '@/types'
 import Select from '@/components/Select'
+import { useSession } from 'next-auth/react'
 
 export default function Users (): JSX.Element {
   const [users, setUsers] = useState<UserDTO[]>([])
@@ -23,12 +23,12 @@ export default function Users (): JSX.Element {
     create: false,
     getUsers: true
   })
-  const { session } = useSessionStore()
+  const { data: session } = useSession()
   const { handleClose, handleOpen, open } = useDisclosure()
 
   useEffect(() => {
     setLoading({ ...loading, getUsers: true })
-    getUsers()
+    getUsers(session?.user.token)
       .then(res => setUsers(res))
       .catch(err => toast.error(err.message))
       .finally(() => setLoading({ ...loading, getUsers: false }))
@@ -46,7 +46,7 @@ export default function Users (): JSX.Element {
 
     setLoading({ ...loading, create: true })
 
-    createUser(data)
+    createUser(data, session?.user.token)
       .then(res => {
         setUsers([...users, res])
         toast.success('Usuario creado');
@@ -62,7 +62,7 @@ export default function Users (): JSX.Element {
       })
   }
 
-  const filteredUsers = (session != null) ? users.filter(user => user._id !== session._id) : users
+  const filteredUsers = (session !== null) ? users.filter(user => user._id !== session.user.token) : []
 
   return (
     <section className='flex-1'>

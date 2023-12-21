@@ -9,10 +9,12 @@ import useCarsStore from '@/hooks/useCarsStore'
 import toast from 'react-hot-toast'
 import Select from './Select'
 import { createBrandCodes, deleteBrandCodes } from '@/utils/statusCodes'
+import { useSession } from 'next-auth/react'
 
 export default function Brands (): JSX.Element {
   const { open, handleClose, handleOpen } = useDisclosure()
   const { reFetch, brands, loading: brandsLoading } = useCarsStore()
+  const { data: session } = useSession()
   const [loading, setLoading] = useState(false)
   const [brand, setBrand] = useState({
     brandToDelete: brands[0]?._id,
@@ -22,10 +24,10 @@ export default function Brands (): JSX.Element {
   const handleCreate = (): void => {
     setLoading(true)
 
-    createBrand(brand.brandToAdd)
+    createBrand(brand.brandToAdd, session?.user.token)
       .then(res => {
         toast.success('Marca creada')
-        reFetch()
+        reFetch(session?.user.token)
         setBrand({ ...brand, brandToAdd: '' })
       })
       .catch(err => toast.error(createBrandCodes[err.response.status] || 'Error al crear marca'))
@@ -43,10 +45,10 @@ export default function Brands (): JSX.Element {
   const handleDelete = (): void => {
     setLoading(true)
 
-    deleteBrand(brand.brandToDelete)
+    deleteBrand(brand.brandToDelete, session?.user.token)
       .then(res => {
         toast.success('Marca eliminada')
-        reFetch()
+        reFetch(session?.user.token)
         setBrand({
           ...brand,
           brandToDelete: brands[0]?._id

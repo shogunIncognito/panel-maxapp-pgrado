@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import 'animate.css'
+import SessionAuthProvider from '@/context/SessionProviderContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,7 +21,9 @@ export default function RootLayout ({
     <html lang='en' className='dark'>
       <body className={inter.className}>
         <Toaster />
-        {children}
+        <SessionAuthProvider>
+          {children}
+        </SessionAuthProvider>
       </body>
     </html>
   )
