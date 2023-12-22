@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import Input from '@/components/Input'
 import { signIn, useSession } from 'next-auth/react'
+import Spinner from '@/components/Spinner'
 
 export default function Login (): JSX.Element {
   const router = useRouter()
@@ -55,6 +56,14 @@ export default function Login (): JSX.Element {
       router.replace('/panel')
     }
   }, [status])
+
+  if (status === 'loading' || status === 'authenticated') {
+    return (
+      <div className='flex justify-center dark:bg-neutral-900 bg-neutral-200 items-center w-full h-screen'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <div className='w-full text-black h-screen max-h-screen flex-col md:flex-row overflow-hidden flex justify-center items-center'>
