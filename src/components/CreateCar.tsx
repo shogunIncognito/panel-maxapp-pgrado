@@ -98,7 +98,6 @@ export default function CreateCar (): JSX.Element {
     try {
       setLoading(true)
       const newCar = await createCar({ ...restOfForm, description }, session?.user.token)
-      console.log(newCar)
 
       const uploadedCarImage = await uploadCarsImages(urlsToUpload, newCar.plate)
       const carWithImages = await updateCar(newCar._id, { images: uploadedCarImage }, session?.user.token)

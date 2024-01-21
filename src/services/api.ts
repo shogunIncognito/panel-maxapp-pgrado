@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { DEVELOPMENT_API_URL, PRODUCTION_API_URL } from '@/utils/envconfig'
+import { API_URL } from '@/utils/envconfig'
 import { BrandType, CarDTO, CreateCarDTO, CreateUserDTO, UpdateCarDTO, UpdateUserDTO, UserDTO } from '@/types'
 import { TypeUserUpdate } from '@/enums'
 
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? PRODUCTION_API_URL : DEVELOPMENT_API_URL
+  baseURL: API_URL
 })
 
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

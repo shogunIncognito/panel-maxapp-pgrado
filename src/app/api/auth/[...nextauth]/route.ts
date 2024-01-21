@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { PRODUCTION_API_URL } from '@/utils/envconfig'
+import { API_URL } from '@/utils/envconfig'
 import axios from 'axios'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
@@ -13,14 +13,14 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password', placeholder: '*********' }
       },
       async authorize (credentials) {
-        const user = await axios.post(`${PRODUCTION_API_URL}/auth/login`, credentials)
-
+        const user = await axios.post(`${API_URL}/auth/login`, credentials)
         return user.data
       }
     })
   ],
   callbacks: {
     async jwt ({ token, user }) {
+      (Boolean((token?.token))) && await axios.post(`${API_URL}/auth/validate-token`, { token: token.token })
       return { ...token, ...user }
     },
     async session ({ session, token }) {
