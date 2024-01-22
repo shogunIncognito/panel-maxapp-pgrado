@@ -8,7 +8,7 @@ import SessionAuthProvider from '@/context/SessionProviderContext'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'MaxAutos',
+  title: 'MaxPanel',
   description: 'Pagina de MaxAutos'
 }
 
