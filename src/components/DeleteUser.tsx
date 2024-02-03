@@ -41,16 +41,16 @@ export default function DeleteUser ({ user, setUsers }: DeleteUserProps): JSX.El
       <ModalBackdrop open={open} className='md:w-auto justify-center items-center font-bold gap-5'>
         <h2 className='text-xl opacity-85'>Eliminar usuario</h2>
         <h2 className='text-lg opacity-85'>El usuario <span className='text-red-400'>{user.username}</span> sera eliminado</h2>
-        <div className='flex gap-1'>
+        <div className='flex gap-1 w-full justify-center'>
           <Button
             loading={loading}
             disabled={loading}
-            className='bg-[#FBD38D] hover:bg-yellow-400/70 font-semibold text-black/70 disabled:bg-yellow-900 disabled:pointer-events-none'
+            className='bg-[#FBD38D] flex-1 hover:bg-yellow-400/70 font-semibold text-black/70 disabled:bg-yellow-900 disabled:pointer-events-none'
             onClick={handleDelete}
           >
             Eliminar
           </Button>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button className='flex-1' onClick={handleClose}>Cancelar</Button>
         </div>
       </ModalBackdrop>
     </>

@@ -177,8 +177,14 @@ export default function page (): JSX.Element {
         {selectedCar !== null && <UpdateCar selectedCar={selectedCar} setSelectedCar={dispatchAction} />}
       </ModalBackdrop>
 
-      {(carToDelete != null) && <DeleteCar carToDelete={carToDelete} setCarToDelete={dispatchAction} />}
-      {(carPreviewToChange != null) && <ChangePreviewCar car={carPreviewToChange} setCar={dispatchAction} />}
+      <ModalBackdrop open={carToDelete !== null}>
+        {carToDelete !== null && <DeleteCar carToDelete={carToDelete} setCarToDelete={dispatchAction} />}
+      </ModalBackdrop>
+
+      <ModalBackdrop open={carPreviewToChange !== null}>
+        {carPreviewToChange !== null && <ChangePreviewCar car={carPreviewToChange} setCar={dispatchAction} />}
+      </ModalBackdrop>
+
     </section>
   )
 }

@@ -110,7 +110,7 @@ export default function UserSettings (): JSX.Element {
         </div>
       </div>
 
-      <ModalBackdrop open={open} className='p-0 overflow-visible w-[450px] h-[450px] mx-5 dark:bg-neutral-950 ring-1 rounded-lg dark:ring-slate-600'>
+      <ModalBackdrop open={open} className='p-0 overflow-visible w-[480px] h-[400px] mx-5 dark:bg-neutral-950 ring-1 rounded-lg dark:ring-slate-600'>
         <div className='flex flex-col gap-6 p-3 flex-1'>
           <header className='w-full dark:bg-gray-700/30 rounded-lg text-center flex p-1.5 relative'>
             <span onClick={() => setSettingsView('username')} className={`flex-1 cursor-pointer opacity-80 rounded-md p-0.5 ${settingsView === 'username' ? 'dark:bg-black/80 bg-gray-700 text-white' : ''}`}>Cuenta</span>
@@ -128,18 +128,18 @@ export default function UserSettings (): JSX.Element {
                     <Input value={values.toUsername.username} onChange={handleChange} name='username' />
                   </div>
 
-                  <div className='flex flex-1 w-full gap-2 my-2 items-center'>
+                  <div className='flex  w-full gap-2 my-2 items-center'>
                     <Button disabled={loading} loading={loading} type='submit' className='bg-purple-600 flex-1 hover:bg-purple-800'>Guardar</Button>
-                    <Button className='flex-1' onClick={handleClose}>Cancelar</Button>
+                    <Button type='reset' className='flex-1' onClick={handleClose}>Cancelar</Button>
                   </div>
                 </form>
               </section>
               )
             : (
-              <section className='flex h-full flex-col select-none justify-center mx-8'>
+              <section className='flex h-full flex-col mx-8'>
                 <h2 className='mb-2 capitalize text-md'>Cambiar contraseña</h2>
 
-                <form name='toPassword' onSubmit={handleSubmit} className='flex gap-5 flex-col justify-start items-center'>
+                <form name='toPassword' onSubmit={handleSubmit} className='flex h-full gap-5 flex-col'>
                   {showPassword
                     ? (
                       <AiFillEyeInvisible onClick={() => setShowPassword(false)} size={33} className='cursor-pointer self-start p-1 rounded bg-slate-300 dark:bg-neutral-800 dark:hover:bg-neutral-900' />
@@ -147,22 +147,24 @@ export default function UserSettings (): JSX.Element {
                     : (
                       <AiFillEye onClick={() => setShowPassword(true)} size={33} className='cursor-pointer self-start p-1 rounded bg-slate-300 dark:bg-neutral-800 dark:hover:bg-neutral-900' />
                       )}
-                  <div className='grid grid-cols-2'>
-                    <label>Contraseña actual</label>
-                    <Input value={values.toPassword.currentPassword} onChange={handleChange} name='currentPassword' type={showPassword ? 'text' : 'password'} />
-                  </div>
-                  <div className='grid grid-cols-2'>
-                    <label>Nueva contraseña</label>
-                    <Input value={values.toPassword.password} onChange={handleChange} name='password' type={showPassword ? 'text' : 'password'} />
-                  </div>
-                  <div className='grid grid-cols-2'>
-                    <label>Confirmar contraseña</label>
-                    <Input value={values.toPassword.confirmPassword} onChange={handleChange} name='confirmPassword' type={showPassword ? 'text' : 'password'} />
+                  <div className='flex flex-col flex-1 justify-center items-center gap-2'>
+                    <div className='grid grid-cols-2'>
+                      <label>Contraseña actual</label>
+                      <Input value={values.toPassword.currentPassword} onChange={handleChange} name='currentPassword' type={showPassword ? 'text' : 'password'} />
+                    </div>
+                    <div className='grid grid-cols-2'>
+                      <label>Nueva contraseña</label>
+                      <Input value={values.toPassword.password} onChange={handleChange} name='password' type={showPassword ? 'text' : 'password'} />
+                    </div>
+                    <div className='grid grid-cols-2'>
+                      <label>Confirmar contraseña</label>
+                      <Input value={values.toPassword.confirmPassword} onChange={handleChange} name='confirmPassword' type={showPassword ? 'text' : 'password'} />
+                    </div>
                   </div>
 
                   <div className='flex gap-2 w-full my-2 items-center'>
                     <Button loading={loading} type='submit' className='bg-purple-600 flex-1 hover:bg-purple-800'>Guardar</Button>
-                    <Button className='flex-1' onClick={handleClose}>Cancelar</Button>
+                    <Button type='reset' className='flex-1' onClick={handleClose}>Cancelar</Button>
                   </div>
                 </form>
               </section>

@@ -1,4 +1,3 @@
-import ModalBackdrop from './ModalBackdrop'
 import Button from './Button'
 import { updatePreviewImage } from '@/services/api'
 import { useState } from 'react'
@@ -48,7 +47,7 @@ export default function ChangePreviewCar ({ car, setCar }: ChangePreviewCarProps
   const handleDispatch = (): void => setCar(ActionTypes.SET_CAR_PREVIEW_TO_CHANGE, null)
 
   return (
-    <ModalBackdrop open>
+    <>
       <h2 className='text-center text-xl opacity-75 mb-6'>Selecciona una imagen de previsualización</h2>
       <section className='grid grid-rows-3 grid-flow-col overflow-x-auto p-1 gap-2 md:place-content-center'>
         {car.images.map((image, index) => (
@@ -63,6 +62,6 @@ export default function ChangePreviewCar ({ car, setCar }: ChangePreviewCarProps
           Cerrar
         </Button>
       </div>
-    </ModalBackdrop>
+    </>
   )
 }
