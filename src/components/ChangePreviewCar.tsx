@@ -51,7 +51,7 @@ export default function ChangePreviewCar ({ car, setCar }: ChangePreviewCarProps
       <h2 className='text-center text-xl opacity-75 mb-6'>Selecciona una imagen de previsualización</h2>
       <section className='grid grid-rows-3 grid-flow-col overflow-x-auto p-1 gap-2 md:place-content-center'>
         {car.images.map((image, index) => (
-          <img onClick={() => setSelectedImage(image)} key={index} className={`md:w-44 w-24 max-w-fit cursor-pointer hover:opacity-60 select-none max-h-44 rounded ${selectedImage === image ? selectedClass : ''} h-auto object-contain`} src={image} alt={car.line} />
+          <img onClick={() => setSelectedImage(image)} key={index} className={`md:w-44 w-24 border-4 border-transparent max-w-fit cursor-pointer hover:opacity-60 select-none max-h-44 rounded ${selectedImage === image ? selectedClass : ''} h-auto object-contain`} src={image} alt={car.line} />
         ))}
       </section>
       <div className='flex mt-5 gap-2 justify-center items-center'>
