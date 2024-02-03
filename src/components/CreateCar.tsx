@@ -73,6 +73,7 @@ export default function CreateCar (): JSX.Element {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
+    if (!open) return
 
     const { description, ...restOfForm } = values
 

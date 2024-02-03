@@ -17,6 +17,7 @@ import { deleteCarsImages } from '@/services/firebase'
 import usePanelCarsReducer, { ActionTypes } from '@/reducers/panelCarsReducer'
 import { CarDTO } from '@/types'
 import { useSession } from 'next-auth/react'
+import ModalBackdrop from '@/components/ModalBackdrop'
 
 export default function page (): JSX.Element {
   const { cars, reFetch, loading } = useCarsStore()
@@ -149,7 +150,7 @@ export default function page (): JSX.Element {
                 </td>
                 <td className='px-6 py-4'>
                   <div className='cursor-pointer flex justify-center items-center relative group'>
-                    <img src={car.preview !== '' ? car.preview : car.images[0]} alt={car.plate} width={160} height={160} className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[160px] max-h-[160px] min-w-[160px] min-h-[160px]' />
+                    <img src={car.preview === null ? car.images[0] : car.preview} alt={car.plate} width={160} height={160} className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[160px] max-h-[160px] min-w-[160px] min-h-[160px]' />
                     <div onClick={() => dispatchAction(ActionTypes.SET_CAR_PREVIEW_TO_CHANGE, car)} className='absolute top-0 w-full h-full bg-black/50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 max-w-[160px] max-h-[160px] min-w-[160px] min-h-[160px] transition-all duration-300'>
                       <span className='text-white font-bold'>
                         Cambiar imagen
@@ -172,7 +173,10 @@ export default function page (): JSX.Element {
         </table>
       </div>
 
-      {(selectedCar != null) && <UpdateCar selectedCar={selectedCar} setSelectedCar={dispatchAction} />}
+      <ModalBackdrop open={selectedCar !== null}>
+        {selectedCar !== null && <UpdateCar selectedCar={selectedCar} setSelectedCar={dispatchAction} />}
+      </ModalBackdrop>
+
       {(carToDelete != null) && <DeleteCar carToDelete={carToDelete} setCarToDelete={dispatchAction} />}
       {(carPreviewToChange != null) && <ChangePreviewCar car={carPreviewToChange} setCar={dispatchAction} />}
     </section>

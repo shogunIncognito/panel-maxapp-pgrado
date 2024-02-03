@@ -1,6 +1,5 @@
 'use client'
 
-import ModalBackdrop from './ModalBackdrop'
 import { useState } from 'react'
 import { deleteCarImageFromApi, updateCar } from '@/services/api'
 import useCarsStore from '@/hooks/useCarsStore'
@@ -137,23 +136,21 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
 
   return (
     <>
-      <ModalBackdrop open>
-        <h2 className='text-2xl font-bold opacity-80 mb-3'>Actualizar auto</h2>
-        <CarForm
-          setValues={setValues}
+      <h2 className='text-2xl font-bold opacity-80 mb-3'>Actualizar auto</h2>
+      <CarForm
+        setValues={setValues}
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          handleDeleteImage={handleDeleteImage}
-          handleImage={handleImage}
-          handleSubmit={handleSubmit}
-          values={values}
-          loading={loading}
-          images={images}
-          brands={brands}
-          handleClose={handleClose}
-        >
-          Actualizar
-        </CarForm>
-      </ModalBackdrop>
+        handleDeleteImage={handleDeleteImage}
+        handleImage={handleImage}
+        handleSubmit={handleSubmit}
+        values={values}
+        loading={loading}
+        images={images}
+        brands={brands}
+        handleClose={handleClose}
+      >
+        Actualizar
+      </CarForm>
     </>
   )
 }
