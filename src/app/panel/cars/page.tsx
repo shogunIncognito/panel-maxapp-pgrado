@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 'use client'
 
 import CreateCar from '@/components/CreateCar'
@@ -18,6 +19,7 @@ import usePanelCarsReducer, { ActionTypes } from '@/reducers/panelCarsReducer'
 import { CarDTO } from '@/types'
 import { useSession } from 'next-auth/react'
 import ModalBackdrop from '@/components/ModalBackdrop'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function page (): JSX.Element {
   const { cars, reFetch, loading } = useCarsStore()
@@ -80,12 +82,25 @@ export default function page (): JSX.Element {
 
         <CarFilter cars={cars} setCars={dispatchAction} />
 
-        {carsSelected.length > 0 && (
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          <Button disabled={carsSelected.length === 0} className='animate__animated animate__fadeIn animate__faster bg-red-500 hover:bg-red-700 font-bold py-2 px-4' onClick={deleteSelectedCars}>
-            Eliminar seleccionados
-          </Button>
-        )}
+        <AnimatePresence
+          mode='wait'
+          onExitComplete={() => null}
+        >
+          {carsSelected.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.3 }}
+              className='flex items-center space-x-3'
+            >
+              <Button disabled={carsSelected.length === 0} className='bg-red-500 hover:bg-red-700 font-bold py-2 px-4' onClick={deleteSelectedCars}>
+                Eliminar seleccionados
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </div>
       <div className='relative flex-1 w-full max-h-[70%] lg:max-h-[76%] xl:max-h-[80%] overflow-auto'>
         <table className='w-full overflow-auto text-sm text-center text-gray-400'>
