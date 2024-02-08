@@ -141,7 +141,7 @@ export default function page (): JSX.Element {
                 <td className='capitalize px-6 py-4'>
                   {car.plate}
                 </td>
-                <td className='capitalize px-6 py-4'>
+                <td className='uppercase px-6 py-4'>
                   {car.brand}
                 </td>
                 <td className='capitalize px-6 py-4'>
