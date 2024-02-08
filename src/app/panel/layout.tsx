@@ -63,6 +63,14 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
     setTheme(panelTheme)
   }, [])
 
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      signOut()
+        .then(() => toast.error('Sesión agotada'))
+        .catch(() => toast.error('Error al cerrar sesión'))
+    }
+  }, [status])
+
   if (status === 'loading') {
     return (
       <div className='flex justify-center bg-neutral-950 items-center w-full h-screen'>
