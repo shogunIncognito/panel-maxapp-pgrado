@@ -133,7 +133,7 @@ export default function page (): JSX.Element {
               </tr>
             )}
 
-            {filteredCars.map((car, index) => (
+            {filteredCars.map((car) => (
               <tr key={car._id} className='bg-transparent border-b border-green-800/90 text-neutral-600 dark:text-white'>
                 <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap'>
                   <input onClick={() => addCarToList(car)} type='checkbox' className='form-checkbox h-4 w-4 text-gray-500' />
@@ -164,7 +164,7 @@ export default function page (): JSX.Element {
                 </td>
                 <td className='px-6 py-4'>
                   <div className='cursor-pointer flex justify-center items-center relative group'>
-                    <img src={car.preview === null ? car.images[0] : car.preview} alt={car.plate} width={160} height={160} className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[160px] max-h-[160px] min-w-[160px] min-h-[160px]' />
+                    <img src={car.preview === null || car.preview === '' ? car.images[0] : car.preview} alt={car.plate} width={160} height={160} className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[160px] max-h-[160px] min-w-[160px] min-h-[160px]' />
                     <div onClick={() => dispatchAction(ActionTypes.SET_CAR_PREVIEW_TO_CHANGE, car)} className='absolute top-0 w-full h-full bg-black/50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 max-w-[160px] max-h-[160px] min-w-[160px] min-h-[160px] transition-all duration-300'>
                       <span className='text-white font-bold'>
                         Cambiar imagen
