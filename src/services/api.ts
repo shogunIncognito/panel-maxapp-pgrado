@@ -71,12 +71,12 @@ export const getBrands = async (token: string | undefined): Promise<BrandType[]>
 }
 
 export const createBrand = async (brand: string, token: string | undefined): Promise<BrandType> => {
-  const response = await api.post('/brands', { name: brand }, auth(token))
+  const response = await api.post('cars/brands', { name: brand }, auth(token))
   return response.data
 }
 
 export const deleteBrand = async (id: string, token: string | undefined): Promise<BrandType> => {
-  const response = await api.delete(`/brands/${id}`, auth(token))
+  const response = await api.delete(`cars/brands/${id}`, auth(token))
   return response.data
 }
 

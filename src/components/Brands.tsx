@@ -21,6 +21,8 @@ export default function Brands (): JSX.Element {
     brandToAdd: ''
   })
 
+  console.log(brands)
+
   const handleCreate = (): void => {
     setLoading(true)
 
@@ -70,11 +72,11 @@ export default function Brands (): JSX.Element {
               <h2 className='text-lg opacity-85'>Nombre de marca a añadir</h2>
               <Input name='brandToAdd' value={brand.brandToAdd} onChange={handleChange} className='py-2' placeholder='Renault...' />
             </div>
-            <div className='flex gap-1'>
+            <div className='flex gap-1 flex-1 w-3/6'>
               <Button
                 loading={loading}
                 disabled={loading}
-                className='py-2 bg-green-600 hover:bg-green-800 disabled:bg-green-900 disabled:pointer-events-none'
+                className='py-2 flex-1 bg-green-600 hover:bg-green-800 disabled:bg-green-900 disabled:pointer-events-none'
                 onClick={handleCreate}
               >
                 Agregar
@@ -88,17 +90,17 @@ export default function Brands (): JSX.Element {
               <Select className='w-full' name='brandToDelete' value={brand.brandToDelete} onChange={handleChange}>
                 {!brandsLoading
                   ? brands.map(brand => (
-                    <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand._id} value={brand._id}>{brand.name}</option>
+                    <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand._id} value={brand.name}>{brand.name}</option>
                   ))
                   : <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700'>Cargando...</option>}
               </Select>
 
             </div>
-            <div className='flex gap-1'>
+            <div className='flex gap-1 flex-1 w-3/6'>
               <Button
                 loading={loading}
                 disabled={loading || brandsLoading}
-                className='py-2 bg-red-600 hover:bg-red-800 disabled:bg-red-900 disabled:pointer-events-none'
+                className='py-2 flex-1 bg-red-600 hover:bg-red-800 disabled:bg-red-900 disabled:pointer-events-none'
                 onClick={handleDelete}
               >
                 Eliminar

@@ -110,7 +110,7 @@ export default function UserSettings (): JSX.Element {
         </div>
       </div>
 
-      <ModalBackdrop open={open} className='p-0 overflow-visible w-[480px] h-[400px] mx-5 dark:bg-neutral-950 ring-1 rounded-lg dark:ring-slate-600'>
+      <ModalBackdrop open={open} className='p-0 overflow-visible w-[480px] h-[400px] mx-5 ring-1 rounded-lg dark:ring-slate-600'>
         <div className='flex flex-col gap-6 p-3 flex-1'>
           <header className='w-full dark:bg-gray-700/30 rounded-lg text-center flex p-1.5 relative'>
             <span onClick={() => setSettingsView('username')} className={`flex-1 cursor-pointer opacity-80 rounded-md p-0.5 ${settingsView === 'username' ? 'dark:bg-black/80 bg-gray-700 text-white' : ''}`}>Cuenta</span>
