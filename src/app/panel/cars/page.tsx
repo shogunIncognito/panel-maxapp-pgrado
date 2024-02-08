@@ -73,8 +73,7 @@ export default function page (): JSX.Element {
   return (
     <section className='w-full dark:bg-inherit bg-slate-200/60 flex-1 max-h-full'>
 
-      <div className='gap-3 p-5 flex-col border-b-2 border-gray-300/40 md:flex-row flex items-start '>
-        <h2 className='text-3xl self-center opacity-75 font-bold text-black dark:text-white font-mono md:hidden mb-3 mt-1'>Autos</h2>
+      <div className='gap-3 flex-col ml-2 mt-2 md:mt-1 border-b-2 border-gray-300/40 md:flex-row flex items-start '>
         <div className='gap-2 flex'>
           <CreateCar />
           <AddBrand />
@@ -102,7 +101,7 @@ export default function page (): JSX.Element {
         </AnimatePresence>
 
       </div>
-      <div className='relative flex-1 w-full max-h-[70%] lg:max-h-[76%] xl:max-h-[80%] overflow-auto'>
+      <div className='relative flex-1 w-full sm:max-h-[65%] max-h-[70%] lg:max-h-[76%] xl:max-h-[80%] overflow-auto'>
         <table className='w-full overflow-auto text-sm text-center text-gray-400'>
           <thead className='text-xs sticky dark:bg-[#171923] bg-slate-300 z-10 top-0 uppercase border-b border-green-800/90 text-gray-800 dark:text-gray-400'>
             <tr>

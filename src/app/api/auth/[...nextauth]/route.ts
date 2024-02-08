@@ -20,12 +20,16 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt ({ token, user }) {
-      (Boolean((token?.token))) && await axios.post(`${API_URL}/auth/validate-token`, { token: token.token })
       return { ...token, ...user }
     },
     async session ({ session, token }) {
-      session.user = token as any
-      return session
+      try {
+        session.user = token as any
+        await axios.post(`${API_URL}/auth/validate-token`, { token: token.token })
+        return session
+      } catch (error) {
+        return null as any
+      }
     }
   },
   pages: {
