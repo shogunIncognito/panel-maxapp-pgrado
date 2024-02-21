@@ -61,6 +61,7 @@ export default function UserSettings (): JSX.Element {
         toast.error('Confirmar contraseña no coinciden')
         return
       }
+
       if (password === currentPassword) {
         toast.error('La nueva contraseña no puede ser igual a la actual')
         return
@@ -79,7 +80,9 @@ export default function UserSettings (): JSX.Element {
         handleClose()
       })
       .catch(err => {
-        if (e.currentTarget.name === 'toPassword') {
+        console.log(err)
+
+        if (formType === TypeUserUpdate.toPassword) {
           toast.error(updatePasswordCodes[err.response.status] || 'Error al actualizar contraseña')
           return
         }
