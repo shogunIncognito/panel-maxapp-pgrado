@@ -133,7 +133,7 @@ export default function Users (): JSX.Element {
                 {filteredUsers.map(user => (
                   <tr key={user._id} className='border-b bg-transparent border-gray-700'>
                     <th scope='row' className='px-6 py-4 grid place-content-center font-medium whitespace-nowrap dark:text-white'>
-                      {user.image !== undefined
+                      {user.image !== null
                         ? <img src={user.image} alt='user' className='w-14 h-14 select-none pointer-events-none object-cover rounded-full' />
                         : <img src={SampleUserImage.src} alt='user' className='w-14 h-14 dark:invert select-none pointer-events-none dark:bg-neutral-200 ring-2 ring-black dark:ring-slate-800 object-cover rounded-full' />}
                     </th>

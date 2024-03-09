@@ -25,7 +25,10 @@ const handler = NextAuth({
     async session ({ session, token }) {
       try {
         session.user = token as any
-        await axios.post(`${API_URL}/auth/validate-token`, { token: token.token })
+
+        const freshUserImage = await axios.post(`${API_URL}/auth/validate-token`, { token: token.token })
+        session.user.image = freshUserImage.data.image
+
         return session
       } catch (error) {
         return null as any

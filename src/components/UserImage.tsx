@@ -9,7 +9,7 @@ import Button from './Button'
 import { updateUserImage } from '@/services/api'
 import { uploadUserImage } from '@/services/firebase'
 import toast from 'react-hot-toast'
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { IoIosCloseCircle } from 'react-icons/io'
 
 interface UserImageInterface {
@@ -50,7 +50,7 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
 
       if (imageValues.deleteImage) {
         await updateUserImage(session.user._id, null, session.user.token)
-        toast.success('Imagen eliminada, vuelve a iniciar sesión para ver los cambios')
+        toast.success('Imagen eliminada')
         return
       }
 
@@ -62,18 +62,20 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
       const newImage = await uploadUserImage(session.user._id, imageValues.newImage)
       await updateUserImage(session.user._id, newImage, session.user.token)
 
-      toast.success('Imagen actualizada, vuelve a iniciar sesión para ver los cambios')
+      toast.success('Imagen actualizada')
     } catch (error) {
       console.log(error)
       toast.error('Ocurrió un error al actualizar la imagen')
     } finally {
       setImage(prev => ({ ...prev, loading: false, newImage: undefined, deleteImage: false }))
       handleClose()
+      // esto va actualizar la sesion
+      void signIn()
     }
   }
 
   const handleDeleteImage = (): void => {
-    setImage(prev => ({ ...prev, newImage: undefined, previewImage: undefined, deleteImage: true }))
+    setImage(prev => ({ ...prev, newImage: undefined, previewImage: null, deleteImage: true }))
   }
 
   const handleClose = (): void => {
@@ -91,6 +93,7 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
         </div>
         <span onClick={handleOpen} className='group-hover:grid place-content-center hidden cursor-pointer absolute text-white top-0 left-0 right-0 bottom-0'><MdEdit size={21} className='dark:invert-0 invert' /></span>
       </div>
+
       <ModalBackdrop open={open} className='md:flex-row gap-4 flex-col justify-center items-center'>
         <div className='relative'>
           <span onClick={handleDeleteImage} className='absolute top-0 right-0 cursor-pointer bg-gray-200 rounded-full text-xl text-black dark:text-black'>
@@ -107,8 +110,8 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
             <input hidden type='file' multiple onChange={handleImage} accept='image/*' />
           </label>
           <div className='flex gap-2'>
-            <Button loading={imageValues.loading} onClick={handleUpdate} className='mt-3 w-2/3' disabled={!imageValues.newImage && !imageValues.deleteImage}>Guardar</Button>
-            <Button onClick={handleClose} type='button' className='mt-3 w-2/3 bg-purple-500'>Cancelar</Button>
+            <Button loading={imageValues.loading} onClick={handleUpdate} className='mt-3 w-32' disabled={!imageValues.newImage && !imageValues.deleteImage}>Guardar</Button>
+            <Button onClick={handleClose} type='button' className='mt-3 w-32 bg-purple-500 hover:bg-purple-700'>Cancelar</Button>
           </div>
         </div>
       </ModalBackdrop>
