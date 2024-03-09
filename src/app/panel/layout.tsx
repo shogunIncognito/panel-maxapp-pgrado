@@ -1,11 +1,8 @@
 'use client'
 
-import sideImage from '@/assets/maxautoslogoblanco.png'
+import sideImage from '@/assets/maxautosicon.png'
 import useDisclosure from '@/hooks/useDisclosure'
 import { CloseIcon, MenuIcon } from '@/libs/Icons'
-import { AiFillHome } from 'react-icons/ai'
-import { FaCarAlt } from 'react-icons/fa'
-import { BiSolidUser } from 'react-icons/bi'
 import { RiLogoutBoxRLine as RxExit } from 'react-icons/ri'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,6 +14,7 @@ import { BsMoon, BsSun } from 'react-icons/bs'
 import UserImage from '@/components/UserImage'
 import { signOut, useSession } from 'next-auth/react'
 import Spinner from '@/components/Spinner'
+import { adminRoutes, userRoutes } from '@/helpers/data'
 
 export default function Layout ({ children }: { children: React.ReactNode }): JSX.Element {
   const { open, handleOpen, handleClose } = useDisclosure()
@@ -79,6 +77,8 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
     )
   }
 
+  const panelRoutes = session?.user.role === 'admin' ? adminRoutes : userRoutes
+
   return (
     <main className='flex-col max-w-full max-h-screen md:flex-row flex h-screen w-full dark:bg-[#171923]'>
       {/* Mobile Layout */}
@@ -106,21 +106,21 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         h-screen shadow-xl dark:bg-[#171923] bg-slate-100 text-black dark:text-white'
       >
         <CloseIcon onClick={handleClose} className='w-12 m-2 self-end cursor-pointer' />
-        <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert dark:invert-0 select-none m-auto my-0 mb-2 object-cover h-auto' />
+        <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert-0 dark:invert select-none m-auto my-0 mb-2 object-cover h-auto' />
 
         <nav className='flex flex-col p-4'>
-          <Link onClick={handleClose} className={`p-4 px-6 rounded-md hover:bg-gray-900 text-black dark:text-white flex gap-2 items-center transition-colors ${path === '/panel' ? 'bg-gray-700 text-white' : ''}`} href='/panel'>
-            <AiFillHome size={28} className='opacity-75' />
-            <p className=''>Inicio</p>
-          </Link>
-          <Link onClick={handleClose} className={`p-4 px-6 rounded-md hover:bg-gray-900 text-black dark:text-white flex gap-2 items-center transition-colors ${path === '/panel/cars' ? 'bg-gray-700 text-white' : ''}`} href='/panel/cars'>
-            <FaCarAlt size={28} className='opacity-75' />
-            <p className=''>Autos</p>
-          </Link>
-          <Link onClick={handleClose} className={`p-4 px-6 hover:bg-gray-900 text-black dark:text-white flex gap-2 items-center transition-colors ${path === '/panel/users' ? 'bg-gray-700 text-white' : ''}`} href='/panel/users'>
-            <BiSolidUser size={28} className='opacity-75' />
-            <p className=''>Usuarios</p>
-          </Link>
+          {
+            panelRoutes.map(route => (
+              <Link
+                key={route.path}
+                onClick={handleClose}
+                className={`p-4 px-6 rounded hover:bg-gray-900 text-black dark:text-white flex gap-2 items-center transition-colors ${path === route.path ? 'bg-gray-700 text-white' : ''}`} href={route.path}
+              >
+                <route.icon size={28} className='opacity-75' />
+                <p className=''>{route.label}</p>
+              </Link>
+            ))
+          }
           <button onClick={closeSession} className='p-4 px-6 rounded-md flex items-center gap-2 hover:bg-red-700/80 transition-colors'>
             <RxExit size={28} className='opacity-75' />
             <p className=''>Cerrar sesión</p>
@@ -136,23 +136,18 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
       <aside className='lg:w-1/6 border-gray-200/10 border-r-2 dark:bg-[#171923] bg-slate-100 md:w-1/3 hidden relative md:flex md:flex-col h-screen px-3 shadow-xl dark:text-white'>
 
         <Link href='https://maxautos.vercel.app/'>
-          <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert dark:invert-0 select-none m-auto h-auto my-8 object-cover' />
+          <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert-0 dark:invert select-none m-auto h-auto my-8 object-cover' />
         </Link>
 
         <nav className='flex flex-col gap-2'>
-
-          <Link className={`p-4 px-6 rounded-md lg:p-4 md:p-3 hover:bg-[#0987A0] hover:text-white dark:text-white flex gap-2 items-center transition-colors ${path === '/panel' ? 'bg-sky-700/60' : ''}`} href='/panel'>
-            <AiFillHome size={20} className='opacity-75' />
-            <p className=''>Inicio</p>
-          </Link>
-          <Link className={`p-4 px-6 rounded-md lg:p-4 md:p-3 hover:bg-[#0987A0] hover:text-white dark:text-white flex gap-2 items-center transition-colors ${path === '/panel/cars' ? 'bg-sky-700/60' : ''}`} href='/panel/cars'>
-            <FaCarAlt size={20} className='opacity-75' />
-            <p className=''>Autos</p>
-          </Link>
-          <Link className={`p-4 px-6 rounded-md lg:p-4 md:p-3 hover:bg-[#0987A0] hover:text-white dark:text-white flex gap-2 items-center transition-colors ${path === '/panel/users' ? 'bg-sky-700/60' : ''}`} href='/panel/users'>
-            <BiSolidUser size={20} className='opacity-75' />
-            <p className=''>Usuarios</p>
-          </Link>
+          {
+            panelRoutes.map(route => (
+              <Link key={route.path} className={`p-4 px-6 rounded-md lg:p-4 md:p-3 hover:bg-[#0987A0] hover:text-white dark:text-white flex gap-2 items-center transition-colors ${path === route.path ? 'bg-sky-700/60' : ''}`} href={route.path}>
+                <route.icon size={20} className='opacity-75' />
+                <p className=''>{route.label}</p>
+              </Link>
+            ))
+          }
           <button onClick={closeSession} className='p-4 px-6 lg:p-4 md:p-3 rounded-md hover:text-white flex items-center gap-2 hover:bg-red-700/80 transition-colors'>
             <RxExit size={20} className='opacity-75' />
             <p className=''>Cerrar sesión</p>

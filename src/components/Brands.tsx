@@ -21,8 +21,6 @@ export default function Brands (): JSX.Element {
     brandToAdd: ''
   })
 
-  console.log(brands)
-
   const handleCreate = (): void => {
     setLoading(true)
 

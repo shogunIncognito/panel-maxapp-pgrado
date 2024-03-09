@@ -1,3 +1,7 @@
+import { AiFillHome } from 'react-icons/ai'
+import { BiSolidUser } from 'react-icons/bi'
+import { FaCarAlt } from 'react-icons/fa'
+
 export const carInputs = [
   {
     type: 'text',
@@ -96,4 +100,35 @@ export const selectOptionsCC = [
   '1.0', '1.1', '1.2', '1.3', '1.4',
   '1.5', '1.6', '1.8', '2.0', '2.2',
   '2.4', '2.5', '2.6', '2.7', '2.8'
+]
+
+export const adminRoutes = [
+  {
+    label: 'Inicio',
+    icon: AiFillHome,
+    path: '/panel'
+  },
+  {
+    label: 'Autos',
+    icon: FaCarAlt,
+    path: '/panel/cars'
+  },
+  {
+    label: 'Usuarios',
+    icon: BiSolidUser,
+    path: '/panel/users'
+  }
+]
+
+export const userRoutes = [
+  {
+    label: 'Inicio',
+    icon: AiFillHome,
+    path: '/panel'
+  },
+  {
+    label: 'Autos',
+    icon: FaCarAlt,
+    path: '/panel/cars'
+  }
 ]
