@@ -37,6 +37,7 @@ export const validateFormValues = (values: UnknowObject): { valid: boolean, mess
   if (values.kilometers < 0) return { valid: false, message: 'Los kilometros no pueden ser negativos' }
   if (values.price < 0) return { valid: false, message: 'El precio no puede ser negativo' }
   if (values.model < 2000 || values.model > currentYear) return { valid: false, message: `El modelo tiene que estar entre 2000 y ${currentYear}` }
+  if (values.plate.length !== 6) return { valid: false, message: 'La placa tiene que tener 6 caracteres' }
 
   return { valid: true, message: '' }
 }

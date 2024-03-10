@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 'use client'
 
 import Button from '@/components/Button'
@@ -32,13 +33,10 @@ export default function Login (): JSX.Element {
 
     setLoading(true)
     signIn('credentials', { ...values, redirect: false })
-      .then(res => {
-        if (res?.error !== null) throw new Error(String(res?.status))
+      .then((res) => {
+        if (!res?.ok) return toast.error(res?.error ?? 'Error al iniciar sesión')
         toast.success('Bienvenido')
         router.replace('/panel')
-      })
-      .catch(() => {
-        toast.error('Usuario o contraseña incorrectos')
       })
       .finally(() => setLoading(false))
   }

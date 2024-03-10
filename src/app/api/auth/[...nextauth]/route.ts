@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { API_URL } from '@/utils/envconfig'
-import axios from 'axios'
+import { loginCodes } from '@/utils/statusCodes'
+import axios, { AxiosError } from 'axios'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
@@ -13,8 +15,13 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password', placeholder: '*********' }
       },
       async authorize (credentials) {
-        const user = await axios.post(`${API_URL}/auth/login`, credentials)
-        return user.data
+        try {
+          const user = await axios.post(`${API_URL}/auth/login`, credentials)
+          return user.data
+        } catch (error) {
+          const err = error as AxiosError
+          throw new Error(loginCodes[Number(err.response?.status)] || 'Error al iniciar sesion')
+        }
       }
     })
   ],

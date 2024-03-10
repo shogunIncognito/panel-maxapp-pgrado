@@ -35,7 +35,7 @@ export const deleteUserCodes: StatusCodes = {
 export const loginCodes: StatusCodes = {
   200: 'Inicio de sesión exitoso',
   404: 'Usuario o contraseña incorrectos',
-  400: 'Usuario o contraseña incorrectos',
+  401: 'Usuario o contraseña incorrectos',
   500: 'Error interno del servidor'
 }
 

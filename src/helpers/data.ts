@@ -40,12 +40,6 @@ export const carInputs = [
     placeholder: '1'
   },
   {
-    type: 'string',
-    name: 'description',
-    label: 'Descripción',
-    placeholder: 'Carro en buen estado y ...'
-  },
-  {
     type: 'number',
     name: 'price',
     label: 'Precio',
