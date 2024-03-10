@@ -10,7 +10,7 @@ export interface CarDTO {
   preview: string
   fuel: string
   transmission: string
-  cc: string
+  cc: number
   type: string
   owners: string
   plate: string
@@ -30,7 +30,7 @@ export interface UpdateCarDTO {
   preview?: string
   fuel?: string
   transmission?: string
-  cc?: string
+  cc?: number
   type?: string
   owners?: string
   plate?: string

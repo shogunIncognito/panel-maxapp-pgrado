@@ -27,7 +27,7 @@ const carInitialValues: CreateCarDTO = {
   plate: '',
   description: '',
   color: '',
-  cc: '1.0'
+  cc: 1.0
 }
 
 // testing values

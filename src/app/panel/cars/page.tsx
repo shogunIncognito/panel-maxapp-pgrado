@@ -70,6 +70,8 @@ export default function page (): JSX.Element {
     dispatchAction(ActionTypes.SET_FILTERED_CARS, sortedCars)
   }
 
+  console.log(cars)
+
   return (
     <section className='w-full dark:bg-inherit bg-slate-200/60 flex-1 max-h-full'>
 
@@ -154,7 +156,7 @@ export default function page (): JSX.Element {
                   {car.kilometers} km
                 </td>
                 <td className='capitalize px-6 py-4'>
-                  {car.cc}
+                  {car.cc.toFixed(1)}
                 </td>
                 <td className='capitalize px-6 py-4'>
                   {car.color}
