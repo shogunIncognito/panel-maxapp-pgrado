@@ -36,7 +36,7 @@ export default function CarForm ({
     <>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       <form onSubmit={handleSubmit} className='overflow-auto lg:max-h-90[dvh] max-h-[80dvh]'>
-        <div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
+        <div className='grid grid-cols-2 md:grid-cols-3 gap-5 p-1 pr-2'>
           <div className='flex flex-col gap-1 overflow-ellipsis'>
             <label className='dark:text-white after:content-["*"] text-black whitespace-nowrap text-ellipsis overflow-hidden'>Marca</label>
             <Select onChange={handleChange} value={values.brand} name='brand' id='brand'>
@@ -130,7 +130,7 @@ export default function CarForm ({
           </section>
 
         </div>
-        <div className='flex gap-2 max-w-full items-center justify-center'>
+        <div className='flex gap-2 pr-1 max-w-full items-center justify-center'>
           <Button loading={loading} disabled={loading} type='submit' className='mt-7 bg-[#90CDF4] hover:bg-sky-600/90 text-black w-40 disabled:bg-opacity-70 disabled:cursor-not-allowed'>
             {children}
           </Button>

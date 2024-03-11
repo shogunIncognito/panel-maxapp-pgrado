@@ -21,7 +21,7 @@ export default function ModalBackdrop ({ children, open, className, ...props }: 
           transition={{ duration: 0.3, ease: 'easeInOut' }}
           className='z-40 absolute bg-black/60 backdrop-blur h-screen w-screen top-0 left-0 flex justify-center items-center'
         >
-          <div {...props} className={twMerge('max-w-[90%] shadow-md overflow-auto max-h-[90%] w-auto mx-5 flex z-[60] flex-col dark:bg-[#171923] dark:text-white bg-slate-50 text-black p-6 rounded', className)}>
+          <div {...props} className={twMerge('max-w-[90%] shadow-md overflow-auto max-h-[90%] w-auto mx-5 flex z-[60] flex-col dark:bg-[#171923] ring-2 ring-purple-400 dark:ring-blue-950 dark:text-white bg-slate-50 text-black p-6 rounded', className)}>
             {children}
           </div>
         </motion.div>

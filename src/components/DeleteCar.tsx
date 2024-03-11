@@ -45,7 +45,7 @@ export default function DeleteCar ({ carToDelete, setCarToDelete }: DeleteCarPro
         <Button
           loading={loading}
           onClick={handleDeleteCar}
-          className='w-1/2 p-2 px-3 bg-[#D6BCFA] hover:bg-purple-600/40 text-black font-semibold'
+          className='w-1/2 p-2 px-3 bg-[#D6BCFA] hover:bg-purple-400 text-black font-semibold'
         >
           Eliminar
         </Button>

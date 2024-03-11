@@ -21,11 +21,17 @@ export default function Brands (): JSX.Element {
     brandToAdd: ''
   })
 
-  const handleCreate = (): void => {
+  const handleCreate = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
+    if (!brand.brandToAdd) {
+      toast.error('La marca a añadir no puede estar vacía')
+      return
+    }
+
     setLoading(true)
 
     createBrand(brand.brandToAdd, session?.user.token)
-      .then(res => {
+      .then(() => {
         toast.success('Marca creada')
         reFetch(session?.user.token)
         setBrand({ ...brand, brandToAdd: '' })
@@ -46,7 +52,7 @@ export default function Brands (): JSX.Element {
     setLoading(true)
 
     deleteBrand(brand.brandToDelete, session?.user.token)
-      .then(res => {
+      .then(() => {
         toast.success('Marca eliminada')
         reFetch(session?.user.token)
         setBrand({
@@ -65,7 +71,7 @@ export default function Brands (): JSX.Element {
       <ModalBackdrop open={open} className='gap-6 justify-center items-center p-8 md:w-auto'>
         <h1 className='text-xl font-bold opacity-80'>Añadir o eliminar marcas</h1>
         <div className='flex gap-6 md:flex-row flex-col'>
-          <form className='gap-4 justify-center items-center flex flex-col'>
+          <form onSubmit={handleCreate} className='gap-4 flex-1 justify-center items-center flex flex-col'>
             <div>
               <h2 className='text-lg opacity-85'>Nombre de marca a añadir</h2>
               <Input name='brandToAdd' value={brand.brandToAdd} onChange={handleChange} className='py-2' placeholder='Renault...' />
@@ -75,13 +81,12 @@ export default function Brands (): JSX.Element {
                 loading={loading}
                 disabled={loading}
                 className='py-2 flex-1 bg-green-600 hover:bg-green-800 disabled:bg-green-900 disabled:pointer-events-none'
-                onClick={handleCreate}
               >
                 Agregar
               </Button>
             </div>
           </form>
-          <form className='gap-4 justify-center items-center flex flex-col'>
+          <form className='gap-4 flex-1 justify-center items-center flex flex-col'>
             <div>
               <h2 className='text-lg opacity-85'>Seleccionar marca a eliminar</h2>
 
@@ -106,7 +111,7 @@ export default function Brands (): JSX.Element {
             </div>
           </form>
         </div>
-        <Button className='py-2' onClick={handleClose}>Cerrar</Button>
+        <Button className='py-2 w-32' onClick={handleClose}>Cerrar</Button>
       </ModalBackdrop>
     </>
   )

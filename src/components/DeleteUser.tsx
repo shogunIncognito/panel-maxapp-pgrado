@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 import { deleteUserCodes } from '@/utils/statusCodes'
 import { UserDTO } from '@/types'
 import { useSession } from 'next-auth/react'
+import { deleteUserImage } from '@/services/firebase'
 
 interface DeleteUserProps {
   user: UserDTO
@@ -21,7 +22,7 @@ export default function DeleteUser ({ user, setUsers }: DeleteUserProps): JSX.El
   const handleDelete = (): void => {
     setLoading(true)
 
-    deleteUser(user._id, session?.user.token)
+    Promise.all([deleteUser(user._id, session?.user.token), deleteUserImage(user.image)])
       .then(() => {
         toast.success('Usuario eliminado')
         setUsers((prev: UserDTO[]) => prev.filter(u => u._id !== user._id))

@@ -29,7 +29,10 @@ export default function Users (): JSX.Element {
   useEffect(() => {
     setLoading({ ...loading, getUsers: true })
     getUsers(session?.user.token)
-      .then(res => setUsers(res))
+      .then(res => {
+        const userFiltered = res.filter(usr => usr._id !== session?.user._id)
+        setUsers(userFiltered)
+      })
       .catch(err => toast.error(err.message))
       .finally(() => setLoading({ ...loading, getUsers: false }))
   }, [])
