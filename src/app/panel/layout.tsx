@@ -15,11 +15,12 @@ import UserImage from '@/components/UserImage'
 import { signOut, useSession } from 'next-auth/react'
 import Spinner from '@/components/Spinner'
 import { adminRoutes, userRoutes } from '@/helpers/data'
+import useCarsStore from '@/hooks/useCarsStore'
 
 export default function Layout ({ children }: { children: React.ReactNode }): JSX.Element {
   const { open, handleOpen, handleClose } = useDisclosure()
   const { data: session, status } = useSession()
-
+  const { reFetch } = useCarsStore()
   const [theme, setTheme] = useState('dark')
 
   const path = usePathname()
@@ -66,7 +67,10 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
       signOut()
         .then(() => toast.error('Sesión agotada'))
         .catch(() => toast.error('Error al cerrar sesión'))
+      return
     }
+    // consulta los autos y guarda en estado global
+    if (status === 'authenticated') return reFetch(session?.user.token)
   }, [status])
 
   if (status === 'loading') {
