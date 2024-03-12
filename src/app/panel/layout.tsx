@@ -174,9 +174,6 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
           <UserSettings />
         </header>
 
-        {/* <section className='w-full flex flex-col dark:bg-inherit bg-slate-200/60 flex-1 max-h-full'>
-          {children}
-        </section> */}
         {children}
 
       </section>

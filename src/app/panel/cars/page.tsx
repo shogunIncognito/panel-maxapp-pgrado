@@ -68,7 +68,6 @@ export default function page (): JSX.Element {
 
   return (
     <>
-
       <div className='gap-1 h-auto flex-col p-0.5 ml-2 mt-2 md:mt-1 border-b-2 border-gray-300/40 lg:flex-row flex items-start '>
         <div className='gap-1 grid grid-cols-3'>
           <CreateCar className='whitespace-nowrap text-ellipsis overflow-hidden' />

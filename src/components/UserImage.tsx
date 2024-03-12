@@ -86,7 +86,7 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
   return (
     <>
       <div className='group relative transition-all'>
-        <div className='group-hover:blur-sm transition-all'>
+        <div className='group-hover:grayscale transition-all'>
           {image !== null
             ? <img src={image} alt='user' className='w-10 h-10 select-none pointer-events-none object-cover rounded-full' />
             : <img src={SampleUserImage.src} alt='user' className='w-10 h-10 dark:invert select-none pointer-events-none dark:bg-neutral-200 ring-2 ring-black dark:ring-slate-800 object-cover rounded-full' />}

@@ -18,7 +18,7 @@ export default function Brands ({ className }: { className?: string }): JSX.Elem
   const { data: session } = useSession()
   const [loading, setLoading] = useState(false)
   const [brand, setBrand] = useState({
-    brandToDelete: brands[0]?._id,
+    brandToDelete: brands[0]?.name,
     brandToAdd: ''
   })
 
@@ -69,50 +69,52 @@ export default function Brands ({ className }: { className?: string }): JSX.Elem
     <>
       <Button className={twMerge('font-semibold py-2 px-1.5 md:px-4 bg-[#0987A0] hover:bg-sky-500', className)} onClick={handleOpen}>Gestionar marcas</Button>
 
-      <ModalBackdrop open={open} className='gap-6 justify-center items-center p-8 md:w-auto'>
-        <h1 className='text-xl font-bold opacity-80'>Añadir o eliminar marcas</h1>
-        <div className='flex gap-6 md:flex-row flex-col'>
-          <form onSubmit={handleCreate} className='gap-4 flex-1 justify-center items-center flex flex-col'>
-            <div>
-              <h2 className='text-lg opacity-85'>Nombre de marca a añadir</h2>
-              <Input name='brandToAdd' value={brand.brandToAdd} onChange={handleChange} className='py-2' placeholder='Renault...' />
-            </div>
-            <div className='flex gap-1 flex-1 w-3/6'>
-              <Button
-                loading={loading}
-                disabled={loading}
-                className='py-2 flex-1 bg-green-600 hover:bg-green-800 disabled:bg-green-900 disabled:pointer-events-none'
-              >
-                Agregar
-              </Button>
-            </div>
-          </form>
-          <form className='gap-4 flex-1 justify-center items-center flex flex-col'>
-            <div>
-              <h2 className='text-lg opacity-85'>Seleccionar marca a eliminar</h2>
+      <ModalBackdrop open={open}>
+        <div className='flex flex-col justify-center items-center gap-4'>
+          <h1 className='text-lg md:text-xl font-bold opacity-80'>Añadir o eliminar marcas</h1>
+          <div className='flex gap-6 md:flex-row flex-col'>
+            <form onSubmit={handleCreate} className='gap-4 flex-1 justify-center items-center flex flex-col'>
+              <div className='flex flex-col'>
+                <h2 className='text-lg opacity-85'>Nombre de marca a añadir</h2>
+                <Input name='brandToAdd' value={brand.brandToAdd} onChange={handleChange} className='py-2 w-full' placeholder='Renault...' />
+              </div>
+              <div className='flex gap-1 flex-1 w-3/6'>
+                <Button
+                  loading={loading}
+                  disabled={loading}
+                  className='py-2 flex-1 bg-green-600 hover:bg-green-800 disabled:bg-green-900 disabled:pointer-events-none'
+                >
+                  Agregar
+                </Button>
+              </div>
+            </form>
+            <form className='gap-4 flex-1 justify-center items-center flex flex-col'>
+              <div>
+                <h2 className='text-lg opacity-85'>Seleccionar marca a eliminar</h2>
 
-              <Select className='w-full' name='brandToDelete' value={brand.brandToDelete} onChange={handleChange}>
-                {!brandsLoading
-                  ? brands.map(brand => (
-                    <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand._id} value={brand.name}>{brand.name}</option>
-                  ))
-                  : <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700'>Cargando...</option>}
-              </Select>
+                <Select className='w-full' name='brandToDelete' value={brand.brandToDelete} onChange={handleChange}>
+                  {!brandsLoading
+                    ? brands.map(brand => (
+                      <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={brand._id} value={brand.name}>{brand.name}</option>
+                    ))
+                    : <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700'>Cargando...</option>}
+                </Select>
 
-            </div>
-            <div className='flex gap-1 flex-1 w-3/6'>
-              <Button
-                loading={loading}
-                disabled={loading || brandsLoading}
-                className='py-2 flex-1 bg-red-600 hover:bg-red-800 disabled:bg-red-900 disabled:pointer-events-none'
-                onClick={handleDelete}
-              >
-                Eliminar
-              </Button>
-            </div>
-          </form>
+              </div>
+              <div className='flex gap-1 flex-1 w-3/6'>
+                <Button
+                  loading={loading}
+                  disabled={loading || brandsLoading}
+                  className='py-2 flex-1 bg-red-600 hover:bg-red-800 disabled:bg-red-900 disabled:pointer-events-none'
+                  onClick={handleDelete}
+                >
+                  Eliminar
+                </Button>
+              </div>
+            </form>
+          </div>
+          <Button className='py-2 w-32' onClick={handleClose}>Cerrar</Button>
         </div>
-        <Button className='py-2 w-32' onClick={handleClose}>Cerrar</Button>
       </ModalBackdrop>
     </>
   )
