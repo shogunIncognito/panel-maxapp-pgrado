@@ -1,6 +1,6 @@
 'use client'
 
-import sideImage from '@/assets/maxautosicon.avif'
+import sideImage from '@/assets/maxautosicon.webp'
 import useDisclosure from '@/hooks/useDisclosure'
 import { CloseIcon, MenuIcon } from '@/libs/Icons'
 import { RiLogoutBoxRLine as RxExit } from 'react-icons/ri'

@@ -2,8 +2,8 @@
 'use client'
 
 import Button from '@/components/Button'
-import Logo from '@/assets/maxautosicon.avif'
-import sideImage from '@/assets/maxHero1.jpg'
+import Logo from '@/assets/maxautosicon.webp'
+import sideImage from '@/assets/maxHero1.webp'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'

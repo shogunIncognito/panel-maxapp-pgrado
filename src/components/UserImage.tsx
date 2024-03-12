@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import SampleUserImage from '@/assets/unknown-userimage.png'
+import SampleUserImage from '@/assets/unknown-userimage.webp'
 import ModalBackdrop from './ModalBackdrop'
 import { MdEdit } from 'react-icons/md'
 import useDisclosure from '@/hooks/useDisclosure'
