@@ -67,9 +67,9 @@ export default function page (): JSX.Element {
   }
 
   return (
-    <section className='w-full dark:bg-inherit bg-slate-200/60 flex-1 max-h-full'>
+    <>
 
-      <div className='gap-1 flex-col p-0.5 ml-2 mt-2 md:mt-1 border-b-2 border-gray-300/40 lg:flex-row flex items-start '>
+      <div className='gap-1 h-auto flex-col p-0.5 ml-2 mt-2 md:mt-1 border-b-2 border-gray-300/40 lg:flex-row flex items-start '>
         <div className='gap-1 grid grid-cols-3'>
           <CreateCar className='whitespace-nowrap text-ellipsis overflow-hidden' />
           <AddBrand className='whitespace-nowrap text-ellipsis overflow-hidden' />
@@ -96,8 +96,9 @@ export default function page (): JSX.Element {
         <CarFilter cars={cars} setCars={dispatchAction} />
 
       </div>
-      <div className='relative flex-1 w-full sm:max-h-[65%] max-h-[70%] lg:max-h-[76%] xl:max-h-[80%] overflow-auto'>
-        <table className='w-full overflow-auto text-sm text-center text-gray-400'>
+
+      <div className='relative flex-1 w-full h-full max-h-max overflow-auto'>
+        <table className='w-full text-sm text-center text-gray-400'>
           <thead className='text-xs sticky dark:bg-[#171923] bg-slate-300 z-10 top-0 uppercase border-b border-green-800/90 text-gray-800 dark:text-gray-400'>
             <tr>
               <th scope='col' className='px-6' />
@@ -200,6 +201,6 @@ export default function page (): JSX.Element {
         {carPreviewToChange !== null && <ChangePreviewCar car={carPreviewToChange} setCar={dispatchAction} />}
       </ModalBackdrop>
 
-    </section>
+    </>
   )
 }
