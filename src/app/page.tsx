@@ -2,7 +2,7 @@
 'use client'
 
 import Button from '@/components/Button'
-import Logo from '@/assets/maxautosicon.png'
+import Logo from '@/assets/maxautosicon.avif'
 import sideImage from '@/assets/maxHero1.jpg'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
