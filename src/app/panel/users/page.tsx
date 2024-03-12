@@ -68,7 +68,7 @@ export default function Users (): JSX.Element {
   const filteredUsers = (session !== null) ? users.filter(user => user._id !== session.user.token) : []
 
   return (
-    <section className='flex-1'>
+    <>
       <header className='flex p-4 w-full justify-start items-center flex-col'>
         <h2 className='text-3xl self-center opacity-75 font-bold text-black dark:text-white font-mono md:hidden my-5'>Usuarios</h2>
         <Button onClick={handleOpen} className={`md:self-start self-center ${loading.getUsers && 'invisible'}`}>Agregar usuario</Button>
@@ -102,11 +102,11 @@ export default function Users (): JSX.Element {
         </form>
       </ModalBackdrop>
 
-      <div className='flex-1 pb-4 px-3 overflow-auto w-max-[90%] max-h-[44%] md:max-h-[62%] lg:max-h-[53%]'>
+      <div className='pb-4 max-w-full px-2 overflow-auto'>
         {loading.getUsers
-          ? <Spinner className='mt-10' />
+          ? <Spinner />
           : (
-            <table className='w-full max-w-full text-sm text-center text-gray-800 dark:text-gray-400'>
+            <table className='w-full text-sm text-center text-gray-800 dark:text-gray-400'>
               <thead className='text-xs dark:bg-[#171923] bg-slate-300/70 sticky top-0 uppercase text-gray-800 dark:text-gray-400'>
                 <tr className='p-0.5'>
                   <th scope='col' className='px-6 py-3'>
@@ -155,6 +155,6 @@ export default function Users (): JSX.Element {
             </table>
             )}
       </div>
-    </section>
+    </>
   )
 }

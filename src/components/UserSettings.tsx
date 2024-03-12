@@ -121,7 +121,7 @@ export default function UserSettings (): JSX.Element {
           </header>
           {settingsView === 'username'
             ? (
-              <section className='flex h-full flex-col'>
+              <section className='flex h-full flex-col px-3'>
                 <h2 className='mb-2 capitalize text-md'>Nombre de usuario</h2>
                 <p className='normal-case opacity-80'>Haz cambios en tu nombre y guardalo cuando termines</p>
 
@@ -139,7 +139,7 @@ export default function UserSettings (): JSX.Element {
               </section>
               )
             : (
-              <section className='flex h-full flex-col'>
+              <section className='flex h-full flex-col px-3'>
                 <h2 className='mb-2 capitalize text-md'>Cambiar contraseña</h2>
 
                 <form name='toPassword' onSubmit={handleSubmit} className='flex h-full gap-5 flex-col'>

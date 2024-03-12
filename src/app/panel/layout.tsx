@@ -86,12 +86,12 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
   return (
     <main className='flex-col max-w-full max-h-screen md:flex-row flex h-screen w-full dark:bg-[#171923]'>
       {/* Mobile Layout */}
-      <section className='overflow-hidden md:hidden flex flex-col flex-1 text-white'>
+      <section className='overflow-hidden md:hidden flex flex-col h-screen text-white'>
         <header className='relative h-16 dark:text-white dark:bg-[#171923] bg-slate-100 text-black border-b justify-between items-center border-gray-600/60 flex w-full'>
           <div onClick={handleOpen} className='ml-3 z-20'>
             <MenuIcon className='w-8 border rounded-lg invert dark:invert-0 border-gray-700/70' />
           </div>
-          <h2 className='text-center absolute w-full m-auto mt-0 text-2xl -z-0 font-bold'>Max<span className='text-blue-500'>Autos</span></h2>
+          <Link href='/panel' className='text-center absolute w-full m-auto mt-0 text-2xl -z-0 font-bold'>Max<span className='text-blue-500'>Autos</span></Link>
           <div className='flex items-center gap-2 mr-3 z-20'>
             <UserImage image={session?.user.image} />
             <UserSettings />
@@ -160,7 +160,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         </nav>
 
         <div className='min-h-fit absolute pointer-events-none bottom-5 self-center'>
-          <p className='text-center text-xs opacity-50'>Max<span className='text-blue-500'>Autos</span></p>
+          <p className='text-center text-xs opacity-60'>Max<span className='text-blue-500'>Autos</span></p>
         </div>
       </aside>
 

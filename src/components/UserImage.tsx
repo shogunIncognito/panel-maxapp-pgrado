@@ -101,10 +101,10 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
           </span>
           {imageValues.previewImage === null
             ? <img src={SampleUserImage.src} alt='user' className='w-36 h-36 dark:invert select-none pointer-events-none object-cover rounded-full' />
-            : <img src={imageValues.previewImage} alt='user' className='w-36 dark:bg-gray-300 h-36 select-none pointer-events-none object-cover rounded-full' />}
+            : <img src={imageValues.previewImage} alt='user' className='w-36 h-36 dark:bg-gray-300 select-none pointer-events-none object-cover rounded-full' />}
         </div>
         <div className='flex flex-col justify-center items-center'>
-          <h1 className='text-2xl font-bold mb-5 max-w-xs text-center'>Cambiar imagen de usuario</h1>
+          <h1 className='md:text-2xl text-lg font-bold mb-5 max-w-xs text-center'>Cambiar imagen de usuario</h1>
           <label className='dark:text-white text-black bg-gray-300 dark:bg-gray-500 hover:bg-neutral-400 transition-colors dark:hover:bg-neutral-600 px-3 py-2 rounded'>
             Seleccionar imagen
             <input hidden type='file' multiple onChange={handleImage} accept='image/*' />
