@@ -13,6 +13,7 @@ import ModalBackdrop from './ModalBackdrop'
 import { createCarCodes } from '@/utils/statusCodes'
 import { CreateCarDTO } from '@/types'
 import { useSession } from 'next-auth/react'
+import { twMerge } from 'tailwind-merge'
 
 const carInitialValues: CreateCarDTO = {
   brand: 'Mazda',
@@ -47,7 +48,7 @@ const carInitialValues: CreateCarDTO = {
 //   cc: 1.4
 // }
 
-export default function CreateCar (): JSX.Element {
+export default function CreateCar ({ className }: { className?: string }): JSX.Element {
   const { data: session } = useSession()
   const { open, handleClose, handleOpen } = useDisclosure()
   const [loading, setLoading] = useState(false)
@@ -128,7 +129,7 @@ export default function CreateCar (): JSX.Element {
 
   return (
     <>
-      <Button onClick={handleOpen} className='bg-[#309654] font-semibold text-white hover:bg-green-600 py-2 px-4 rounded'>
+      <Button onClick={handleOpen} className={twMerge('bg-[#309654] font-semibold text-white hover:bg-green-600 py-2 px-1.5 md:px-4 rounded', className)}>
         Crear auto
       </Button>
 

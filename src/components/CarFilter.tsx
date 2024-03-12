@@ -36,7 +36,7 @@ export default function CarFilter ({ cars, setCars }: Props): JSX.Element {
 
   return (
     <div className='flex dark:text-white text-black py-1 gap-2 px-2 items-center'>
-      <h2>Filtrar por</h2>
+      <h2 className='whitespace-nowrap text-ellipsis overflow-hidden'>Filtrar por</h2>
       <div className='flex gap-1 items-center'>
 
         <Select onChange={handleChange} name='option' value={filters.option} className='h-full border-gray-600 dark:border-inherit dark:text-white text-black outline-none px-1 bg-transparent'>

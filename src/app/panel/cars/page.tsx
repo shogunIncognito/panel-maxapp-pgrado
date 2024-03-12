@@ -69,32 +69,31 @@ export default function page (): JSX.Element {
   return (
     <section className='w-full dark:bg-inherit bg-slate-200/60 flex-1 max-h-full'>
 
-      <div className='gap-3 flex-col ml-2 mt-2 md:mt-1 border-b-2 border-gray-300/40 md:flex-row flex items-start '>
-        <div className='gap-2 flex'>
-          <CreateCar />
-          <AddBrand />
+      <div className='gap-1 flex-col p-0.5 ml-2 mt-2 md:mt-1 border-b-2 border-gray-300/40 lg:flex-row flex items-start '>
+        <div className='gap-1 grid grid-cols-3'>
+          <CreateCar className='whitespace-nowrap text-ellipsis overflow-hidden' />
+          <AddBrand className='whitespace-nowrap text-ellipsis overflow-hidden' />
+          <AnimatePresence
+            mode='wait'
+            onExitComplete={() => null}
+          >
+            {carsSelected.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.3 }}
+                className='flex items-center space-x-3'
+              >
+                <Button disabled={carsSelected.length === 0} className='bg-red-500 w-full hover:bg-red-700 font-bold py-2 px-4' onClick={deleteSelectedCars}>
+                  Eliminar
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <CarFilter cars={cars} setCars={dispatchAction} />
-
-        <AnimatePresence
-          mode='wait'
-          onExitComplete={() => null}
-        >
-          {carsSelected.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.3 }}
-              className='flex items-center space-x-3'
-            >
-              <Button disabled={carsSelected.length === 0} className='bg-red-500 hover:bg-red-700 font-bold py-2 px-4' onClick={deleteSelectedCars}>
-                Eliminar seleccionados
-              </Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
       </div>
       <div className='relative flex-1 w-full sm:max-h-[65%] max-h-[70%] lg:max-h-[76%] xl:max-h-[80%] overflow-auto'>
@@ -165,7 +164,7 @@ export default function page (): JSX.Element {
                       alt={car.plate}
                       width={160}
                       height={160}
-                      className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[100px] min-w-[100px] max-h-[100px] min-h-[100px]  lg:max-w-[160px] lg:max-h-[160px] lg:min-w-[160px] lg:min-h-[160px]'
+                      className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[100px] min-w-[100px] max-h-[100px] min-h-[100px] lg:max-w-[160px] lg:max-h-[160px] lg:min-w-[160px] lg:min-h-[160px]'
                     />
                     <div onClick={() => dispatchAction(ActionTypes.SET_CAR_PREVIEW_TO_CHANGE, car)} className='absolute top-0 w-full h-full bg-black/50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 lg:max-w-[160px] lg:max-h-[160px] lg:min-w-[160px] lg:min-h-[160px] transition-all duration-300'>
                       <span className='text-white font-bold'>

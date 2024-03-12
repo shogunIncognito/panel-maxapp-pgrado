@@ -10,8 +10,9 @@ import toast from 'react-hot-toast'
 import Select from './Select'
 import { createBrandCodes, deleteBrandCodes } from '@/utils/statusCodes'
 import { useSession } from 'next-auth/react'
+import { twMerge } from 'tailwind-merge'
 
-export default function Brands (): JSX.Element {
+export default function Brands ({ className }: { className?: string }): JSX.Element {
   const { open, handleClose, handleOpen } = useDisclosure()
   const { reFetch, brands, loading: brandsLoading } = useCarsStore()
   const { data: session } = useSession()
@@ -66,7 +67,7 @@ export default function Brands (): JSX.Element {
 
   return (
     <>
-      <Button className='font-semibold py-2 px-4 bg-[#0987A0] hover:bg-sky-500' onClick={handleOpen}>Gestionar marcas</Button>
+      <Button className={twMerge('font-semibold py-2 px-1.5 md:px-4 bg-[#0987A0] hover:bg-sky-500', className)} onClick={handleOpen}>Gestionar marcas</Button>
 
       <ModalBackdrop open={open} className='gap-6 justify-center items-center p-8 md:w-auto'>
         <h1 className='text-xl font-bold opacity-80'>Añadir o eliminar marcas</h1>
