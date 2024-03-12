@@ -28,7 +28,8 @@ export default function page (): JSX.Element {
     carToDelete,
     filteredCars,
     carsSelected,
-    carPreviewToChange
+    carPreviewToChange,
+    sortingBy
   }, dispatch] = usePanelCarsReducer()
   const { data: session } = useSession()
 
@@ -64,6 +65,7 @@ export default function page (): JSX.Element {
   const sortByHeader = (header: string): void => {
     const sortedCars = [...filteredCars].sort((a, b) => String(b[header as keyof CarDTO]).localeCompare(String(a[header as keyof CarDTO]), 'es', { numeric: true }))
     dispatchAction(ActionTypes.SET_FILTERED_CARS, sortedCars)
+    dispatchAction(ActionTypes.SET_SORTING_BY, header)
   }
 
   return (
@@ -103,7 +105,7 @@ export default function page (): JSX.Element {
               <th scope='col' className='px-6' />
 
               {tableHeaders.map((header, index) => (
-                <th key={index} scope='col' onClick={() => sortByHeader(header.value)} className='px-6 py-3 cursor-pointer hover:text-white transition-colors'>
+                <th key={index} scope='col' onClick={() => sortByHeader(header.value)} className={`px-6 py-3 cursor-pointer hover:text-white transition-colors ${sortingBy === header.value ? 'text-white' : ''}`}>
                   {header.label}
                 </th>
               ))}
@@ -162,11 +164,9 @@ export default function page (): JSX.Element {
                     <img
                       src={car.preview === null || car.preview === '' ? car.images[0] : car.preview}
                       alt={car.plate}
-                      width={160}
-                      height={160}
-                      className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[100px] min-w-[100px] max-h-[100px] min-h-[100px] lg:max-w-[160px] lg:max-h-[160px] lg:min-w-[160px] lg:min-h-[160px]'
+                      className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[100px] min-w-[100px] max-h-[100px] min-h-[100px] lg:max-w-[160px] lg:max-h-[160px] lg:min-w-[190px] lg:min-h-[160px]'
                     />
-                    <div onClick={() => dispatchAction(ActionTypes.SET_CAR_PREVIEW_TO_CHANGE, car)} className='absolute top-0 w-full h-full bg-black/50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 lg:max-w-[160px] lg:max-h-[160px] lg:min-w-[160px] lg:min-h-[160px] transition-all duration-300'>
+                    <div onClick={() => dispatchAction(ActionTypes.SET_CAR_PREVIEW_TO_CHANGE, car)} className='absolute top-0 w-full h-full bg-black/50 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 lg:max-w-[160px] lg:max-h-[160px] lg:min-w-[190px] lg:min-h-[160px] transition-all duration-300'>
                       <span className='text-white font-bold'>
                         Cambiar imagen
                       </span>

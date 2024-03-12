@@ -6,7 +6,8 @@ export enum ActionTypes {
   SET_CAR_TO_DELETE = 'SET_CAR_TO_DELETE',
   SET_FILTERED_CARS = 'SET_FILTERED_CARS',
   SET_CARS_SELECTED = 'SET_CARS_SELECTED',
-  SET_CAR_PREVIEW_TO_CHANGE = 'SET_CAR_PREVIEW_TO_CHANGE'
+  SET_CAR_PREVIEW_TO_CHANGE = 'SET_CAR_PREVIEW_TO_CHANGE',
+  SET_SORTING_BY = 'SET_SORTING_BY'
 }
 
 interface Action {
@@ -20,6 +21,7 @@ interface State {
   filteredCars: CarDTO[]
   carsSelected: CarDTO[]
   carPreviewToChange: null | CarDTO
+  sortingBy: string
 }
 
 const panelCarsReducer = (state: State, action: Action): State => {
@@ -38,6 +40,11 @@ const panelCarsReducer = (state: State, action: Action): State => {
       return {
         ...state,
         filteredCars: action.payload
+      }
+    case ActionTypes.SET_SORTING_BY:
+      return {
+        ...state,
+        sortingBy: action.payload
       }
     case ActionTypes.SET_CARS_SELECTED:
       return {
@@ -59,7 +66,8 @@ const INITIAL_STATE: State = {
   carToDelete: null,
   filteredCars: [],
   carsSelected: [],
-  carPreviewToChange: null
+  carPreviewToChange: null,
+  sortingBy: ''
 }
 
 export default function usePanelCarsReducer (): [State, React.Dispatch<Action>] {
