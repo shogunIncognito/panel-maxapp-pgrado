@@ -108,7 +108,7 @@ export default function CarForm ({
             <input hidden type='file' multiple onChange={handleImage} accept='image/*' />
           </label>
 
-          <section className='grid grid-rows-1 mt-1 pb-1.5 gap-2 md:grid-rows-2 max-w-[40%] grid-flow-col overflow-x-auto'>
+          <section className='grid grid-rows-2 mt-1 pb-1.5 gap-2 md:grid-rows-2 max-w-[70%] grid-flow-col overflow-x-auto'>
             {images.length > 0 && (
               images.map((image, index) => {
                 return (

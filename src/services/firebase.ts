@@ -35,12 +35,6 @@ export const deleteCarsImages = async (images: string[]): Promise<void> => {
   await Promise.all(urls)
 }
 
-export const deleteCarImage = async (image: string): Promise<Boolean> => {
-  const delRef = ref(storage, image)
-  await deleteObject(delRef)
-  return true
-}
-
 export const uploadUserImage = async (userId: string, image: File): Promise<string> => {
   const imagesRef = ref(storage, `images/Proyecto-grado-panel/users/${userId}`)
   await uploadBytes(imagesRef, image)

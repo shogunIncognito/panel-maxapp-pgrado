@@ -85,7 +85,7 @@ export const updatePreviewImage = async (id: string, preview: string, token: str
   return response.data
 }
 
-export const deleteCarImageFromApi = async (id: string, image: string, token: string | undefined): Promise<CarDTO> => {
-  const response = await api.patch(`/cars/${id}/images`, { image }, auth(token))
+export const deleteCarImageFromApi = async (id: string, images: string[], token: string | undefined): Promise<CarDTO> => {
+  const response = await api.patch(`/cars/${id}/images`, { images }, auth(token))
   return response.data
 }

@@ -5,7 +5,7 @@ import { deleteCarImageFromApi, updateCar } from '@/services/api'
 import useCarsStore from '@/hooks/useCarsStore'
 import toast from 'react-hot-toast'
 import { getObjectsDiff, objectHasEmptyValues, validateFormValues } from '@/utils/functions'
-import { deleteCarImage, uploadCarsImages } from '@/services/firebase'
+import { deleteCarsImages, uploadCarsImages } from '@/services/firebase'
 import CarForm from './CarForm'
 import { updateCarCodes } from '@/utils/statusCodes'
 import { CarDTO } from '@/types'
@@ -118,8 +118,8 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
         return
       }
 
-      await deleteCarImageFromApi(selectedCar._id, img, session?.user.token)
-      await deleteCarImage(img)
+      await deleteCarImageFromApi(selectedCar._id, [img], session?.user.token)
+      await deleteCarsImages([img])
 
       setImages(prev => prev.filter(image => image !== img))
       toast.success('Imagen eliminada')
