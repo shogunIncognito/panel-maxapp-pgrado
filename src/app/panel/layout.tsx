@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 'use client'
 
 import sideImage from '@/assets/maxautosicon.webp'
@@ -14,7 +15,7 @@ import { BsMoon, BsSun } from 'react-icons/bs'
 import UserImage from '@/components/UserImage'
 import { signOut, useSession } from 'next-auth/react'
 import Spinner from '@/components/Spinner'
-import { adminRoutes, userRoutes } from '@/helpers/data'
+import { adminRoutes, navRouteMsg, userRoutes } from '@/helpers/data'
 import useCarsStore from '@/hooks/useCarsStore'
 
 export default function Layout ({ children }: { children: React.ReactNode }): JSX.Element {
@@ -82,6 +83,8 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
   }
 
   const panelRoutes = session?.user.role === 'admin' ? adminRoutes : userRoutes
+
+  console.log(path)
 
   return (
     <main className='flex-col max-w-full max-h-screen md:flex-row flex h-screen w-full dark:bg-[#171923]'>
@@ -165,13 +168,18 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
       </aside>
 
       <section className='md:flex flex-1 pb-32 h-screen max-h-screen md:pb-0 flex-col hidden overflow-hidden text-white'>
-        <header className='border-b-2 border-gray-200/10 shadow-lg flex items-center gap-3 capitalize p-4 bg-slate-100 dark:text-black dark:bg-[#171923] justify-end'>
-          <span className='w-9 h-9 flex items-center justify-center cursor-pointer bg-slate-300 text-black dark:text-white dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-600 transition-colors p-1.5 rounded-md' onClick={changeTheme}>
-            {theme === 'dark' ? <BsSun /> : <BsMoon />}
-          </span>
-          <UserImage image={session?.user.image} />
-          <h2 className='opacity-80 capitalize text-black dark:text-white'>{(session !== null) ? session.user.username : 'Cargando...'}</h2>
-          <UserSettings />
+        <header className='border-b-2 border-gray-200/10 shadow-lg flex items-center justify-between gap-3 capitalize p-4 bg-slate-100 dark:text-black dark:bg-[#171923]'>
+          <h2 className='dark:text-white text-xl text-black'>
+            {navRouteMsg[path] || 'Panel'}
+          </h2>
+          <div className='flex gap-3 items-center'>
+            <span className='w-9 h-9 flex items-center justify-center cursor-pointer bg-slate-300 text-black dark:text-white dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-600 transition-colors p-1.5 rounded-md' onClick={changeTheme}>
+              {theme === 'dark' ? <BsSun /> : <BsMoon />}
+            </span>
+            <UserImage image={session?.user.image} />
+            <h2 className='opacity-80 capitalize text-black dark:text-white'>{(session !== null) ? session.user.username : 'Cargando...'}</h2>
+            <UserSettings />
+          </div>
         </header>
 
         {children}

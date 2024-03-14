@@ -126,3 +126,13 @@ export const userRoutes = [
     path: '/panel/cars'
   }
 ]
+
+interface NavRouteMsg {
+  [key: string]: string
+}
+
+export const navRouteMsg: NavRouteMsg = {
+  '/panel': 'Panel de administración',
+  '/panel/cars': 'Autos',
+  '/panel/users': 'Usuarios'
+}
