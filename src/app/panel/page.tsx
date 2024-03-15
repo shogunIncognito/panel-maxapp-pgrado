@@ -1,32 +1,49 @@
 import Link from 'next/link'
 import panelimg1 from '@/assets/panelindeximg1.webp'
 import panelimg2 from '@/assets/panelindeximg2.webp'
+import panelimg3 from '@/assets/maxHero1.webp'
 import Image from 'next/image'
 
 export default function PanelLanding (): JSX.Element | null {
   return (
-    <section className='flex flex-col flex-1 w-full justify-center items-center'>
+    <section className='flex flex-col flex-1 w-full bg-slate-400/40 dark:bg-neutral-950/30'>
+      <h1 className='md:text-4xl text-2xl text-center mt-5 font-bold opacity-80 dark:text-neutral-100 text-black'>Bienvenido al panel de administración de MaxAutos</h1>
+      <div className='grid md:grid-cols-2 md:grid-rows-2 grid-cols-1 grid-rows-3 h-full place-content-center p-10 gap-6 w-full'>
+        <article className='flex flex-col bg-black/60 rounded h-full justify-center items-center relative'>
 
-      <div className='flex flex-col md:flex-row w-full h-full'>
-
-        <article className='flex-1 group relative transition-all shadow-md w-full h-full'>
-          <div className='hover:bg-black/70 shadow-md transition-all gap-2 z-10 p-3 w-full h-full flex-col flex justify-center items-center bg-black/50 absolute top-0'>
-            <h2 className='text-3xl mb-32 opacity-80 font-bold group-hover:scale-125 transition-all text-center'>Autos</h2>
-            <Link href='/panel/cars' className='bg-[#0987A0] hover:bg-sky-500 disabled:bg-sky-900 font-semibold rounded disabled:pointer-events-none text-white px-6 py-3   ease-in-out animate__animated animate__fadeInUp absolute bg-black/70 md:hidden group-hover:block transition-all duration-300 my-11'>Administrar autos</Link>
+          <div className='z-30 p-6 bg-black/75 w-full h-full justify-center items-center flex flex-col rounded'>
+            <Link className='rounded text-center transition-all bg-black/50 hover:bg-black/80 ring-2 ring-gray-600 duration-1000 w-48 py-3 p-2' href='/panel/cars'>
+              Administrar autos
+            </Link>
           </div>
-          <Image alt='panel imagen' src={panelimg1} className='w-full h-full top-0 object-cover pointer-events-none' />
+
+          <Image src={panelimg1} alt='panelimg1' layout='fill' className='object-cover rounded' />
         </article>
 
-        <article className='flex-1 group relative transition-all shadow-md w-full h-full'>
-          <div className='hover:bg-black/70 shadow-md transition-all gap-2 z-10 p-3 w-full h-full flex-col flex justify-center items-center bg-black/50 absolute top-0'>
-            <h2 className='text-3xl mb-32 opacity-80 font-bold group-hover:scale-125 transition-all text-center'>Usuarios</h2>
-            <Link href='/panel/users' className='bg-[#0987A0] hover:bg-sky-500 disabled:bg-sky-900 font-semibold rounded disabled:pointer-events-none text-white px-6 py-3   ease-in-out animate__animated animate__fadeInUp absolute bg-black/70 md:hidden group-hover:block transition-all duration-300 my-11'>Administrar usuarios</Link>
+        <article className='flex flex-col bg-black/60 rounded h-full justify-center items-center relative'>
+
+          <div className='z-30 p-6 bg-black/75 rounded w-full h-full justify-center items-center flex flex-col'>
+            <Link className='rounded text-center transition-all bg-black/50 hover:bg-black/80 ring-2 ring-gray-600 duration-1000 w-48 py-3 p-2' href='/panel/cars'>
+              Administrar usuarios
+            </Link>
           </div>
-          <Image alt='panel imagen' src={panelimg2} className='w-full h-full top-0 object-cover pointer-events-none' />
+
+          <Image src={panelimg2} alt='panelimg1' layout='fill' className='object-cover rounded' />
         </article>
 
+        <article className='flex md:col-span-2 col-span-1 max-h-max overflow-hidden bg-black/60 justify-center items-center relative rounded'>
+
+          <div className='z-30 p-6 bg-black/80 rounded w-full h-full justify-center items-center flex flex-col text-center'>
+            <h2 className='text-xl'>
+              Administra los vehículos de la pagina web de
+            </h2>
+            <Link href='https://maxautos.vercel.app/' className='text-blue-600 text-2xl'><span className='text-white'>Max</span>Autos</Link>
+          </div>
+
+          <Image src={panelimg3} alt='panelimg3' layout='fill' className='object-cover rounded' />
+
+        </article>
       </div>
-
     </section>
   )
 }

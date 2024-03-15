@@ -169,7 +169,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
 
       <section className='md:flex flex-1 pb-32 h-screen max-h-screen md:pb-0 flex-col hidden overflow-hidden text-white'>
         <header className='border-b-2 border-gray-200/10 shadow-lg flex items-center justify-between gap-3 capitalize p-4 bg-slate-100 dark:text-black dark:bg-[#171923]'>
-          <h2 className='dark:text-white text-xl text-black'>
+          <h2 className='dark:text-white text-xl opacity-75 text-black'>
             {navRouteMsg[path] || 'Panel'}
           </h2>
           <div className='flex gap-3 items-center'>
