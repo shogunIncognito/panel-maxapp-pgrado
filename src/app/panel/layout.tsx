@@ -84,8 +84,6 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
 
   const panelRoutes = session?.user.role === 'admin' ? adminRoutes : userRoutes
 
-  console.log(path)
-
   return (
     <main className='flex-col max-w-full max-h-screen md:flex-row flex h-screen w-full dark:bg-[#171923]'>
       {/* Mobile Layout */}

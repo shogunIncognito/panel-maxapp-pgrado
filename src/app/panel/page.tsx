@@ -23,7 +23,7 @@ export default function PanelLanding (): JSX.Element | null {
         <article className='flex flex-col bg-black/60 rounded h-full justify-center items-center relative'>
 
           <div className='z-30 p-6 bg-black/75 rounded w-full h-full justify-center items-center flex flex-col'>
-            <Link className='rounded text-center transition-all bg-black/50 hover:bg-black/80 ring-2 ring-gray-600 duration-1000 w-48 py-3 p-2' href='/panel/cars'>
+            <Link className='rounded text-center transition-all bg-black/50 hover:bg-black/80 ring-2 ring-gray-600 duration-1000 w-48 py-3 p-2' href='/panel/users'>
               Administrar usuarios
             </Link>
           </div>
