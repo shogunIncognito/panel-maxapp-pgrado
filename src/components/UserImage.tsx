@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import SampleUserImage from '@/assets/unknown-userimage.webp'
+import defaultAvatar from '@/assets/default-avatar.webp'
 import ModalBackdrop from './ModalBackdrop'
 import { MdEdit } from 'react-icons/md'
 import useDisclosure from '@/hooks/useDisclosure'
@@ -75,6 +75,7 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
   }
 
   const handleDeleteImage = (): void => {
+    if (imageValues.previewImage === null) return
     setImage(prev => ({ ...prev, newImage: undefined, previewImage: null, deleteImage: true }))
   }
 
@@ -89,18 +90,18 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
         <div className='group-hover:grayscale transition-all'>
           {image !== null
             ? <img src={image} alt='user' className='w-10 h-10 select-none pointer-events-none object-cover rounded-full' />
-            : <img src={SampleUserImage.src} alt='user' className='w-10 h-10 dark:invert select-none pointer-events-none dark:bg-neutral-200 ring-2 ring-black dark:ring-slate-800 object-cover rounded-full' />}
+            : <img src={defaultAvatar.src} alt='user' className='w-10 h-10 select-none pointer-events-none dark:bg-neutral-200 ring-2 ring-black dark:ring-slate-800 object-cover rounded-full' />}
         </div>
-        <span onClick={handleOpen} className='group-hover:grid place-content-center hidden cursor-pointer absolute text-white top-0 left-0 right-0 bottom-0'><MdEdit size={21} className='dark:invert-0 invert' /></span>
+        <span onClick={handleOpen} className='group-hover:grid place-content-center hidden cursor-pointer absolute text-white top-0 left-0 right-0 bottom-0'><MdEdit size={21} /></span>
       </div>
 
       <ModalBackdrop open={open} className='md:flex-row gap-4 flex-col justify-center items-center'>
         <div className='relative'>
-          <span onClick={handleDeleteImage} className='absolute top-0 right-0 cursor-pointer bg-gray-200 rounded-full text-xl text-black dark:text-black'>
+          <span onClick={handleDeleteImage} className='absolute top-0 right-0 z-20 cursor-pointer bg-gray-200 rounded-full text-xl text-black dark:text-black'>
             <IoIosCloseCircle size={34} />
           </span>
           {imageValues.previewImage === null
-            ? <img src={SampleUserImage.src} alt='user' className='w-36 h-36 dark:invert select-none pointer-events-none object-cover rounded-full' />
+            ? <img src={defaultAvatar.src} alt='user' className='w-36 h-36 select-none pointer-events-none object-cover rounded-full' />
             : <img src={imageValues.previewImage} alt='user' className='w-36 h-36 dark:bg-gray-300 select-none pointer-events-none object-cover rounded-full' />}
         </div>
         <div className='flex flex-col justify-center items-center'>

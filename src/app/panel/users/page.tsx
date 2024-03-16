@@ -12,7 +12,7 @@ import { objectHasEmptyValues } from '@/utils/functions'
 import { createUserCodes } from '@/utils/statusCodes'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import SampleUserImage from '@/assets/unknown-userimage.webp'
+import defaultAvatar from '@/assets/default-avatar.webp'
 import { CreateUserDTO, UserDTO } from '@/types'
 import Select from '@/components/Select'
 import { useSession } from 'next-auth/react'
@@ -138,7 +138,7 @@ export default function Users (): JSX.Element {
                     <th scope='row' className='px-6 py-4 grid place-content-center font-medium whitespace-nowrap dark:text-white'>
                       {user.image !== null
                         ? <img src={user.image} alt='user' className='w-14 h-14 select-none pointer-events-none object-cover rounded-full' />
-                        : <img src={SampleUserImage.src} alt='user' className='w-14 h-14 dark:invert select-none pointer-events-none dark:bg-neutral-200 ring-2 ring-black dark:ring-slate-800 object-cover rounded-full' />}
+                        : <img src={defaultAvatar.src} alt='user' className='w-14 h-14 select-none pointer-events-none dark:bg-neutral-200 ring-2 ring-black dark:ring-slate-800 object-cover rounded-full' />}
                     </th>
                     <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap dark:text-white'>
                       {user.username}
