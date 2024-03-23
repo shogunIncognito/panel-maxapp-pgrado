@@ -60,3 +60,17 @@ export interface BrandType {
   _id: string
   name: string
 }
+
+export interface StatsDTO {
+  viewsMonths: ViewsMonths
+  daysMonthViews: DaysMonthViews
+}
+
+interface ViewsMonths {
+  Abril: number
+  Marzo: number
+}
+
+interface DaysMonthViews {
+  [key]: number
+}

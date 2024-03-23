@@ -1,5 +1,5 @@
 import { AiFillHome } from 'react-icons/ai'
-import { BiSolidUser } from 'react-icons/bi'
+import { BiSolidUser, BiStats } from 'react-icons/bi'
 import { FaCarAlt } from 'react-icons/fa'
 
 export const carInputs = [
@@ -111,6 +111,11 @@ export const adminRoutes = [
     label: 'Usuarios',
     icon: BiSolidUser,
     path: '/panel/users'
+  },
+  {
+    label: 'Estadísticas',
+    icon: BiStats,
+    path: '/panel/stats'
   }
 ]
 
@@ -134,5 +139,6 @@ interface NavRouteMsg {
 export const navRouteMsg: NavRouteMsg = {
   '/panel': 'Panel de administración',
   '/panel/cars': 'Autos',
-  '/panel/users': 'Usuarios'
+  '/panel/users': 'Usuarios',
+  '/panel/stats': 'Estadísticas'
 }

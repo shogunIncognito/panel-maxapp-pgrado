@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_URL } from '@/utils/envconfig'
-import { BrandType, CarDTO, CreateCarDTO, CreateUserDTO, UpdateCarDTO, UpdateUserDTO, UserDTO } from '@/types'
+import { BrandType, CarDTO, CreateCarDTO, CreateUserDTO, StatsDTO, UpdateCarDTO, UpdateUserDTO, UserDTO } from '@/types'
 import { TypeUserUpdate } from '@/enums'
 
 const api = axios.create({
@@ -87,5 +87,11 @@ export const updatePreviewImage = async (id: string, preview: string, token: str
 
 export const deleteCarImageFromApi = async (id: string, images: string[], token: string | undefined): Promise<CarDTO> => {
   const response = await api.patch(`/cars/${id}/images`, { images }, auth(token))
+  return response.data
+}
+
+// Stats endpoints
+export const getStats = async (token: string | undefined): Promise<StatsDTO> => {
+  const response = await api.get('/stats', auth(token))
   return response.data
 }
