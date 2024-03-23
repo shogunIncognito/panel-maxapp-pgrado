@@ -41,11 +41,3 @@ export const validateFormValues = (values: UnknowObject): { valid: boolean, mess
 
   return { valid: true, message: '' }
 }
-
-export const getMonthDaysArray = (): number[] => {
-  const date = new Date()
-  const month = date.getMonth()
-  const year = date.getFullYear()
-  const days = new Date(year, month + 1, 0).getDate()
-  return Array.from({ length: days }, (_, i) => i + 1)
-}

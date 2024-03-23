@@ -3,7 +3,6 @@
 import Spinner from '@/components/Spinner'
 import { getStats } from '@/services/api'
 import { StatsDTO } from '@/types'
-import { getMonthDaysArray } from '@/utils/functions'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -41,8 +40,7 @@ const optionsMonth = {
       text: `Visitas mensuales a la web de MaxAutos en ${new Date().getFullYear()}`,
       font: {
         size: 20
-      },
-      color: 'rgb(255, 255, 255, 0.7)'
+      }
     }
   }
 }
@@ -58,8 +56,7 @@ const optionsDays = {
       text: 'Visitas diarias en el mes a la web de MaxAutos',
       font: {
         size: 20
-      },
-      color: 'rgb(255, 255, 255, 0.7)'
+      }
     }
   },
 
@@ -97,7 +94,7 @@ const months = [
   'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
 ]
 
-export default function page (): JSX.Element {
+export default function Stats (): JSX.Element {
   const [stats, setStats] = useState<StatsDTO | null>(null)
   const [error, setError] = useState(false)
   const { data, status } = useSession()
@@ -124,7 +121,6 @@ export default function page (): JSX.Element {
   }
 
   const daysStats = {
-    labels: getMonthDaysArray(),
     datasets: [
       {
         label: 'Visitas por dia',
