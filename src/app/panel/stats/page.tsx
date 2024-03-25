@@ -31,6 +31,7 @@ ChartJS.register(
 
 const optionsMonth = {
   responsive: true,
+  mantainAspectRatio: false,
   plugins: {
     legend: {
       position: 'top' as const
@@ -42,11 +43,32 @@ const optionsMonth = {
         size: 20
       }
     }
+  },
+  scales: {
+    x: {
+      title: {
+        display: true,
+        text: 'Meses',
+        font: {
+          size: 16
+        }
+      }
+    },
+    y: {
+      title: {
+        display: true,
+        text: 'Visitas',
+        font: {
+          size: 16
+        }
+      }
+    }
   }
 }
 
 const optionsDays = {
   responsive: true,
+  mantainAspectRatio: false,
   plugins: {
     legend: {
       position: 'top' as const
@@ -72,6 +94,7 @@ const optionsDays = {
       min: 0
     },
     y: {
+      beginAtZero: true,
       title: {
         display: true,
         text: 'Visitas',
@@ -132,10 +155,11 @@ export default function Stats (): JSX.Element {
   }
 
   return (
-    <section className='p-3 overflow-auto'>
-      <Bar options={optionsMonth} data={monthsStats} className='mb-20' />
+    <section className='p-3 relative overflow-auto'>
+      <h2 className='sm:hidden text-sm opacity-70 text-center mb-5'>Para observar mejor las gráficas gira tu dispositivo horizontalmente</h2>
+      <Bar options={optionsMonth} data={monthsStats} className='lg:mb-20 w-full' />
       <hr />
-      <Line options={optionsDays} data={daysStats} className='mt-20' />
+      <Line options={optionsDays} data={daysStats} className='lg:mt-20 w-full' />
     </section>
   )
 }

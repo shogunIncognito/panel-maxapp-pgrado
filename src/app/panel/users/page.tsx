@@ -71,18 +71,18 @@ export default function Users (): JSX.Element {
     <>
       <header className='flex p-4 w-full justify-start items-center flex-col'>
         <h2 className='text-3xl self-center opacity-75 font-bold text-black dark:text-white font-mono md:hidden my-5'>Usuarios</h2>
-        <Button onClick={handleOpen} className={`md:self-start self-center ${loading.getUsers && 'invisible'}`}>Agregar usuario</Button>
+        <Button onClick={handleOpen} className={`md:self-start self-center ${loading.getUsers && 'hidden'}`}>Agregar usuario</Button>
       </header>
 
-      <ModalBackdrop open={open}>
+      <ModalBackdrop open={open} className='p-3'>
         <h2 className='text-2xl opacity-75 self-center'>Agregar usuario</h2>
         <form onSubmit={handleSubmit} className='flex justify-center items-center flex-col gap-3 mt-4 p-4 rounded'>
-          <div className='flex md:flex-row flex-col gap-2'>
-            <div className='w-full flex flex-col gap-1'>
+          <div className='flex md:flex-row justify-center items-center flex-col gap-2 m-3'>
+            <div className='w-5/6 flex flex-col gap-1'>
               <label className='opacity-80 font-bold' htmlFor='username'>Nombre</label>
               <Input required className='p-2' name='username' type='text' id='username' placeholder='Pedro' />
             </div>
-            <div className='w-full flex flex-col gap-1'>
+            <div className='w-5/6 flex flex-col gap-1'>
               <label className='opacity-80 font-bold' htmlFor='password'>Contraseña</label>
               <Input required className='p-2' name='password' type='password' id='password' placeholder='*******' />
             </div>
@@ -94,9 +94,9 @@ export default function Users (): JSX.Element {
             </Select>
           </div>
 
-          <div className='flex items-center gap-2 mt-3'>
-            <Button type='submit' loading={loading.create} disabled={loading.create} className='py-2 mt-2 flex-1 w-40 self-center bg-purple-600 hover:bg-purple-800'>Crear</Button>
-            <Button onClick={handleClose} type='reset' className='py-2 mt-2 w-40 flex-1 self-center'>Cancelar</Button>
+          <div className='flex items-center w-5/6 lg:w-2/3 gap-2 mt-3'>
+            <Button type='submit' loading={loading.create} disabled={loading.create} className='py-2 mt-2 flex-1 w-2/3 self-center bg-purple-600 hover:bg-purple-800'>Crear</Button>
+            <Button onClick={handleClose} type='reset' className='py-2 mt-2 w-2/3 flex-1 self-center'>Cancelar</Button>
           </div>
 
         </form>
@@ -104,7 +104,7 @@ export default function Users (): JSX.Element {
 
       <div className='pb-4 max-w-full px-2 overflow-auto'>
         {loading.getUsers
-          ? <Spinner />
+          ? <Spinner className='h-[80dvh]' />
           : (
             <table className='w-full text-sm text-center text-gray-800 dark:text-gray-400'>
               <thead className='text-xs dark:bg-[#171923] bg-slate-300/70 sticky top-0 uppercase text-gray-800 dark:text-gray-400'>

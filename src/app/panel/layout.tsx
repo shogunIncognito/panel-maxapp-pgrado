@@ -76,7 +76,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
 
   if (status === 'loading') {
     return (
-      <div className='flex justify-center bg-neutral-950 items-center w-full h-screen'>
+      <div className='flex justify-center dark:bg-neutral-950 items-center w-full h-screen'>
         <Spinner />
       </div>
     )
@@ -110,7 +110,12 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         className='top-0 md:hidden transition-all duration-500 w-full flex flex-col absolute z-50
         h-screen shadow-xl dark:bg-[#171923] bg-slate-100 text-black dark:text-white'
       >
-        <CloseIcon onClick={handleClose} className='w-12 m-2 self-end cursor-pointer' />
+        <div className='flex justify-between items-center'>
+          <span className='w-9 m-2 h-9 flex items-center justify-center cursor-pointer bg-slate-200 text-black dark:text-white dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-600 transition-colors p-1.5 rounded-md' onClick={changeTheme}>
+            {theme === 'dark' ? <BsSun size={20} /> : <BsMoon size={20} />}
+          </span>
+          <CloseIcon onClick={handleClose} className='w-12 m-2 self-end cursor-pointer' />
+        </div>
         <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert-0 dark:invert select-none m-auto my-0 mb-2 object-cover h-auto' />
 
         <nav className='flex flex-col p-4'>
@@ -119,16 +124,16 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
               <Link
                 key={route.path}
                 onClick={handleClose}
-                className={`p-4 px-6 rounded hover:bg-gray-900 text-black dark:text-white flex gap-2 items-center transition-colors ${path === route.path ? 'bg-gray-700 text-white' : ''}`} href={route.path}
+                className={`p-4 px-6 rounded hover:bg-gray-900 dark:hover:bg-gray-800 hover:text-white text-black dark:text-white flex gap-2 items-center transition-colors ${path === route.path ? 'bg-gray-700 text-white' : ''}`} href={route.path}
               >
                 <route.icon size={28} className='opacity-75' />
-                <p className=''>{route.label}</p>
+                <p>{route.label}</p>
               </Link>
             ))
           }
           <button onClick={closeSession} className='p-4 px-6 rounded-md flex items-center gap-2 hover:bg-red-700/80 transition-colors'>
             <RxExit size={28} className='opacity-75' />
-            <p className=''>Cerrar sesión</p>
+            <p>Cerrar sesión</p>
           </button>
         </nav>
 
@@ -144,12 +149,12 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
           <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert-0 dark:invert select-none m-auto h-auto my-8 object-cover' />
         </Link>
 
-        <nav className='flex flex-col gap-2'>
+        <nav className='flex flex-col overflow-auto gap-2'>
           {
             panelRoutes.map(route => (
               <Link key={route.path} className={`p-4 px-6 rounded-md lg:p-4 md:p-3 hover:bg-[#0987A0] hover:text-white dark:text-white flex gap-2 items-center transition-colors ${path === route.path ? 'bg-sky-700/60' : ''}`} href={route.path}>
                 <route.icon size={20} className='opacity-75' />
-                <p className=''>{route.label}</p>
+                <p>{route.label}</p>
               </Link>
             ))
           }
@@ -160,7 +165,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
 
         </nav>
 
-        <div className='min-h-fit absolute pointer-events-none bottom-5 self-center'>
+        <div className='min-h-fit horizontal-hidden absolute pointer-events-none bottom-5 self-center'>
           <p className='text-center text-xs opacity-60'>Max<span className='text-blue-500'>Autos</span></p>
         </div>
       </aside>

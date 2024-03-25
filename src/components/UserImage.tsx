@@ -95,7 +95,7 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
         <span onClick={handleOpen} className='group-hover:grid place-content-center hidden cursor-pointer absolute text-white top-0 left-0 right-0 bottom-0'><MdEdit size={21} /></span>
       </div>
 
-      <ModalBackdrop open={open} className='md:flex-row gap-4 flex-col justify-center items-center'>
+      <ModalBackdrop open={open} className='md:flex-row z-50 gap-4 flex-col justify-center items-center'>
         <div className='relative'>
           <span onClick={handleDeleteImage} className='absolute top-0 right-0 z-20 cursor-pointer bg-gray-200 rounded-full text-xl text-black dark:text-black'>
             <IoIosCloseCircle size={34} />

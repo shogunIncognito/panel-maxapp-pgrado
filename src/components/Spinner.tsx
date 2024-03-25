@@ -7,10 +7,10 @@ type SpinnerTypes = {
   className?: string
 } & React.HTMLAttributes<HTMLDivElement>
 
-export default function Spinner ({ size = 50, color = 'text-slate-300', className, ...props }: SpinnerTypes): JSX.Element {
+export default function Spinner ({ size = 50, color = 'text-blue-500', className, ...props }: SpinnerTypes): JSX.Element {
   return (
     <div {...props} className={twMerge('flex h-full pb-32 justify-center items-center', className)}>
-      <ImSpinner2 size={size} className={`animate-spin ${color} dark:text-blue-600`} />
+      <ImSpinner2 size={size} className={twMerge('animate-spin', color)} />
     </div>
   )
 }

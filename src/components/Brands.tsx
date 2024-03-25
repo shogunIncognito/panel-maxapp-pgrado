@@ -88,7 +88,7 @@ export default function Brands ({ className }: { className?: string }): JSX.Elem
                 </Button>
               </div>
             </form>
-            <form className='gap-4 flex-1 justify-center items-center flex flex-col'>
+            <form className='gap-4 justify-center items-center flex flex-col'>
               <div>
                 <h2 className='text-lg opacity-85'>Seleccionar marca a eliminar</h2>
 
