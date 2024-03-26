@@ -16,7 +16,7 @@ export default function PanelLanding (): JSX.Element | null {
       <div className='grid md:grid-cols-2 md:grid-rows-2 grid-cols-1 grid-rows-3 h-full place-content-center p-4 gap-4 w-full'>
         <article className={`flex flex-col bg-black/60 rounded h-full justify-center items-center relative ${!isAdmin ? 'col-span-2' : ''}`}>
 
-          <div className='z-10 p-6 bg-black/75 w-full h-full justify-center items-center flex flex-col rounded'>
+          <div className='z-10 p-6 bg-black/50 dark:bg-black/75 w-full h-full justify-center items-center flex flex-col rounded'>
             <Link className='rounded text-center transition-all bg-black/50 hover:bg-black/80 ring-2 ring-gray-600 hover:ring-gray-400 duration-300 w-48 py-3 p-2' href='/panel/cars'>
               Administrar autos
             </Link>
@@ -27,8 +27,8 @@ export default function PanelLanding (): JSX.Element | null {
 
         <article className={`flex flex-col bg-black/60 rounded h-full justify-center items-center relative ${!isAdmin ? 'hidden' : ''}`}>
 
-          <div className='z-10 p-6 bg-black/75 rounded w-full h-full justify-center items-center flex flex-col'>
-            <Link className='rounded text-center transition-all bg-black/50 hover:bg-black/80 ring-2 ring-gray-600 duration-1000 w-48 py-3 p-2' href='/panel/users'>
+          <div className='z-10 p-6 bg-black/50 dark:bg-black/75 rounded w-full h-full justify-center items-center flex flex-col'>
+            <Link className='rounded text-center transition-all bg-black/50 hover:bg-black/80 ring-2 ring-gray-600 hover:ring-gray-400 duration-300 w-48 py-3 p-2' href='/panel/users'>
               Administrar usuarios
             </Link>
           </div>
@@ -38,11 +38,11 @@ export default function PanelLanding (): JSX.Element | null {
 
         <article className='flex md:col-span-2 col-span-1 max-h-max overflow-hidden bg-black/60 justify-center items-center relative rounded'>
 
-          <div className='z-10 p-6 bg-black/80 rounded w-full h-full justify-center items-center flex flex-col text-center'>
-            <h2 className='text-xl'>
+          <div className='z-10 p-6 bg-black/60 dark:bg-black/75 rounded w-full h-full justify-center items-center flex flex-col text-center'>
+            <h2 className='text-2xl'>
               Administra los vehículos de la pagina web de
             </h2>
-            <Link href='https://maxautos.vercel.app/' target='_blank' className='text-blue-600 text-2xl' rel='noreferrer'><span className='text-white'>Max</span>Autos</Link>
+            <Link href='https://maxautos.vercel.app/' target='_blank' className='text-blue-500 font-bold text-2xl' rel='noreferrer'><span className='text-white'>Max</span>Autos</Link>
           </div>
 
           <Image src={panelimg3} alt='panelimg3' fill sizes='(max-width: 768px) 600px, (max-width: 1200px) 500px' className='object-cover rounded' />

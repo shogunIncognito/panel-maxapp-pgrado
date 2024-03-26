@@ -1,10 +1,10 @@
 import { CarDTO } from '@/types'
 
-interface UnknowObject {
+interface UnknownObject {
   [key: string]: any
 }
 
-export const objectHasEmptyValues = (obj: UnknowObject): boolean => {
+export const objectHasEmptyValues = (obj: UnknownObject): boolean => {
   for (const key in obj) {
     if (typeof obj[key] === 'string' && obj[key].trim() === '') return true
     if (obj[key] === undefined) return true
@@ -18,8 +18,8 @@ export const filterCars = (cars: CarDTO[], filters: { value: string, option: str
   })
 )
 
-export const getObjectsDiff = (obj: UnknowObject, objTwo: UnknowObject): UnknowObject => {
-  const diff: UnknowObject = {}
+export const getObjectsDiff = (obj: UnknownObject, objTwo: UnknownObject): UnknownObject => {
+  const diff: UnknownObject = {}
 
   for (const key in obj) {
     if (objTwo[key] !== obj[key]) {
@@ -30,7 +30,7 @@ export const getObjectsDiff = (obj: UnknowObject, objTwo: UnknowObject): UnknowO
   return diff
 }
 
-export const validateFormValues = (values: UnknowObject): { valid: boolean, message: string } => {
+export const validateFormValues = (values: UnknownObject): { valid: boolean, message: string } => {
   const currentYear = new Date().getFullYear()
 
   if (values.owners < 0) return { valid: false, message: 'El vehiculo tiene que tener minimo 1 dueño' }

@@ -50,9 +50,9 @@ const carInitialValues: CreateCarDTO = {
 
 export default function CreateCar ({ className }: { className?: string }): JSX.Element {
   const { data: session } = useSession()
+  const { addCar, brands } = useCarsStore()
   const { open, handleClose, handleOpen } = useDisclosure()
   const [loading, setLoading] = useState(false)
-  const { addCar, brands } = useCarsStore()
   const [values, setValues] = useState(carInitialValues)
   const [images, setImages] = useState<Array<{ url: string, file: File }>>([])
 

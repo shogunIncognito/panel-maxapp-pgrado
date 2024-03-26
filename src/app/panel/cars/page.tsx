@@ -105,7 +105,7 @@ export default function page (): JSX.Element {
               <th scope='col' className='px-6' />
 
               {tableHeaders.map((header, index) => (
-                <th key={index} scope='col' onClick={() => sortByHeader(header.value)} className={`px-6 py-3 cursor-pointer hover:text-white transition-colors ${sortingBy === header.value ? 'text-white' : ''}`}>
+                <th key={index} scope='col' onClick={() => sortByHeader(header.value)} className={`px-6 py-3 cursor-pointer dark:hover:text-white hover:text-blue-500 transition-colors ${sortingBy === header.value ? 'dark:text-white text-blue-600' : ''}`}>
                   {header.label}
                 </th>
               ))}

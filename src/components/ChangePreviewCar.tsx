@@ -7,7 +7,7 @@ import { CarDTO } from '@/types'
 import { ActionTypes } from '@/reducers/panelCarsReducer'
 import { useSession } from 'next-auth/react'
 
-const selectedClass = 'border-4 dark:border-green-500 border-purple-500 shadow-xl'
+const selectedClass = 'dark:border-green-500 border-purple-500 shadow-xl'
 
 interface ChangePreviewCarProps {
   car: CarDTO

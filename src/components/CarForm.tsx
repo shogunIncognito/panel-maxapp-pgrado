@@ -131,7 +131,7 @@ export default function CarForm ({
 
         </div>
         <div className='flex gap-2 pr-1 max-w-full items-center justify-center'>
-          <Button loading={loading} disabled={loading} type='submit' className='mt-7 bg-[#90CDF4] hover:bg-sky-600/90 text-black w-40 disabled:bg-opacity-70 disabled:cursor-not-allowed'>
+          <Button loading={loading} type='submit' className='mt-7 w-40'>
             {children}
           </Button>
           <Button type='reset' onClick={handleClose} className='mt-7 w-40 bg-gray-600 tex hover:bg-neutral-500'>Cerrar</Button>
