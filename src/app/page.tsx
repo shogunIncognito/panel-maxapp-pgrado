@@ -64,10 +64,10 @@ export default function Login (): JSX.Element {
   }
 
   return (
-    <div className='w-full text-black h-screen max-h-screen flex-col md:flex-row overflow-hidden flex justify-center items-center'>
+    <div className='w-full text-black h-screen max-h-screen flex-col md:flex-row overflow-hidden flex items-center'>
       <section className='flex w-full justify-center items-center md:w-1/2 lg:w-1/3 bg-neutral-50 h-full relative'>
         <form onSubmit={handleSubmit} className='w-3/4 2xl:w-1/2 text-black relative rounded-md font-bold gap-4 p-6 py-10 mb-10 flex flex-col'>
-          <Image className='self-center select-none pointer-events-none object-cover h-auto mb-4 w-44' alt='loginLogo' src={Logo} />
+          <Image className='self-center select-none pointer-events-none object-cover h-auto mb-4 w-32 lg:w-44' alt='loginLogo' src={Logo} />
           <div className='flex flex-col gap-1'>
             <label className='text-md opacity-70' htmlFor='username'>Usuario</label>
             <Input className='bg-white shadow dark:text-black text-gray-700 p-1.5' value={values.username} onChange={handleChange} id='username' type='text' name='username' />

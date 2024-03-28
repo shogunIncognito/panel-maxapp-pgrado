@@ -113,8 +113,8 @@ export default function UserSettings (): JSX.Element {
         </div>
       </div>
 
-      <ModalBackdrop open={open} className='p-0 overflow-visible max-w-[480px] w-[480px] mx-5 ring-1 rounded-lg dark:ring-slate-600'>
-        <div className='flex flex-col gap-6 flex-1 p-3.5'>
+      <ModalBackdrop open={open} className='p-0 md:p-2 overflow-visible max-w-[480px] w-[480px] mx-5 ring-1 rounded-lg dark:ring-slate-600'>
+        <div className='flex flex-col gap-6 flex-1 p-2.5'>
           <header className='w-full dark:bg-gray-700/30 rounded-lg text-center flex p-1.5 relative'>
             <span onClick={() => setSettingsView('username')} className={`flex-1 cursor-pointer opacity-80 rounded-md p-0.5 ${settingsView === 'username' ? 'dark:bg-black/80 bg-gray-700 text-white' : ''}`}>Cuenta</span>
             <span onClick={() => setSettingsView('password')} className={`flex-1 cursor-pointer opacity-80 rounded-md p-0.5 ${settingsView === 'password' ? 'dark:bg-black/80 bg-gray-700 text-white' : ''}`}>Contraseña</span>
@@ -123,7 +123,7 @@ export default function UserSettings (): JSX.Element {
             ? (
               <section className='flex h-full flex-col px-3'>
                 <h2 className='mb-2 capitalize text-md'>Nombre de usuario</h2>
-                <p className='normal-case opacity-80'>Haz cambios en tu nombre y guardalo cuando termines</p>
+                <p className='normal-case opacity-80'>Haz cambios en tu nombre y guárdalo cuando termines</p>
 
                 <form name='toUsername' onSubmit={handleSubmit} className='flex h-full gap-5 flex-col'>
                   <div className='flex flex-1 mt-6 gap-2 flex-col'>

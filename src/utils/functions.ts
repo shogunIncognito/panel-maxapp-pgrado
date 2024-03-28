@@ -33,8 +33,8 @@ export const getObjectsDiff = (obj: UnknownObject, objTwo: UnknownObject): Unkno
 export const validateFormValues = (values: UnknownObject): { valid: boolean, message: string } => {
   const currentYear = new Date().getFullYear()
 
-  if (values.owners < 0) return { valid: false, message: 'El vehiculo tiene que tener minimo 1 dueño' }
-  if (values.kilometers < 0) return { valid: false, message: 'Los kilometros no pueden ser negativos' }
+  if (values.owners < 0) return { valid: false, message: 'El vehículo tiene que tener mínimo 1 dueño' }
+  if (values.kilometers < 0) return { valid: false, message: 'Los kilómetros no pueden ser negativos' }
   if (values.price < 0) return { valid: false, message: 'El precio no puede ser negativo' }
   if (values.model < 2000 || values.model > currentYear) return { valid: false, message: `El modelo tiene que estar entre 2000 y ${currentYear}` }
   if (values.plate.length !== 6) return { valid: false, message: 'La placa tiene que tener 6 caracteres' }

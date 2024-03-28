@@ -69,7 +69,7 @@ export default function UserImage ({ image }: { image: string | undefined }): JS
     } finally {
       setImage(prev => ({ ...prev, loading: false, newImage: undefined, deleteImage: false }))
       handleClose()
-      // esto va actualizar la sesion
+      // esto va actualizar la sesión
       void signIn()
     }
   }
