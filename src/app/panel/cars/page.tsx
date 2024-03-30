@@ -20,6 +20,7 @@ import { CarDTO } from '@/types'
 import { useSession } from 'next-auth/react'
 import ModalBackdrop from '@/components/ModalBackdrop'
 import { motion, AnimatePresence } from 'framer-motion'
+import CarPDFDownload from '@/components/pdf/CarPDFDownload'
 
 export default function page (): JSX.Element {
   const { cars, reFetch, loading } = useCarsStore()
@@ -96,6 +97,7 @@ export default function page (): JSX.Element {
 
         <CarFilter cars={cars} setCars={dispatchAction} />
 
+        <CarPDFDownload cars={cars} />
       </div>
 
       <div className='relative flex-1 w-full h-full max-h-max overflow-auto'>
