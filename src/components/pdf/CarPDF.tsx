@@ -1,4 +1,4 @@
-import { Page, Text, View, Document } from '@react-pdf/renderer'
+import { Document, Page, Text, View } from '@react-pdf/renderer'
 import { tableStyles } from './styles'
 import { CarDTO } from '@/types'
 

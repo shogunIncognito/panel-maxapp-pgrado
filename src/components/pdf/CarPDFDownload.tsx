@@ -1,7 +1,7 @@
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import Button from '../Button'
 import CarsPDF from './CarPDF'
 import { CarDTO } from '@/types'
+import Button from '../Button'
 
 export default function CarPDFDownload ({ cars }: { cars: CarDTO[] }): JSX.Element {
   return (
