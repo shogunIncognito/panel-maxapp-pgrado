@@ -41,8 +41,9 @@ export const uploadUserImage = async (userId: string, image: File): Promise<stri
   return await getDownloadURL(imagesRef)
 }
 
-export const deleteUserImage = async (image: string | undefined): Promise<Boolean> => {
-  if (image === undefined) return true
+export const deleteUserImage = async (image: string | undefined | null): Promise<Boolean> => {
+  if (image === undefined || image === null) return true
+
   const delRef = ref(storage, image)
   await deleteObject(delRef)
   return true
