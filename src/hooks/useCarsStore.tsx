@@ -18,7 +18,7 @@ const useCarsStore = create<CarsState>((set) => ({
   cars: [],
   brands: [],
   loading: true,
-  addCar: (car) => set((state) => ({ cars: [...state.cars, car] })),
+  addCar: (car) => set((state) => ({ cars: [car, ...state.cars] })),
   deleteCar: (id) => set((state) => ({ cars: state.cars.filter((car) => car._id !== id) })),
   reFetch: (token) => {
     Promise.all([getCars(), getBrands(token)])
