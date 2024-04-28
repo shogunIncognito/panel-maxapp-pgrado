@@ -156,7 +156,7 @@ export default function Stats (): JSX.Element {
 
   return (
     <section className='p-3 relative overflow-auto'>
-      <h2 className='sm:hidden text-sm opacity-70 text-center mb-5'>Para observar mejor las gráficas gira tu dispositivo horizontalmente</h2>
+      <h2 className='sm:hidden text-sm opacity-70 text-center mb-5 dark:text-white text-black'>Para observar mejor las gráficas gira tu dispositivo horizontalmente</h2>
       <Bar options={optionsMonth} data={monthsStats} className='lg:mb-20 w-full' />
       <hr />
       <Line options={optionsDays} data={daysStats} className='lg:mt-20 w-full' />
