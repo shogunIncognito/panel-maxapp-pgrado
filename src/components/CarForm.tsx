@@ -38,6 +38,14 @@ export default function CarForm ({
       <form onSubmit={handleSubmit} className='overflow-auto lg:max-h-90[dvh] max-h-[80dvh]'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-5 p-1 pr-2'>
           <div className='flex flex-col gap-1 overflow-ellipsis'>
+            <label className='dark:text-white after:content-["*"] text-black whitespace-nowrap text-ellipsis overflow-hidden'>Mostrar en web</label>
+            <Select onChange={handleChange} value={values.show.toString()} name='show' id='show'>
+              <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value='true'>Sí</option>
+              <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value='false'>No</option>
+            </Select>
+          </div>
+
+          <div className='flex flex-col gap-1 overflow-ellipsis'>
             <label className='dark:text-white after:content-["*"] text-black whitespace-nowrap text-ellipsis overflow-hidden'>Marca</label>
             <Select onChange={handleChange} value={values.brand} name='brand' id='brand'>
               <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value='' disabled>Seleccione una marca</option>
@@ -91,7 +99,7 @@ export default function CarForm ({
                 </label>
                 <Input
                   onChange={handleChange}
-                  value={values[input.name as keyof CreateCarDTO]}
+                  value={values[input.name as keyof CreateCarDTO].toString()}
                   required={input.name !== 'description'}
                   className='p-2'
                   type={input.type}

@@ -15,6 +15,7 @@ export interface CarDTO {
   owners: string
   plate: string
   color: string
+  show: boolean
   createdAt: string
   updatedAt: string
 }
@@ -35,6 +36,7 @@ export interface UpdateCarDTO {
   owners?: string
   plate?: string
   color?: string
+  show?: boolean
 }
 
 export interface CreateCarDTO extends Omit<CarDTO, '_id' | 'createdAt' | 'updatedAt' | 'images' | 'preview'> {}
