@@ -14,7 +14,7 @@ import { twMerge } from 'tailwind-merge'
 
 export default function Brands ({ className }: { className?: string }): JSX.Element {
   const { open, handleClose, handleOpen } = useDisclosure()
-  const { reFetch, brands, loading: brandsLoading } = useCarsStore()
+  const { fetchBrands, brands, loading: brandsLoading } = useCarsStore()
   const { data: session } = useSession()
   const [loading, setLoading] = useState(false)
   const [brand, setBrand] = useState({
@@ -34,7 +34,7 @@ export default function Brands ({ className }: { className?: string }): JSX.Elem
     createBrand(brand.brandToAdd, session?.user.token)
       .then(() => {
         toast.success('Marca creada')
-        reFetch(session?.user.token)
+        fetchBrands(session?.user.token)
         setBrand({ ...brand, brandToAdd: '' })
       })
       .catch(err => toast.error(createBrandCodes[err.response.status] || 'Error al crear marca'))
@@ -55,7 +55,7 @@ export default function Brands ({ className }: { className?: string }): JSX.Elem
     deleteBrand(brand.brandToDelete, session?.user.token)
       .then(() => {
         toast.success('Marca eliminada')
-        reFetch(session?.user.token)
+        fetchBrands(session?.user.token)
         setBrand({
           ...brand,
           brandToDelete: brands[0]?._id

@@ -23,7 +23,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import CarPDFDownload from '@/components/pdf/CarPDFDownload'
 
 export default function page (): JSX.Element {
-  const { cars, reFetch, sortCars, fetchCars, loading } = useCarsStore()
+  const { cars, sortCars, fetchCars, loading } = useCarsStore()
   const [{
     selectedCar,
     carToDelete,
@@ -54,7 +54,7 @@ export default function page (): JSX.Element {
       await Promise.all([deleteCarsImages(carsImages), deleteCar(carsSelected, session?.user.token)])
 
       toast.success('Autos eliminados')
-      reFetch(session?.user.token)
+      fetchCars(1)
     } catch (error) {
       toast.error('Error al eliminar los autos')
     } finally {

@@ -20,9 +20,9 @@ export const login = async (user: { username: string, password: string }): Promi
 export const getCars = async (page: number, filter?: string | {
   value: string
   option: string
-}, sortBy = ''): Promise<ApiCarDTO> => {
+}): Promise<ApiCarDTO> => {
   const filterValue = filter === undefined ? '' : typeof filter === 'string' ? filter : `${filter.option}=${filter.value}`
-  const response = await api.get(`/cars?page=${page}&limit=${carsItemsPerPage}&${filterValue}&sort=${sortBy}`)
+  const response = await api.get(`/cars?page=${page}&limit=${carsItemsPerPage}&${filterValue}`)
   return response.data
 }
 

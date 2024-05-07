@@ -18,7 +18,7 @@ interface UpdateCarProps {
 }
 
 export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarProps): JSX.Element {
-  const { reFetch, brands } = useCarsStore()
+  const { reFetch, fetchCars, brands } = useCarsStore()
   const { data: session } = useSession()
   const [values, setValues] = useState(selectedCar)
   const [loading, setLoading] = useState(false)
@@ -69,7 +69,7 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
 
       await updateCar(selectedCar._id, valuesToUpdate, session?.user.token)
 
-      reFetch(session?.user.token)
+      fetchCars(1)
       handleClose()
       toast.success('Auto actualizado')
     } catch (error: any) {

@@ -16,6 +16,7 @@ interface CarsState {
     value: string
     option: string
   }) => void
+  fetchBrands: (token: string | undefined) => void
   reFetch: (token: string | undefined) => void
   sortCars: (header: string) => void
 }
@@ -30,6 +31,12 @@ const useCarsStore = create<CarsState>((set) => ({
   fetchCars: (page, filter) => {
     getCars(page, filter)
       .then((cars) => set({ cars: cars.result }))
+      .catch((err) => console.log(err))
+      .finally(() => set({ loading: false }))
+  },
+  fetchBrands: (token) => {
+    getBrands(token)
+      .then((brands) => set({ brands }))
       .catch((err) => console.log(err))
       .finally(() => set({ loading: false }))
   },
