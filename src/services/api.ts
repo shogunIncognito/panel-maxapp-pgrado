@@ -1,11 +1,13 @@
 import axios from 'axios'
 import { API_URL } from '@/utils/envconfig'
-import { BrandType, CarDTO, CreateCarDTO, CreateUserDTO, StatsDTO, UpdateCarDTO, UpdateUserDTO, UserDTO } from '@/types'
+import { ApiCarDTO, BrandType, CarDTO, CreateCarDTO, CreateUserDTO, StatsDTO, UpdateCarDTO, UpdateUserDTO, UserDTO } from '@/types'
 import { TypeUserUpdate } from '@/enums'
 
 const api = axios.create({
   baseURL: API_URL
 })
+
+const carsItemsPerPage = 5
 
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 const auth = (token: string | undefined): { headers: { authorization: string } } => ({ headers: { authorization: `Bearer ${token}` } })
@@ -15,8 +17,12 @@ export const login = async (user: { username: string, password: string }): Promi
   return response.data
 }
 
-export const getCars = async (): Promise<CarDTO[]> => {
-  const response = await api.get('/cars')
+export const getCars = async (page: number, filter?: string | {
+  value: string
+  option: string
+}, sortBy = ''): Promise<ApiCarDTO> => {
+  const filterValue = filter === undefined ? '' : typeof filter === 'string' ? filter : `${filter.option}=${filter.value}`
+  const response = await api.get(`/cars?page=${page}&limit=${carsItemsPerPage}&${filterValue}&sort=${sortBy}`)
   return response.data
 }
 

@@ -20,6 +20,12 @@ export interface CarDTO {
   updatedAt: string
 }
 
+export interface ApiCarDTO {
+  result: CarDTO[]
+  totalPages: number
+  currentPage: number
+}
+
 export interface UpdateCarDTO {
   brand?: string
   model?: string

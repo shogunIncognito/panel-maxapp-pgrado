@@ -1,5 +1,3 @@
-import { CarDTO } from '@/types'
-
 interface UnknownObject {
   [key: string]: any
 }
@@ -11,12 +9,6 @@ export const objectHasEmptyValues = (obj: UnknownObject): boolean => {
   }
   return false
 }
-
-export const filterCars = (cars: CarDTO[], filters: { value: string, option: string }): CarDTO[] => (
-  cars.filter(car => {
-    return String(car[filters.option as keyof CarDTO]).toLocaleLowerCase().includes(filters.value.toLowerCase())
-  })
-)
 
 export const getObjectsDiff = (obj: UnknownObject, objTwo: UnknownObject): UnknownObject => {
   const diff: UnknownObject = {}

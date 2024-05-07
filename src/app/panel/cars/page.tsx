@@ -23,11 +23,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import CarPDFDownload from '@/components/pdf/CarPDFDownload'
 
 export default function page (): JSX.Element {
-  const { cars, reFetch, loading } = useCarsStore()
+  const { cars, reFetch, sortCars, fetchCars, loading } = useCarsStore()
   const [{
     selectedCar,
     carToDelete,
-    filteredCars,
     carsSelected,
     carPreviewToChange,
     sortingBy
@@ -37,8 +36,8 @@ export default function page (): JSX.Element {
   const dispatchAction = (type: ActionTypes, payload: any): void => dispatch({ type, payload })
 
   useEffect(() => {
-    dispatchAction(ActionTypes.SET_FILTERED_CARS, cars)
-  }, [cars])
+    fetchCars(1)
+  }, [])
 
   if (loading) return <Spinner />
 
@@ -64,8 +63,7 @@ export default function page (): JSX.Element {
   }
 
   const sortByHeader = (header: string): void => {
-    const sortedCars = [...filteredCars].sort((a, b) => String(b[header as keyof CarDTO]).localeCompare(String(a[header as keyof CarDTO]), 'es', { numeric: true }))
-    dispatchAction(ActionTypes.SET_FILTERED_CARS, sortedCars)
+    sortCars(header)
     dispatchAction(ActionTypes.SET_SORTING_BY, header)
   }
 
@@ -95,7 +93,7 @@ export default function page (): JSX.Element {
           </AnimatePresence>
         </div>
 
-        <CarFilter cars={cars} setCars={dispatchAction} />
+        <CarFilter />
 
         <CarPDFDownload cars={cars} />
       </div>
@@ -124,7 +122,7 @@ export default function page (): JSX.Element {
               </tr>
             )}
 
-            {filteredCars.length === 0 && !loading && cars.length > 0 && (
+            {cars.length === 0 && !loading && cars.length > 0 && (
               <tr className='border-b border-green-800/90'>
                 <td colSpan={11} className='px-6 py-4 font-medium whitespace-nowrap text-white'>
                   No hay autos que coincidan con el filtro
@@ -132,7 +130,7 @@ export default function page (): JSX.Element {
               </tr>
             )}
 
-            {filteredCars.map((car) => (
+            {cars.map((car) => (
               <tr key={car._id} className='bg-transparent border-b border-green-800/90 text-neutral-600 dark:text-white'>
                 <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap'>
                   <input onClick={() => addCarToList(car)} type='checkbox' className='form-checkbox h-4 w-4 text-gray-500' />
