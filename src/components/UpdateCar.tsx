@@ -28,7 +28,7 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
     e.preventDefault()
 
     // el id no se actualiza
-    const { description, preview, _id, ...restOfForm } = values
+    const { preview, _id, ...restOfForm } = values
 
     if (values.images.length === 0) {
       toast.error('Debe agregar una imagen')
@@ -45,7 +45,7 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
       return [...acc, curr.file]
     }, [])
 
-    const valuesToUpdate = getObjectsDiff(selectedCar, { ...values, description })
+    const valuesToUpdate = getObjectsDiff(selectedCar, values)
 
     if (Object.keys(valuesToUpdate).length === 0 && urlsToUpload.length === 0) {
       toast.error('No hay cambios')

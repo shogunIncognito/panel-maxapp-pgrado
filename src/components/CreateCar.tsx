@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { createCar, updateCar } from '@/services/api'
+import { createCar } from '@/services/api'
 import useCarsStore from '@/hooks/useCarsStore'
 import { objectHasEmptyValues, validateFormValues } from '@/utils/functions'
 import toast from 'react-hot-toast'
@@ -26,7 +26,6 @@ const carInitialValues: CreateCarDTO = {
   model: '',
   line: '',
   plate: '',
-  description: '',
   color: '',
   cc: 1.0,
   show: true
@@ -38,15 +37,15 @@ const carInitialValues: CreateCarDTO = {
 //   fuel: 'corriente',
 //   transmission: 'manual',
 //   type: 'automovil',
-//   owners: 2,
-//   kilometers: 25000,
-//   price: 35000000,
-//   model: 2022,
+//   owners: '2',
+//   kilometers: '25000',
+//   price: '35000000',
+//   model: '2022',
 //   line: 'captiva sport',
 //   plate: 'xhg345',
-//   description: 'pelo',
 //   color: 'rojo',
-//   cc: 1.4
+//   cc: 1.4,
+//   show: true
 // }
 
 export default function CreateCar ({ className }: { className?: string }): JSX.Element {
@@ -77,19 +76,17 @@ export default function CreateCar ({ className }: { className?: string }): JSX.E
     e.preventDefault()
     if (!open) return
 
-    const { description, ...restOfForm } = values
-
     if (images.length === 0) {
       toast.error('Debe agregar una imagen')
       return
     }
 
-    if (objectHasEmptyValues(restOfForm)) {
+    if (objectHasEmptyValues(values)) {
       toast.error('Todos los campos son obligatorios')
       return
     }
 
-    const isValidForm = validateFormValues(restOfForm)
+    const isValidForm = validateFormValues(values)
 
     if (!isValidForm.valid) {
       toast.error(isValidForm.message)
@@ -100,14 +97,12 @@ export default function CreateCar ({ className }: { className?: string }): JSX.E
 
     try {
       setLoading(true)
-      const newCar = await createCar({ ...restOfForm, description }, session?.user.token)
 
-      const uploadedCarImage = await uploadCarsImages(urlsToUpload, newCar.plate)
-      const carWithImages = await updateCar(newCar._id, { images: uploadedCarImage }, session?.user.token)
+      const uploadedCarImage = await uploadCarsImages(urlsToUpload, values.plate)
+      const newCar = await createCar({ ...values, images: uploadedCarImage }, session?.user.token)
 
       setImages([])
-
-      addCar(carWithImages)
+      addCar(newCar)
 
       toast.success('Auto agregado')
     } catch (error: any) {

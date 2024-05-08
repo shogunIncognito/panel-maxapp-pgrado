@@ -2,7 +2,6 @@ export interface CarDTO {
   _id: string
   brand: string
   model: string
-  description: string
   line: string
   kilometers: string
   images: string[]
@@ -29,7 +28,6 @@ export interface ApiCarDTO {
 export interface UpdateCarDTO {
   brand?: string
   model?: string
-  description?: string
   line?: string
   kilometers?: string
   images?: string[]
@@ -45,7 +43,9 @@ export interface UpdateCarDTO {
   show?: boolean
 }
 
-export interface CreateCarDTO extends Omit<CarDTO, '_id' | 'createdAt' | 'updatedAt' | 'images' | 'preview'> {}
+export interface CreateCarDTO extends Omit<CarDTO, '_id' | 'createdAt' | 'updatedAt' | 'preview'> {
+  images?: string[]
+}
 
 export interface UserDTO {
   _id: string

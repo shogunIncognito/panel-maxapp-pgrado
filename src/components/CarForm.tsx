@@ -99,7 +99,7 @@ export default function CarForm ({
                 </label>
                 <Input
                   onChange={handleChange}
-                  value={values[input.name as keyof CreateCarDTO].toString()}
+                  value={values[input.name as keyof CreateCarDTO]?.toString() ?? ''}
                   required={input.name !== 'description'}
                   className='p-2'
                   type={input.type}
