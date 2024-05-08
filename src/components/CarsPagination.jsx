@@ -6,12 +6,12 @@ export default function CarsPagination () {
   const { pagination, fetchCars, cars } = useCarsStore()
 
   const handlePageChange = (page) => {
-    if (page < 1 || page > pagination.totalPages) return
+    if (page < 1 || page > pagination.totalPages || page === pagination.currentPage) return
     fetchCars(page)
   }
 
   return (
-    <div className='flex items-center justify-between border-t text-gray-700 dark:text-white border-gray-300 px-4 py-3 sm:px-6'>
+    <div className='flex items-center justify-between border-t border-b dark:border-b-gray-700 text-gray-700 dark:text-white border-gray-300 px-4 py-3 sm:px-6'>
       <div className='flex flex-1 items-center justify-between sm:hidden'>
         <button
           onClick={() => handlePageChange(pagination.currentPage - 1)}
