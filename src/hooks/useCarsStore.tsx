@@ -5,6 +5,10 @@ import { create } from 'zustand'
 interface CarsState {
   cars: CarDTO[]
   originalCars: CarDTO[]
+  pagination: {
+    currentPage: number
+    totalPages: number
+  }
   brands: Array<{
     _id: string
     name: string
@@ -24,13 +28,17 @@ interface CarsState {
 const useCarsStore = create<CarsState>((set) => ({
   cars: [],
   originalCars: [],
+  pagination: {
+    currentPage: 1,
+    totalPages: 0
+  },
   brands: [],
   loading: true,
   addCar: (car) => set((state) => ({ cars: [car, ...state.cars] })),
   deleteCar: (id) => set((state) => ({ cars: state.cars.filter((car) => car._id !== id) })),
   fetchCars: (page, filter) => {
     getCars(page, filter)
-      .then((cars) => set({ cars: cars.result }))
+      .then((cars) => set({ cars: cars.result, pagination: { currentPage: cars.currentPage, totalPages: cars.totalPages } }))
       .catch((err) => console.log(err))
       .finally(() => set({ loading: false }))
   },

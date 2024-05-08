@@ -21,6 +21,7 @@ import { useSession } from 'next-auth/react'
 import ModalBackdrop from '@/components/ModalBackdrop'
 import { motion, AnimatePresence } from 'framer-motion'
 import CarPDFDownload from '@/components/pdf/CarPDFDownload'
+import CarsPagination from '@/components/CarsPagination'
 
 export default function page (): JSX.Element {
   const { cars, sortCars, fetchCars, loading } = useCarsStore()
@@ -187,6 +188,10 @@ export default function page (): JSX.Element {
           </tbody>
         </table>
       </div>
+
+      {/* // Pagination */}
+      <CarsPagination />
+      {/* // Pagination */}
 
       <ModalBackdrop open={selectedCar !== null}>
         {selectedCar !== null && <UpdateCar selectedCar={selectedCar} setSelectedCar={dispatchAction} />}

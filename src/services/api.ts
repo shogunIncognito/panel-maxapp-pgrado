@@ -7,7 +7,7 @@ const api = axios.create({
   baseURL: API_URL
 })
 
-const carsItemsPerPage = 5
+const carsItemsPerPage = 10
 
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 const auth = (token: string | undefined): { headers: { authorization: string } } => ({ headers: { authorization: `Bearer ${token}` } })
