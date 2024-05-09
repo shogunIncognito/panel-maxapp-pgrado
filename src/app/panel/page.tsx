@@ -42,7 +42,7 @@ export default function PanelLanding (): JSX.Element | null {
             <h2 className='text-2xl'>
               Administra los vehículos de la pagina web de
             </h2>
-            <Link href='https://maxautos.vercel.app/' target='_blank' className='text-indigo-500 font-bold text-2xl' rel='noreferrer'><span className='text-white'>Car</span>Sllen</Link>
+            <Link href='https://landing-page-maxautos-3xr7.vercel.app/' target='_blank' className='text-indigo-500 font-bold text-2xl' rel='noreferrer'><span className='text-white'>Car</span>Sllen</Link>
           </div>
 
           <Image src={panelimg3} alt='panelimg3' fill sizes='(max-width: 768px) 600px, (max-width: 1200px) 500px' className='object-cover rounded' />

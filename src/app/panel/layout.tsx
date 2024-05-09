@@ -145,7 +145,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
       {/* Desktop Layout */}
       <aside className='border-gray-200/10 px-3 w-60 lg:w-72 border-r-2 dark:bg-[#171923] bg-slate-100 hidden relative md:flex md:flex-col h-screen shadow-xl dark:text-white'>
 
-        <Link href='https://maxautos.vercel.app/'>
+        <Link href='https://landing-page-maxautos-3xr7.vercel.app/'>
           <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none select-none m-auto h-auto my-8 object-cover' />
         </Link>
 
