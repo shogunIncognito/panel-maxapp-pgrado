@@ -92,7 +92,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
           <div onClick={handleOpen} className='ml-3 z-20'>
             <MenuIcon className='w-8 border rounded-lg invert dark:invert-0 border-gray-700/70' />
           </div>
-          <Link href='/panel' className='text-center absolute w-full m-auto mt-0 text-2xl -z-0 font-bold'>Max<span className='text-blue-500'>Autos</span></Link>
+          <Link href='/panel' className='text-center absolute w-full m-auto mt-0 text-2xl -z-0 font-bold'>Car<span className='text-indigo-500'>Sellen</span></Link>
           <div className='flex items-center gap-2 mr-3 z-20'>
             <UserImage image={session?.user.image} />
             <UserSettings />
@@ -116,7 +116,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
           </span>
           <CloseIcon onClick={handleClose} className='w-12 m-2 self-end cursor-pointer' />
         </div>
-        <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert-0 dark:invert select-none m-auto my-0 mb-2 object-cover h-auto' />
+        <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none select-none m-auto my-0 mb-2 object-cover h-auto' />
 
         <nav className='flex flex-col p-4'>
           {
@@ -138,7 +138,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         </nav>
 
         <div className='min-h-fit absolute pointer-events-none bottom-5 self-center'>
-          <p className='text-center text-xs opacity-50'>Max<span className='text-blue-500'>Autos</span></p>
+          <p className='text-center text-xs opacity-50'>Car<span className='text-blue-500'>Sellen</span></p>
         </div>
       </aside>
 
@@ -146,7 +146,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
       <aside className='border-gray-200/10 px-3 w-60 lg:w-72 border-r-2 dark:bg-[#171923] bg-slate-100 hidden relative md:flex md:flex-col h-screen shadow-xl dark:text-white'>
 
         <Link href='https://maxautos.vercel.app/'>
-          <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none invert-0 dark:invert select-none m-auto h-auto my-8 object-cover' />
+          <Image src={sideImage} width={140} priority alt='sideimage' className='pointer-events-none select-none m-auto h-auto my-8 object-cover' />
         </Link>
 
         <nav className='flex flex-col overflow-auto gap-2'>
@@ -166,7 +166,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         </nav>
 
         <div className='min-h-fit horizontal-hidden absolute pointer-events-none bottom-5 self-center'>
-          <p className='text-center text-xs opacity-60'>Max<span className='text-blue-500'>Autos</span></p>
+          <p className='text-center text-xs opacity-60'>Car<span className='text-blue-500'>Sellen</span></p>
         </div>
       </aside>
 

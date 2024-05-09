@@ -11,7 +11,7 @@ export default function CarsPDF ({ cars }: { cars: CarDTO[] }): JSX.Element {
 
           <View style={tableStyles.tableRow}>
             <View style={[tableStyles.bodyTableCol, { width: '100%' }]}>
-              <Text style={[tableStyles.tableCell, tableStyles.bodySubTitle]}>INVENTARIO MAX-AUTOS "USADOS QUE DAN CONFIANZA"</Text>
+              <Text style={[tableStyles.tableCell, tableStyles.bodySubTitle]}>INVENTARIO CAR-SELLEN "AUTOS A TODO MOTOR"</Text>
             </View>
           </View>
 

@@ -10,7 +10,7 @@ export default function NotFound (): JSX.Element {
         href='/panel'
         className='absolute top-4 left-4'
       >
-        <Image src={sideImage} alt='MaxAutos' className='lg:w-24 w-20 dark:text-gray-500' />
+        <Image src={sideImage} alt='CarSllen' className='lg:w-24 w-20 dark:text-gray-500' />
       </Link>
       <div className='space-y-2 m-1'>
         <FaSadTear className='text-8xl text-white/80 mx-auto invert dark:invert-0' />

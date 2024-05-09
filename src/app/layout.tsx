@@ -8,8 +8,8 @@ import SessionAuthProvider from '@/context/SessionProviderContext'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'MaxPanel',
-  description: 'Pagina de MaxAutos'
+  title: 'SllenPanel',
+  description: 'Panel de CarSellen'
 }
 
 export default function RootLayout ({
