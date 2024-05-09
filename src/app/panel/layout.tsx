@@ -92,7 +92,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
           <div onClick={handleOpen} className='ml-3 z-20'>
             <MenuIcon className='w-8 border rounded-lg invert dark:invert-0 border-gray-700/70' />
           </div>
-          <Link href='/panel' className='text-center absolute w-full m-auto mt-0 text-2xl -z-0 font-bold'>Car<span className='text-indigo-500'>Sellen</span></Link>
+          <Link href='/panel' className='text-center absolute w-full m-auto mt-0 text-2xl -z-0 font-bold'>Car<span className='text-indigo-500'>Sllen</span></Link>
           <div className='flex items-center gap-2 mr-3 z-20'>
             <UserImage image={session?.user.image} />
             <UserSettings />
@@ -138,7 +138,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         </nav>
 
         <div className='min-h-fit absolute pointer-events-none bottom-5 self-center'>
-          <p className='text-center text-xs opacity-50'>Car<span className='text-blue-500'>Sellen</span></p>
+          <p className='text-center text-xs opacity-50'>Car<span className='text-blue-500'>Sllen</span></p>
         </div>
       </aside>
 
@@ -166,7 +166,7 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         </nav>
 
         <div className='min-h-fit horizontal-hidden absolute pointer-events-none bottom-5 self-center'>
-          <p className='text-center text-xs opacity-60'>Car<span className='text-blue-500'>Sellen</span></p>
+          <p className='text-center text-xs opacity-60'>Car<span className='text-blue-500'>Sllen</span></p>
         </div>
       </aside>
 

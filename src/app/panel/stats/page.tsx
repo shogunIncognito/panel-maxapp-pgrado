@@ -38,7 +38,7 @@ const optionsMonth = {
     },
     title: {
       display: true,
-      text: `Visitas mensuales a la web de CarSellen en ${new Date().getFullYear()}`,
+      text: `Visitas mensuales a la web de CarSllen en ${new Date().getFullYear()}`,
       font: {
         size: 20
       }
@@ -75,7 +75,7 @@ const optionsDays = {
     },
     title: {
       display: true,
-      text: 'Visitas diarias en el mes a la web de CarSellen',
+      text: 'Visitas diarias en el mes a la web de CarSllen',
       font: {
         size: 20
       }
