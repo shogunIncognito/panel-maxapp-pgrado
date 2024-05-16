@@ -180,7 +180,7 @@ export default function page (): JSX.Element {
                     Editar
                   </Button>
                   <Button onClick={() => dispatchAction(ActionTypes.SET_CAR_TO_DELETE, car)} className='w-full mt-1 bg-[#FBD38D] hover:bg-yellow-500 font-semibold text-black/70 py-2 px-4'>
-                    Eliminar
+                    Eliminar/Vendido
                   </Button>
                 </td>
               </tr>

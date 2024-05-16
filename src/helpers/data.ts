@@ -129,6 +129,11 @@ export const userRoutes = [
     label: 'Autos',
     icon: FaCarAlt,
     path: '/panel/cars'
+  },
+  {
+    label: 'Transacciones',
+    icon: BiStats,
+    path: '/panel/transactions'
   }
 ]
 
@@ -140,5 +145,29 @@ export const navRouteMsg: NavRouteMsg = {
   '/panel': 'Panel de administración',
   '/panel/cars': 'Autos',
   '/panel/users': 'Usuarios',
-  '/panel/stats': 'Estadísticas'
+  '/panel/stats': 'Estadísticas',
+  '/panel/transactions': 'Transacciones'
 }
+
+export const transactionsTableHeaders = [
+  {
+    label: 'ID',
+    value: 'id'
+  },
+  {
+    label: 'Fecha',
+    value: 'date'
+  },
+  {
+    label: 'Comprador',
+    value: 'buyer'
+  },
+  {
+    label: 'Auto',
+    value: 'car'
+  },
+  {
+    label: 'Precio',
+    value: 'price'
+  }
+]

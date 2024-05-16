@@ -76,3 +76,22 @@ interface ViewsMonths {
 interface DaysMonthViews {
   [key]: number
 }
+
+interface CarBuyer {
+  cc: number
+  name: string
+  email: string
+  phone: number
+  createdAt: string
+  updatedAt: string
+}
+
+interface TransactionDTO {
+  _id: string
+  date: string
+  car: CarDTO
+  buyer: CarBuyer
+  price: string
+  createdAt: string
+  updatedAt: string
+}

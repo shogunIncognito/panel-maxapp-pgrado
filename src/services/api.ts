@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_URL } from '@/utils/envconfig'
-import { BrandType, CarDTO, CreateCarDTO, CreateUserDTO, StatsDTO, UpdateCarDTO, UpdateUserDTO, UserDTO } from '@/types'
+import { BrandType, CarDTO, CreateCarDTO, CreateUserDTO, StatsDTO, TransactionDTO, UpdateCarDTO, UpdateUserDTO, UserDTO } from '@/types'
 import { TypeUserUpdate } from '@/enums'
 
 const api = axios.create({
@@ -93,5 +93,12 @@ export const deleteCarImageFromApi = async (id: string, images: string[], token:
 // Stats endpoints
 export const getStats = async (token: string | undefined): Promise<StatsDTO> => {
   const response = await api.get('/stats', auth(token))
+  return response.data
+}
+
+// Transactions endpoints
+
+export const getTransactions = async (): Promise<TransactionDTO[]> => {
+  const response = await api.get('/transactions')
   return response.data
 }
