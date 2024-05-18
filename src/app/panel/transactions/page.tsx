@@ -5,6 +5,7 @@ import Spinner from '@/components/Spinner'
 import { transactionsTableHeaders } from '@/helpers/data'
 import { getTransactions } from '@/services/api'
 import { TransactionDTO } from '@/types'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export default function page (): JSX.Element {
@@ -24,7 +25,9 @@ export default function page (): JSX.Element {
   return (
     <>
       <div className='m-4'>
-        <Button onClick={() => console.log('Crear transacción')}>Crear transacción</Button>
+        <Link href='/panel/transactions/create'>
+          <Button>Crear transacción</Button>
+        </Link>
       </div>
 
       <div className='relative flex-1 w-full h-full max-h-max overflow-auto'>

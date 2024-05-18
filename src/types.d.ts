@@ -95,3 +95,15 @@ interface TransactionDTO {
   createdAt: string
   updatedAt: string
 }
+
+interface CreateTransactionDTO {
+  buyer: {
+    cc: number
+    name: string
+    email: string
+    phone: number
+  }
+  car: string
+  price: string
+  date: string
+}

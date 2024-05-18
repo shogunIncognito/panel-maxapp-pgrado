@@ -49,7 +49,7 @@ export default function DeleteCar ({ carToDelete, setCarToDelete }: DeleteCarPro
         >
           Eliminar
         </Button>
-        <Link href='/panel/transactions/create'>
+        <Link href={`/panel/transactions/create?id=${carToDelete._id}`}>
           <Button className='p-2 px-3 bg-orange-400 hover:bg-orange-600 text-black font-semibold'>
             Crear transacción
           </Button>
