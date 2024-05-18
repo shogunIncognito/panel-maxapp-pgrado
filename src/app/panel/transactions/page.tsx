@@ -1,6 +1,7 @@
 'use client'
 
 import Button from '@/components/Button'
+import ModalBackdrop from '@/components/ModalBackdrop'
 import Spinner from '@/components/Spinner'
 import { transactionsTableHeaders } from '@/helpers/data'
 import { getTransactions } from '@/services/api'
@@ -9,13 +10,14 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export default function page (): JSX.Element {
-  const [transactions, setTransaction] = useState<TransactionDTO[]>([])
+  const [transactions, setTransactions] = useState<TransactionDTO[]>([])
   const [loading, setLoading] = useState(false)
+  const [transaction, setTransaction] = useState<TransactionDTO | null>(null)
 
   useEffect(() => {
     setLoading(true)
     getTransactions()
-      .then((data) => setTransaction(data))
+      .then((data) => setTransactions(data))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false))
   }, [])
@@ -68,10 +70,13 @@ export default function page (): JSX.Element {
                   {transaction.car.line}
                 </td>
                 <td className='capitalize px-6 py-4'>
+                  {transaction.car.plate}
+                </td>
+                <td className='capitalize px-6 py-4'>
                   $ {Math.round(Number(transaction.price)).toLocaleString()}
                 </td>
                 <td className='capitalize px-6 py-4'>
-                  <Button onClick={() => console.log('Ver detalles')}>Ver detalles</Button>
+                  <Button onClick={() => setTransaction(transaction)}>Ver detalles</Button>
                 </td>
               </tr>
             ))}
@@ -79,6 +84,34 @@ export default function page (): JSX.Element {
           </tbody>
         </table>
       </div>
+
+      <ModalBackdrop open={transaction !== null}>
+        {transaction !== null && (
+          <>
+            <div className='p-4 m-2 rounded shadow-lg border'>
+              <h3 className='text-xl font-bold'>Datos comprador</h3>
+              <div className='flex gap-3 flex-wrap m-2 justify-center mt-3'>
+                <p className='text-white'>Cédula: {transaction.buyer.cc}</p>
+                <p className='text-white'>Nombre: {transaction.buyer.name}</p>
+                <p className='text-white'>Correo: {transaction.buyer.email}</p>
+                <p className='text-white'>Teléfono: {transaction.buyer.phone}</p>
+              </div>
+
+              <h3 className='text-xl font-bold'>Datos compra</h3>
+              <div className='flex gap-3 flex-wrap m-2 justify-center mt-3'>
+                <p className='text-white'>Precio: $ {Math.round(Number(transaction.price)).toLocaleString()}</p>
+                <p className='text-white'>Fecha: {transaction.date.split('T')[0]}</p>
+                <p className='text-white'>Auto: {transaction.car.brand} {transaction.car.line} {transaction.car.model}</p>
+                <p className='text-white'>Placa: {transaction.car.plate}</p>
+              </div>
+            </div>
+
+            <img src={transaction.car.images[0]} alt={transaction.car.plate} className='w-36 h-36 my-2 object-cover mx-auto' />
+
+            <Button onClick={() => setTransaction(null)}>Cerrar</Button>
+          </>
+        )}
+      </ModalBackdrop>
     </>
   )
 }

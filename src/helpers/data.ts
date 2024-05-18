@@ -167,6 +167,10 @@ export const transactionsTableHeaders = [
     value: 'car'
   },
   {
+    label: 'Placa',
+    value: 'plate'
+  },
+  {
     label: 'Precio',
     value: 'price'
   }

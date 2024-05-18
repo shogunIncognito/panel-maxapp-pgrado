@@ -85,31 +85,31 @@ export default function page (): JSX.Element {
   return (
     <section className='p-2'>
       <h1 className='text-xl mb-4'>Crear transacción</h1>
-      <form className='mx-32' onSubmit={handleSubmit}>
-        <div className='flex gap-2'>
+      <form className='md:mx-14 lg:mx-32' onSubmit={handleSubmit}>
+        <div className='flex gap-2 flex-col md:flex-row'>
           <div className='mt-5 bg-blue-950 p-4 flex-1 rounded shadow-lg border'>
             <h3 className='text-xl font-bold'>Datos comprador</h3>
             <div className='flex gap-3 flex-wrap m-2 justify-center mt-3'>
-              <Input onChange={handleChange} name='cc' value={values.cc} type='text' placeholder='Cédula' />
-              <Input onChange={handleChange} name='name' value={values.name} type='text' placeholder='Nombre' />
-              <Input onChange={handleChange} name='email' value={values.email} type='text' placeholder='Correo' />
-              <Input onChange={handleChange} name='phone' value={values.phone} type='text' placeholder='Teléfono' />
+              <Input required onChange={handleChange} name='cc' value={values.cc} type='text' placeholder='Cédula' />
+              <Input required onChange={handleChange} name='name' value={values.name} type='text' placeholder='Nombre' />
+              <Input required onChange={handleChange} name='email' value={values.email} type='email' placeholder='Correo' />
+              <Input required onChange={handleChange} name='phone' value={values.phone} type='number' placeholder='Teléfono' />
             </div>
           </div>
 
           <div className='mt-5 bg-blue-950 p-4 flex-1 rounded shadow-lg border'>
             <h3 className='text-xl font-bold'>Datos compra</h3>
             <div className='flex gap-3 flex-wrap m-2 justify-center mt-3'>
-              <Input onChange={handleChange} name='price' value={values.price} type='text' placeholder='Precio' />
-              <Input onChange={handleChange} name='date' value={values.date} type='date' placeholder='Fecha' />
-              <Select onChange={handleChange} name='car' value={values.car}>
+              <Input required onChange={handleChange} name='price' value={values.price} type='text' placeholder='Precio' />
+              <Input required onChange={handleChange} name='date' value={values.date} type='date' placeholder='Fecha' />
+              <Select required onChange={handleChange} name='car' value={values.car}>
                 <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value=''>Seleccione un auto</option>
                 {cars.map((car) => (
-                  <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={car._id} value={car._id}>{car.model} {car.line}</option>
+                  <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' key={car._id} value={car._id}>{car.brand} {car.line} {car.model}</option>
                 ))}
               </Select>
-              {(car !== null) && <img src={car.images[0]} alt={car.plate} className='w-28 h-28 object-cover' />}
             </div>
+            {(car !== null) && <img src={car.images[0]} alt={car.plate} className='w-28 h-28 object-cover mx-auto' />}
           </div>
         </div>
 

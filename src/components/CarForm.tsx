@@ -39,7 +39,7 @@ export default function CarForm ({
         <div className='grid grid-cols-1 md:grid-cols-3 gap-5 p-1 pr-2'>
           <div className='flex flex-col gap-1 overflow-ellipsis'>
             <label className='dark:text-white after:content-["*"] text-black whitespace-nowrap text-ellipsis overflow-hidden'>Mostrar en web</label>
-            <Select onChange={handleChange} value={values.show.toString()} name='show' id='show'>
+            <Select onChange={handleChange} value={values.show?.toString()} name='show' id='show'>
               <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value='true'>Sí</option>
               <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value='false'>No</option>
             </Select>
