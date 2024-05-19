@@ -1,16 +1,19 @@
 import Button from './Button'
-import Input from './Input'
 import Image from 'next/image'
 import { carInputs, selectOptionsCC } from '@/helpers/data'
 import Select from './Select'
 import { AiFillDelete } from 'react-icons/ai'
-import { BrandType, CreateCarDTO } from '@/types'
+import { useForm } from 'react-hook-form'
+import FormField from './FormInput'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { CarFormSchema } from '@/schemas/CarFormSchema'
+import { BrandType, CarFormData, CreateCarDTO } from '@/types'
 
 interface Props {
   setValues: any
   values: CreateCarDTO
   handleImage: (e: React.ChangeEvent<HTMLInputElement>) => void
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void | Promise<void>
+  handleSubmit: (data: CarFormData) => void | Promise<void>
   loading: boolean
   images: Array<{ url: string, file: File } | string>
   handleDeleteImage: (image: { url: string, file: File } | string) => void
@@ -32,10 +35,19 @@ export default function CarForm ({
     }))
   }
 
+  const {
+    register,
+    handleSubmit: onSubmitForm,
+    formState: { errors }
+  } = useForm<CarFormData>({
+    resolver: zodResolver(CarFormSchema),
+    defaultValues: values
+  })
+
   return (
     <>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-      <form onSubmit={handleSubmit} className='overflow-auto lg:max-h-90[dvh] max-h-[80dvh]'>
+      <form onSubmit={onSubmitForm(handleSubmit)} className='overflow-auto lg:max-h-90[dvh] max-h-[80dvh]'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-5 p-1 pr-2'>
           <div className='flex flex-col gap-1 overflow-ellipsis'>
             <label className='dark:text-white after:content-["*"] text-black whitespace-nowrap text-ellipsis overflow-hidden'>Mostrar en web</label>
@@ -97,14 +109,14 @@ export default function CarForm ({
                 >
                   {input.label}
                 </label>
-                <Input
-                  onChange={handleChange}
-                  value={values[input.name as keyof CreateCarDTO]?.toString() ?? ''}
-                  required={input.name !== 'description'}
+                <FormField
+                  error={errors[input.name as keyof CarFormData]}
                   className='p-2'
+                  register={register}
                   type={input.type}
                   name={input.name}
                   placeholder={input.placeholder}
+                  valueAsNumber={input.type === 'number'}
                 />
               </div>
             ))

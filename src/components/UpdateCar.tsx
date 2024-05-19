@@ -4,11 +4,11 @@ import { useState } from 'react'
 import { deleteCarImageFromApi, updateCar } from '@/services/api'
 import useCarsStore from '@/hooks/useCarsStore'
 import toast from 'react-hot-toast'
-import { getObjectsDiff, objectHasEmptyValues, validateFormValues } from '@/utils/functions'
+import { getObjectsDiff } from '@/utils/functions'
 import { deleteCarsImages, uploadCarsImages } from '@/services/firebase'
 import CarForm from './CarForm'
 import { updateCarCodes } from '@/utils/statusCodes'
-import { CarDTO } from '@/types'
+import { CarDTO, CarFormData } from '@/types'
 import { ActionTypes } from '@/reducers/panelCarsReducer'
 import { useSession } from 'next-auth/react'
 
@@ -24,19 +24,21 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
   const [loading, setLoading] = useState(false)
   const [images, setImages] = useState<Array<string | { url: string, file: File }>>(selectedCar.images)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault()
-
-    // el id no se actualiza
-    const { preview, _id, ...restOfForm } = values
-
-    if (values.images.length === 0) {
-      toast.error('Debe agregar una imagen')
-      return
+  const handleSubmit = async (data: CarFormData): Promise<void> => {
+    const valuesFormed = {
+      ...values,
+      ...data,
+      brand: values.brand,
+      fuel: values.fuel,
+      transmission: values.transmission,
+      type: values.type,
+      cc: values.cc,
+      show: values.show
     }
 
-    if (objectHasEmptyValues(restOfForm)) {
-      toast.error('Todos los campos son obligatorios')
+    // el id no se actualiza
+    if (valuesFormed.images.length === 0) {
+      toast.error('Debe agregar una imagen')
       return
     }
 
@@ -45,17 +47,10 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
       return [...acc, curr.file]
     }, [])
 
-    const valuesToUpdate = getObjectsDiff(selectedCar, values)
+    const valuesToUpdate = getObjectsDiff(selectedCar, valuesFormed)
 
     if (Object.keys(valuesToUpdate).length === 0 && urlsToUpload.length === 0) {
       toast.error('No hay cambios')
-      return
-    }
-
-    const isValidForm = validateFormValues(restOfForm)
-
-    if (!isValidForm.valid) {
-      toast.error(isValidForm.message)
       return
     }
 

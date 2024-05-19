@@ -1,17 +1,17 @@
 export interface CarDTO {
   _id: string
   brand: string
-  model: string
+  model: number
   line: string
-  kilometers: string
+  kilometers: number
   images: string[]
-  price: string
+  price: number
   preview: string
   fuel: string
   transmission: string
   cc: number
   type: string
-  owners: string
+  owners: number
   plate: string
   color: string
   show: boolean
@@ -27,17 +27,17 @@ export interface ApiCarDTO {
 
 export interface UpdateCarDTO {
   brand?: string
-  model?: string
+  model?: number
   line?: string
-  kilometers?: string
+  kilometers?: number
   images?: string[]
-  price?: string
+  price?: number
   preview?: string
   fuel?: string
   transmission?: string
   cc?: number
   type?: string
-  owners?: string
+  owners?: number
   plate?: string
   color?: string
   show?: boolean
@@ -81,4 +81,33 @@ interface ViewsMonths {
 
 interface DaysMonthViews {
   [key]: number
+}
+
+export interface FormFieldProps {
+  type: string
+  placeholder: string
+  name: ValidFieldNames
+  register: UseFormRegister<FormData>
+  error: FieldError | undefined
+  valueAsNumber?: boolean
+  className?: string
+}
+
+export interface CarFormData {
+  color: string
+  kilometers: number
+  line: string
+  model: number
+  owners: number
+  plate: string
+  price: number
+}
+
+export interface CarFormSelects {
+  brand: string
+  fuel: string
+  transmission: string
+  type: string
+  cc: number
+  show: boolean
 }

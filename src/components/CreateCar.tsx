@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { createCar } from '@/services/api'
 import useCarsStore from '@/hooks/useCarsStore'
-import { objectHasEmptyValues, validateFormValues } from '@/utils/functions'
 import toast from 'react-hot-toast'
 import { uploadCarsImages } from '@/services/firebase'
 import CarForm from './CarForm'
@@ -11,7 +10,7 @@ import Button from './Button'
 import useDisclosure from '@/hooks/useDisclosure'
 import ModalBackdrop from './ModalBackdrop'
 import { createCarCodes } from '@/utils/statusCodes'
-import { CreateCarDTO } from '@/types'
+import { CarFormData, CreateCarDTO } from '@/types'
 import { useSession } from 'next-auth/react'
 import { twMerge } from 'tailwind-merge'
 
@@ -20,10 +19,10 @@ const carInitialValues: CreateCarDTO = {
   fuel: 'corriente',
   transmission: 'manual',
   type: 'automovil',
-  owners: '',
-  kilometers: '',
-  price: '',
-  model: '',
+  owners: NaN,
+  kilometers: NaN,
+  price: NaN,
+  model: NaN,
   line: '',
   plate: '',
   color: '',
@@ -37,10 +36,10 @@ const carInitialValues: CreateCarDTO = {
 //   fuel: 'corriente',
 //   transmission: 'manual',
 //   type: 'automovil',
-//   owners: '2',
-//   kilometers: '25000',
-//   price: '35000000',
-//   model: '2022',
+//   owners: 2,
+//   kilometers: 25000,
+//   price: 35000000,
+//   model: 2022,
 //   line: 'captiva sport',
 //   plate: 'xhg345',
 //   color: 'rojo',
@@ -72,24 +71,21 @@ export default function CreateCar ({ className }: { className?: string }): JSX.E
     setImages(newUrls)
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault()
+  const handleSubmit = async (data: CarFormData): Promise<void> => {
     if (!open) return
+
+    const valuesToCreate = {
+      ...data,
+      brand: values.brand,
+      fuel: values.fuel,
+      transmission: values.transmission,
+      type: values.type,
+      cc: values.cc,
+      show: values.show
+    }
 
     if (images.length === 0) {
       toast.error('Debe agregar una imagen')
-      return
-    }
-
-    if (objectHasEmptyValues(values)) {
-      toast.error('Todos los campos son obligatorios')
-      return
-    }
-
-    const isValidForm = validateFormValues(values)
-
-    if (!isValidForm.valid) {
-      toast.error(isValidForm.message)
       return
     }
 
@@ -98,21 +94,20 @@ export default function CreateCar ({ className }: { className?: string }): JSX.E
     try {
       setLoading(true)
 
-      const uploadedCarImage = await uploadCarsImages(urlsToUpload, values.plate)
-      const newCar = await createCar({ ...values, images: uploadedCarImage }, session?.user.token)
+      const uploadedCarImage = await uploadCarsImages(urlsToUpload, valuesToCreate.plate)
+      const newCar = await createCar({ ...valuesToCreate, images: uploadedCarImage }, session?.user.token)
 
       setImages([])
       addCar(newCar)
 
+      handleClose()
       toast.success('Auto agregado')
     } catch (error: any) {
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       toast.error(createCarCodes[error.response.status] || 'Error al agregar auto')
       console.log(error)
     } finally {
-      setLoading(false);
-
-      (e.target as HTMLFormElement).reset()
+      setLoading(false)
       setValues(carInitialValues)
     }
   }

@@ -2,10 +2,10 @@ import useCarsStore from '@/hooks/useCarsStore'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
 import { twMerge } from 'tailwind-merge'
 
-export default function CarsPagination () {
+export default function CarsPagination (): JSX.Element {
   const { pagination, fetchCars, cars } = useCarsStore()
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number): void => {
     if (page < 1 || page > pagination.totalPages || page === pagination.currentPage) return
     fetchCars(page)
   }
