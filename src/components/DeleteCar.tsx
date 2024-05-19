@@ -42,13 +42,15 @@ export default function DeleteCar ({ carToDelete, setCarToDelete }: DeleteCarPro
     <>
       <h2 className='text-2xl text-black dark:text-white m-auto mb-4'>¿Que deseas hacer?</h2>
       <div className='flex gap-2 justify-center mx-7 mt-3'>
-        <Button
-          loading={loading}
-          onClick={handleDeleteCar}
-          className='w-1/2 p-2 px-3 bg-[#D6BCFA] hover:bg-purple-400 text-black font-semibold'
-        >
-          Eliminar
-        </Button>
+        {carToDelete.transactions?.length === 0 && (
+          <Button
+            loading={loading}
+            onClick={handleDeleteCar}
+            className='w-1/2 p-2 px-3 bg-[#D6BCFA] hover:bg-purple-400 text-black font-semibold'
+          >
+            Eliminar
+          </Button>
+        )}
         <Link href={`/panel/transactions/create?id=${carToDelete._id}`}>
           <Button className='p-2 px-3 bg-orange-400 hover:bg-orange-600 text-black font-semibold'>
             Crear transacción

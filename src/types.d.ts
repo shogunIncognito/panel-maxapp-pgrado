@@ -1,4 +1,5 @@
 export interface CarDTO {
+  [x: string]: any
   _id: string
   brand: string
   model: string
