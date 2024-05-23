@@ -7,23 +7,17 @@ import UpdateCar from '@/components/UpdateCar'
 import { tableHeaders } from '@/helpers/data'
 import DeleteCar from '@/components/DeleteCar'
 import useCarsStore from '@/hooks/useCarsStore'
-import AddBrand from '@/components/Brands'
 import Button from '@/components/Button'
 import Spinner from '@/components/Spinner'
 import CarFilter from '@/components/CarFilter'
-import { deleteCar } from '@/services/api'
-import toast from 'react-hot-toast'
 import ChangePreviewCar from '@/components/ChangePreviewCar'
-import { deleteCarsImages } from '@/services/firebase'
 import usePanelCarsReducer, { ActionTypes } from '@/reducers/panelCarsReducer'
 import { CarDTO } from '@/types'
-import { useSession } from 'next-auth/react'
 import ModalBackdrop from '@/components/ModalBackdrop'
-import { motion, AnimatePresence } from 'framer-motion'
 import CarPDFDownload from '@/components/pdf/CarPDFDownload'
 
 export default function page (): JSX.Element {
-  const { cars, reFetch, loading } = useCarsStore()
+  const { cars, loading } = useCarsStore()
   const [{
     selectedCar,
     carToDelete,
@@ -32,7 +26,6 @@ export default function page (): JSX.Element {
     carPreviewToChange,
     sortingBy
   }, dispatch] = usePanelCarsReducer()
-  const { data: session } = useSession()
 
   const dispatchAction = (type: ActionTypes, payload: any): void => dispatch({ type, payload })
 
@@ -48,21 +41,6 @@ export default function page (): JSX.Element {
       : dispatchAction(ActionTypes.SET_CARS_SELECTED, [...carsSelected, car])
   }
 
-  const deleteSelectedCars = async (): Promise<void> => {
-    const carsImages = carsSelected.reduce<string[]>((acc, curr) => [...acc, ...curr.images], [])
-
-    try {
-      await Promise.all([deleteCarsImages(carsImages), deleteCar(carsSelected, session?.user.token)])
-
-      toast.success('Autos eliminados')
-      reFetch(session?.user.token)
-    } catch (error) {
-      toast.error('Error al eliminar los autos')
-    } finally {
-      dispatchAction(ActionTypes.SET_CARS_SELECTED, [])
-    }
-  }
-
   const sortByHeader = (header: string): void => {
     const sortedCars = [...filteredCars].sort((a, b) => String(b[header as keyof CarDTO]).localeCompare(String(a[header as keyof CarDTO]), 'es', { numeric: true }))
     dispatchAction(ActionTypes.SET_FILTERED_CARS, sortedCars)
@@ -74,25 +52,6 @@ export default function page (): JSX.Element {
       <div className='gap-1 h-auto flex-col p-0.5 ml-2 mt-2 md:mt-1 border-b-2 border-gray-300/40 lg:flex-row flex items-start '>
         <div className='gap-1 grid grid-cols-3'>
           <CreateCar className='whitespace-nowrap text-ellipsis overflow-hidden' />
-          <AddBrand className='whitespace-nowrap text-ellipsis overflow-hidden' />
-          <AnimatePresence
-            mode='wait'
-            onExitComplete={() => null}
-          >
-            {carsSelected.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.3 }}
-                className='flex items-center space-x-3'
-              >
-                <Button disabled={carsSelected.length === 0} className='bg-red-500 w-full hover:bg-red-700 font-bold py-2 px-4' onClick={deleteSelectedCars}>
-                  Eliminar
-                </Button>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
         <CarFilter cars={cars} setCars={dispatchAction} />

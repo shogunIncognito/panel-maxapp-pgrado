@@ -19,7 +19,7 @@ export default function page (): JSX.Element {
     email: '',
     phone: '',
     price: '',
-    date: '',
+    date: new Date().toISOString().split('T')[0],
     car: ''
   })
 
