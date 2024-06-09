@@ -9,7 +9,8 @@ const FormField: React.FC<FormFieldProps> = ({
   register,
   error,
   valueAsNumber,
-  className
+  className,
+  errorLength
 }) => (
   <>
     <input
@@ -18,7 +19,7 @@ const FormField: React.FC<FormFieldProps> = ({
       placeholder={placeholder}
       {...register(name, { valueAsNumber })}
     />
-    {error && <span className='text-red-400 max-w-[23ch]'>{error.message}</span>}
+    {error && <span className={`text-red-400 max-w-[${errorLength ?? '23ch'}]`}>{error.message}</span>}
   </>
 )
 export default FormField

@@ -62,7 +62,9 @@ export interface UpdateUserDTO {
   image?: string
 }
 
-export interface CreateUserDTO extends Omit<UserDTO, '_id' | 'createdAt' | 'updatedAt'> { }
+export interface CreateUserDTO extends Omit<UserDTO, '_id' | 'createdAt' | 'updatedAt'> {
+  password: string
+}
 
 export interface BrandType {
   _id: string
@@ -91,6 +93,7 @@ export interface FormFieldProps {
   error: FieldError | undefined
   valueAsNumber?: boolean
   className?: string
+  errorLength?: string
 }
 
 export interface CarFormData {
@@ -101,6 +104,12 @@ export interface CarFormData {
   owners: number
   plate: string
   price: number
+}
+
+export interface UserFormData {
+  username: string
+  password: string
+  role: string
 }
 
 export interface CarFormSelects {

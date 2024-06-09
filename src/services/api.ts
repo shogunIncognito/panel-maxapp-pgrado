@@ -17,6 +17,8 @@ export const login = async (user: { username: string, password: string }): Promi
   return response.data
 }
 
+// cars
+
 export const getCars = async (page: number, filter?: string | {
   value: string
   option: string
@@ -42,6 +44,8 @@ export const deleteCar = async (id: string | CarDTO[], token: string | undefined
   return response.data
 }
 
+// users
+
 export const getUsers = async (token: string | undefined): Promise<UserDTO[]> => {
   const response = await api.get('/users', auth(token))
   return response.data
@@ -61,6 +65,12 @@ export const updateUser = async (id: string, values: UpdateUserDTO, type: TypeUs
   const response = await api.patch(`/users/${id}?type=${String(type)}`, values, auth(token))
   return response.data
 }
+
+export const updateOneUser = async (id: string, values: UpdateUserDTO, token: string | undefined): Promise<UserDTO> => {
+  const response = await api.patch(`/users/update/${id}`, values, auth(token))
+  return response.data
+}
+
 export const updateUserImage = async (id: string, image: string | null, token: string | undefined): Promise<UserDTO> => {
   const response = await api.patch(`/users/${id}/image`, { image }, auth(token))
   return response.data
@@ -70,6 +80,8 @@ export const getUserInfo = async (token: string | undefined): Promise<UserDTO> =
   const response = await api.get('/users/info', auth(token))
   return response.data
 }
+
+// brands
 
 export const getBrands = async (token: string | undefined): Promise<BrandType[]> => {
   const response = await api.get('/cars/brands', auth(token))
@@ -86,6 +98,8 @@ export const deleteBrand = async (id: string, token: string | undefined): Promis
   return response.data
 }
 
+// images
+
 export const updatePreviewImage = async (id: string, preview: string, token: string | undefined): Promise<CarDTO> => {
   const response = await api.patch(`/cars/${id}`, { preview }, auth(token))
   return response.data
@@ -97,6 +111,7 @@ export const deleteCarImageFromApi = async (id: string, images: string[], token:
 }
 
 // Stats endpoints
+
 export const getStats = async (token: string | undefined): Promise<StatsDTO> => {
   const response = await api.get('/stats', auth(token))
   return response.data
