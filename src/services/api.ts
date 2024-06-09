@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_URL } from '@/utils/envconfig'
-import { ApiCarDTO, BrandType, CarDTO, CreateCarDTO, CreateUserDTO, StatsDTO, UpdateCarDTO, UpdateUserDTO, UserDTO } from '@/types'
+import { ApiCarDTO, BrandType, CarDTO, CreateCarDTO, CreateTransactionDTO, CreateUserDTO, StatsDTO, TransactionDTO, UpdateCarDTO, UpdateUserDTO, UserDTO } from '@/types'
 import { TypeUserUpdate } from '@/enums'
 
 const api = axios.create({
@@ -25,6 +25,11 @@ export const getCars = async (page: number, filter?: string | {
 }): Promise<ApiCarDTO> => {
   const filterValue = filter === undefined ? '' : typeof filter === 'string' ? filter : `${filter.option}=${filter.value}`
   const response = await api.get(`/cars?page=${page}&limit=${carsItemsPerPage}&${filterValue}`)
+  return response.data
+}
+
+export const getCar = async (id: string): Promise<CarDTO> => {
+  const response = await api.get(`/cars/${id}`)
   return response.data
 }
 
@@ -114,5 +119,17 @@ export const deleteCarImageFromApi = async (id: string, images: string[], token:
 
 export const getStats = async (token: string | undefined): Promise<StatsDTO> => {
   const response = await api.get('/stats', auth(token))
+  return response.data
+}
+
+// Transactions endpoints
+
+export const getTransactions = async (token: string | undefined): Promise<TransactionDTO[]> => {
+  const response = await api.get('/transactions', auth(token))
+  return response.data
+}
+
+export const createTransaction = async (token: string | undefined, values: CreateTransactionDTO): Promise<TransactionDTO> => {
+  const response = await api.post('/transactions', values)
   return response.data
 }
