@@ -10,19 +10,20 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
-export default function page (): JSX.Element {
+export default function page(): JSX.Element {
   const id = useSearchParams().get('id')
-  const {data} = useSession()
+  const { data } = useSession()
   const [car, setCar] = useState<CarDTO | null>(null)
   const [cars, setCars] = useState<CarDTO[]>([])
   const [values, setValues] = useState({
-    cc: '',
-    name: '',
-    email: '',
-    phone: '',
+    cc: '1227435372',
+    name: 'Jhon doe',
+    email: 'jhon@gmail.com',
+    phone: '32145432549',
     price: NaN,
     date: new Date().toISOString().split('T')[0],
-    car: ''
+    car: '',
+    sold: false
   })
 
   useEffect(() => {
@@ -59,6 +60,8 @@ export default function page (): JSX.Element {
       return
     }
 
+    if (name === 'sold') return setValues((prev) => ({ ...prev, sold: !prev.sold }))
+
     setValues((prev) => ({
       ...prev,
       [name]: value
@@ -75,8 +78,9 @@ export default function page (): JSX.Element {
         phone: Number(values.phone)
       },
       car: values.car,
-      price: values.price,
-      date: values.date
+      price: Number(values.price),
+      date: values.date,
+      sold: values.sold
     }
 
     createTransaction(data?.user.token, valuesToSend)
@@ -111,7 +115,13 @@ export default function page (): JSX.Element {
                 ))}
               </Select>
             </div>
-            {(car !== null) && <img src={car.images[0]} alt={car.plate} className='w-28 h-28 object-cover mx-auto' />}
+            {(car !== null) && <img src={car.preview || car.images[0]} alt={car.plate} className='w-28 h-28 object-cover mx-auto' />}
+
+            <div>
+              <Input id='sold' name='sold' onChange={handleChange} type='checkbox' />
+              <label htmlFor='sold' className='ml-1 text-white'>Marcar como vendido</label>
+            </div>
+
           </div>
         </div>
 

@@ -2,7 +2,7 @@
 'use client'
 
 import CreateCar from '@/components/CreateCar'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import UpdateCar from '@/components/UpdateCar'
 import { tableHeaders } from '@/helpers/data'
 import DeleteCar from '@/components/DeleteCar'
@@ -23,8 +23,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import CarPDFDownload from '@/components/pdf/CarPDFDownload'
 import CarsPagination from '@/components/CarsPagination'
 
-export default function page (): JSX.Element {
-  const { cars, sortCars, fetchCars, loading } = useCarsStore()
+export default function page(): JSX.Element {
+  const { cars, sortCars, fetchCars, showSold, setShowSold, loading } = useCarsStore()
   const [{
     selectedCar,
     carToDelete,
@@ -38,7 +38,7 @@ export default function page (): JSX.Element {
 
   useEffect(() => {
     fetchCars(1)
-  }, [])
+  }, [showSold])
 
   if (loading) return <Spinner />
 
@@ -96,10 +96,15 @@ export default function page (): JSX.Element {
 
         <CarFilter />
 
-        <CarPDFDownload cars={cars} />
+        <CarPDFDownload />
       </div>
 
       <div className='relative flex-1 w-full h-full max-h-max overflow-auto'>
+        {/* boton para alternar entre mostrar disponibles y vendidos */}
+        <Button onClick={() => setShowSold(!showSold)} className={`fixed z-20 bottom-16 right-4 ${showSold ? 'bg-green-500 hover:bg-green-700' : 'bg-red-500 hover:bg-red-700'}  hover:text-white font-bold py-2 px-4 rounded`}>
+          {showSold ? 'Mostrar disponibles' : 'Mostrar vendidos'}
+        </Button>
+
         <table className='w-full text-sm text-center text-gray-400'>
           <thead className='text-xs sticky dark:bg-[#171923] bg-slate-300 z-10 top-0 uppercase border-b border-green-800/90 text-gray-800 dark:text-gray-400'>
             <tr>

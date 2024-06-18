@@ -18,13 +18,17 @@ export const login = async (user: { username: string, password: string }): Promi
 }
 
 // cars
+export const getAllCars = async (): Promise<CarDTO[]> => {
+  const response = await api.get('/cars/all')
+  return response.data
+}
 
 export const getCars = async (page: number, filter?: string | {
   value: string
   option: string
-}): Promise<ApiCarDTO> => {
+}, showSold = false): Promise<ApiCarDTO> => {
   const filterValue = filter === undefined ? '' : typeof filter === 'string' ? filter : `${filter.option}=${filter.value}`
-  const response = await api.get(`/cars?page=${page}&limit=${carsItemsPerPage}&${filterValue}`)
+  const response = await api.get(`/cars?page=${page}&limit=${carsItemsPerPage}&${filterValue}&sold=${showSold}`)
   return response.data
 }
 

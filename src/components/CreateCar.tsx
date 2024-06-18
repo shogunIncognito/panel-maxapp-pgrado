@@ -27,7 +27,8 @@ const carInitialValues: CreateCarDTO = {
   plate: '',
   color: '',
   cc: 1.0,
-  show: true
+  show: true,
+  sold: false
 }
 
 // testing values
@@ -81,7 +82,8 @@ export default function CreateCar ({ className }: { className?: string }): JSX.E
       transmission: values.transmission,
       type: values.type,
       cc: values.cc,
-      show: values.show
+      show: values.show,
+      sold: values.sold,
     }
 
     if (images.length === 0) {

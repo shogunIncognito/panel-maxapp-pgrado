@@ -70,8 +70,6 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
         .catch(() => toast.error('Error al cerrar sesión'))
       return
     }
-    // consulta los autos y guarda en estado global
-    if (status === 'authenticated') return reFetch(session?.user.token)
   }, [status])
 
   if (status === 'loading') {

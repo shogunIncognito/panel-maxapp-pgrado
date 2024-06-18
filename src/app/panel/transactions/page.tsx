@@ -59,8 +59,14 @@ export default function page(): JSX.Element {
 
             {transactions.map((transaction) => (
               <tr key={transaction._id} className='bg-transparent border-b border-green-800/90 text-neutral-600 dark:text-white'>
-                <td className='capitalize px-6 py-4'>
-                  {transaction._id}
+                <td className='px-6 py-4'>
+                  <div className='flex justify-center items-center relative group'>
+                    <img
+                      src={transaction.car.preview || transaction.car.images[0]}
+                      alt={transaction.car.plate}
+                      className='rounded-lg object-cover cursor-pointer w-auto h-auto ring-2 max-w-[100px] min-w-[100px] max-h-[100px] min-h-[100px] lg:max-w-[160px] lg:max-h-[160px] lg:min-w-[190px] lg:min-h-[160px]'
+                    />
+                  </div>
                 </td>
                 <td className='capitalize px-6 py-4'>
                   {transaction.date.split('T')[0]}

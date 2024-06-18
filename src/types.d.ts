@@ -15,6 +15,7 @@ export interface CarDTO {
   plate: string
   color: string
   show: boolean
+  sold: boolean
   createdAt: string
   updatedAt: string
 }
@@ -41,6 +42,7 @@ export interface UpdateCarDTO {
   plate?: string
   color?: string
   show?: boolean
+  sold?: boolean
 }
 
 export interface CreateCarDTO extends Omit<CarDTO, '_id' | 'createdAt' | 'updatedAt' | 'preview'> {
@@ -119,6 +121,7 @@ export interface CarFormSelects {
   type: string
   cc: number
   show: boolean
+  sold: boolean
 }
 
 interface CarBuyer {

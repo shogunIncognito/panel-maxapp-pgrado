@@ -1,6 +1,6 @@
 import { AiFillHome } from 'react-icons/ai'
 import { BiSolidUser, BiStats } from 'react-icons/bi'
-import { FaCarAlt } from 'react-icons/fa'
+import { FaCarAlt, FaMoneyCheck } from 'react-icons/fa'
 
 export const carInputs = [
   {
@@ -119,7 +119,7 @@ export const adminRoutes = [
   },
   {
     label: 'Transacciones',
-    icon: BiStats,
+    icon: FaMoneyCheck,
     path: '/panel/transactions'
   }
 ]
@@ -151,8 +151,8 @@ export const navRouteMsg: NavRouteMsg = {
 
 export const transactionsTableHeaders = [
   {
-    label: 'ID',
-    value: 'id'
+    label: 'Imagen',
+    value: 'image'
   },
   {
     label: 'Fecha',
