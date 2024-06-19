@@ -106,7 +106,7 @@ export default function page(): JSX.Element {
           <div className='mt-5 bg-blue-950 p-4 flex-1 rounded shadow-lg border'>
             <h3 className='text-xl font-bold'>Datos compra</h3>
             <div className='flex gap-3 flex-wrap m-2 justify-center mt-3'>
-              <Input required onChange={handleChange} name='price' value={values.price} type='text' placeholder='Precio' />
+              <Input required onChange={handleChange} name='price' value={values.price || ''} type='number' placeholder='Precio' />
               <Input required onChange={handleChange} name='date' value={values.date} type='date' placeholder='Fecha' />
               <Select required onChange={handleChange} name='car' value={values.car}>
                 <option className='bg-slate-100 text-black dark:text-white dark:bg-slate-700' value=''>Seleccione un auto</option>

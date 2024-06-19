@@ -28,7 +28,7 @@ const carInitialValues: CreateCarDTO = {
   color: '',
   cc: 1.0,
   show: true,
-  sold: false
+  sold: false,
 }
 
 // testing values

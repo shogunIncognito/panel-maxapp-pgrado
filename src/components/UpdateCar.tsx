@@ -18,7 +18,7 @@ interface UpdateCarProps {
 }
 
 export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarProps): JSX.Element {
-  const { reFetch, fetchCars, brands } = useCarsStore()
+  const { fetchCars, brands } = useCarsStore()
   const { data: session } = useSession()
   const [values, setValues] = useState(selectedCar)
   const [loading, setLoading] = useState(false)
@@ -123,7 +123,7 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
       toast.error('Error al eliminar imagen')
     } finally {
       setLoading(false)
-      reFetch(session?.user.token)
+      fetchCars(1)
     }
   }
 
@@ -134,7 +134,6 @@ export default function UpdateCar ({ selectedCar, setSelectedCar }: UpdateCarPro
       <h2 className='text-2xl font-bold opacity-80 mb-3'>Actualizar auto</h2>
       <CarForm
         setValues={setValues}
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
         handleDeleteImage={handleDeleteImage}
         handleImage={handleImage}
         handleSubmit={handleSubmit}

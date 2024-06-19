@@ -16,6 +16,7 @@ export interface CarDTO {
   color: string
   show: boolean
   sold: boolean
+  transactions: number
   createdAt: string
   updatedAt: string
 }
@@ -45,7 +46,7 @@ export interface UpdateCarDTO {
   sold?: boolean
 }
 
-export interface CreateCarDTO extends Omit<CarDTO, '_id' | 'createdAt' | 'updatedAt' | 'preview'> {
+export interface CreateCarDTO extends Omit<CarDTO, '_id' | 'createdAt' | 'updatedAt' | 'preview' | 'transactions'> {
   images?: string[]
 }
 
