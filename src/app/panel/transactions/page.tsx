@@ -96,27 +96,38 @@ export default function page(): JSX.Element {
       <ModalBackdrop open={transaction !== null}>
         {transaction !== null && (
           <>
-            <div className='p-4 m-2 rounded shadow-lg border'>
-              <h3 className='text-xl font-bold'>Datos comprador</h3>
-              <div className='flex gap-3 flex-wrap m-2 justify-center mt-3'>
-                <p className='text-white'>Cédula: {transaction.buyer.cc}</p>
-                <p className='text-white'>Nombre: {transaction.buyer.name}</p>
-                <p className='text-white'>Correo: {transaction.buyer.email}</p>
-                <p className='text-white'>Teléfono: {transaction.buyer.phone}</p>
-              </div>
-
-              <h3 className='text-xl font-bold'>Datos compra</h3>
-              <div className='flex gap-3 flex-wrap m-2 justify-center mt-3'>
-                <p className='text-white'>Precio: $ {Math.round(Number(transaction.price)).toLocaleString()}</p>
-                <p className='text-white'>Fecha: {transaction.date.split('T')[0]}</p>
-                <p className='text-white'>Auto: {transaction.car.brand} {transaction.car.line} {transaction.car.model}</p>
-                <p className='text-white'>Placa: {transaction.car.plate}</p>
+           <div className='w-[600px] h-[300px] flex flex-col justify-center items-cente'>
+            <div className='w-full flex gap-3 border-b-blue-950 border-b-2 p-3'>
+              <img src={transaction.car.images[0]} alt={transaction.car.plate} className='w-14 h-14 my-2 object-cover rounded-xl' />
+              <div className='h-16 flex flex-col justify-center my-2'>
+                <p className="text-md font-semibold">{transaction.car.line}</p>
+                <p className="text-sm font-light">{transaction.car.brand}</p>
               </div>
             </div>
-
-            <img src={transaction.car.images[0]} alt={transaction.car.plate} className='w-36 h-36 my-2 object-cover mx-auto' />
-
-            <Button onClick={() => setTransaction(null)}>Cerrar</Button>
+            <div className='w-full h-[60%] flex my-1 gap-2'>
+              <div className='w-[50%] border-r-blue-950 border-r-2'>
+                <h2 >Datos Comprador</h2>
+                <div className='grid grid-cols-2 p-1 place-content-center place-items-center grid-rows-2 gap-1 h-[90%]'>
+                  <p className='text-white text-xs font-light w-full h-full'><span className='font-semibold'>Cédula:</span> {transaction.buyer.cc}</p>
+                  <p className='text-white text-xs font-light w-full h-full'><span className='font-semibold'>Nombre:</span> {transaction.buyer.name}</p>
+                  <p className='text-white text-xs font-light w-full h-full'><span className='font-semibold'>Correo:</span> {transaction.buyer.email}</p>
+                  <p className='text-white text-xs font-light w-full h-full'><span className='font-semibold'>Teléfono:</span> {transaction.buyer.phone}</p>
+                </div>
+              </div>
+              <div className='w-[50%]'>
+                <h2 >Datos compra</h2>
+                <div className='grid grid-cols-2 p-1 place-content-center place-items-center grid-rows-2 gap-1 h-[90%]'>
+                  <p className='text-white text-xs font-light w-full h-full'><span className=' font-semibold'>Precio:</span> $ {Math.round(Number(transaction.price)).toLocaleString()}</p>
+                  <p className='text-white text-xs font-light w-full h-full'><span className=' font-semibold'>Fecha:</span> {transaction.date.split('T')[0]}</p>
+                  <p className='text-white text-xs font-light w-full h-full'><span className=' font-semibold'>Auto:</span> {transaction.car.brand} {transaction.car.line} {transaction.car.model}</p>
+                  <p className='text-white text-xs font-light w-full h-full'><span className=' font-semibold'>Placa:</span> {transaction.car.plate}</p>
+                </div>
+              </div>
+            </div>
+            <div className='w-full flex justify-center items-center border-t-blue-950 border-t-2 p-3'>
+              <Button onClick={() => setTransaction(null)}>Cerrar</Button>
+            </div>
+          </div>
           </>
         )}
       </ModalBackdrop>
