@@ -108,9 +108,9 @@ export const adminRoutes = [
     path: '/panel/cars'
   },
   {
-    label: 'Usuarios',
+    label: 'Administradores',
     icon: BiSolidUser,
-    path: '/panel/users'
+    path: '/panel/administrators'
   },
   {
     label: 'Estadísticas',
@@ -124,19 +124,6 @@ export const adminRoutes = [
   }
 ]
 
-export const userRoutes = [
-  {
-    label: 'Inicio',
-    icon: AiFillHome,
-    path: '/panel'
-  },
-  {
-    label: 'Autos',
-    icon: FaCarAlt,
-    path: '/panel/cars'
-  }
-]
-
 interface NavRouteMsg {
   [key: string]: string
 }
@@ -144,7 +131,7 @@ interface NavRouteMsg {
 export const navRouteMsg: NavRouteMsg = {
   '/panel': 'Panel de administración',
   '/panel/cars': 'Autos',
-  '/panel/users': 'Usuarios',
+  '/panel/administrators': 'Administradores',
   '/panel/stats': 'Estadísticas',
   '/panel/transactions': 'Transacciones'
 }

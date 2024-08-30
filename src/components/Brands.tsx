@@ -4,7 +4,7 @@ import Button from './Button'
 import ModalBackdrop from './ModalBackdrop'
 import Input from './Input'
 import { createBrand, deleteBrand } from '@/services/api'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useCarsStore from '@/hooks/useCarsStore'
 import toast from 'react-hot-toast'
 import Select from './Select'
@@ -64,6 +64,10 @@ export default function Brands ({ className }: { className?: string }): JSX.Elem
       .catch(err => toast.error(deleteBrandCodes[err.response.status] || 'Error al eliminar marca'))
       .finally(() => setLoading(false))
   }
+
+  useEffect(() => {
+    fetchBrands(session?.user.token)
+  }, [])
 
   return (
     <>

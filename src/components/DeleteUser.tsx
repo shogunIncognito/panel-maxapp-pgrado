@@ -35,7 +35,7 @@ export default function DeleteUser ({ user, setUsers }: DeleteUserProps): JSX.El
 
   return (
     <>
-      <Button onClick={handleOpen} className='transition-colors w-full mt-1 bg-[#FBD38D] hover:bg-yellow-400/70 font-semibold text-black/70 py-2 px-4 rounded'>
+      <Button onClick={handleOpen} className='transition-colors w-full lg:w-1/2 mt-1 bg-[#FBD38D] hover:bg-yellow-400/70 font-semibold text-black/70 py-2 px-4 rounded'>
         Eliminar
       </Button>
 

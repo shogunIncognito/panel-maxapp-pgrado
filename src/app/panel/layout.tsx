@@ -15,13 +15,11 @@ import { BsMoon, BsSun } from 'react-icons/bs'
 import UserImage from '@/components/UserImage'
 import { signOut, useSession } from 'next-auth/react'
 import Spinner from '@/components/Spinner'
-import { adminRoutes, navRouteMsg, userRoutes } from '@/helpers/data'
-import useCarsStore from '@/hooks/useCarsStore'
+import { adminRoutes as panelRoutes, navRouteMsg } from '@/helpers/data'
 
 export default function Layout ({ children }: { children: React.ReactNode }): JSX.Element {
   const { open, handleOpen, handleClose } = useDisclosure()
   const { data: session, status } = useSession()
-  const { reFetch } = useCarsStore()
   const [theme, setTheme] = useState('dark')
 
   const path = usePathname()
@@ -79,8 +77,6 @@ export default function Layout ({ children }: { children: React.ReactNode }): JS
       </div>
     )
   }
-
-  const panelRoutes = session?.user.role === 'admin' ? adminRoutes : userRoutes
 
   return (
     <main className='flex-col max-w-full max-h-screen md:flex-row flex h-screen w-full dark:bg-[#171923]'>

@@ -112,7 +112,6 @@ export interface CarFormData {
 export interface UserFormData {
   username: string
   password: string
-  role: string
 }
 
 export interface CarFormSelects {

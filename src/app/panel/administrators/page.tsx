@@ -17,10 +17,9 @@ import ModalBackdrop from '@/components/ModalBackdrop'
 const initialValues = {
   username: '',
   password: '',
-  role: 'usuario'
 }
 
-export default function Users (): JSX.Element {
+export default function Administrators (): JSX.Element {
   const [users, setUsers] = useState<UserDTO[]>([])
   const [loading, setLoading] = useState(true)
   const [loadingMutation, setLoadingMutation] = useState(false)
@@ -112,9 +111,6 @@ export default function Users (): JSX.Element {
                     Nombre
                   </th>
                   <th scope='col' className='px-6 py-3'>
-                    Rol
-                  </th>
-                  <th scope='col' className='px-6 py-3'>
                     Acciones
                   </th>
                 </tr>
@@ -139,15 +135,12 @@ export default function Users (): JSX.Element {
                     <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap dark:text-white'>
                       {user.username}
                     </th>
-                    <th scope='row' className='px-6 py-4 font-medium capitalize whitespace-nowrap dark:text-white'>
-                      {user.role}
-                    </th>
-                    <td className='px-6 py-4 h-full w-1/6 m-auto'>
+                    <td className='px-6 py-4 h-full flex flex-col w-full justify-center items-center m-auto'>
                       <Button
                         onClick={() => {
                           setUserToUpdate(user)
                           handleOpenUpdate()
-                        }} className='transition-colors w-full mt-1 font-semibold py-2 px-4 rounded'
+                        }} className='transition-colors w-full lg:w-1/2 mt-1 font-semibold py-2 px-4 rounded'
                       >
                         Editar
                       </Button>
