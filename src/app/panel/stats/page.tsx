@@ -125,17 +125,7 @@ export default function Stats(): JSX.Element {
 
   useEffect(() => {
     getStats(data?.user.token)
-      .then(res => {
-        const daysMonthViews = res.daysMonthViews
-
-        const lastDay = Math.max(...Object.keys(daysMonthViews).map(Number))
-
-        for (let i = 1; i < lastDay; i++) {
-          if (!daysMonthViews[i]) daysMonthViews[i] = 0;
-        }
-
-        setStats(res)
-      })
+      .then(res => setStats(res))
       .catch(() => setError(true))
   }, [])
 
