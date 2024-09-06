@@ -85,7 +85,7 @@ interface ViewsMonths {
 }
 
 interface DaysMonthViews {
-  [key]: number
+  [key: number]: any
 }
 
 export interface FormFieldProps {

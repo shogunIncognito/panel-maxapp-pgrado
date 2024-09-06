@@ -95,6 +95,7 @@ const optionsDays = {
     },
     y: {
       beginAtZero: true,
+      max: 100,
       title: {
         display: true,
         text: 'Visitas',
@@ -117,14 +118,24 @@ const months = [
   'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
 ]
 
-export default function Stats (): JSX.Element {
+export default function Stats(): JSX.Element {
   const [stats, setStats] = useState<StatsDTO | null>(null)
   const [error, setError] = useState(false)
   const { data, status } = useSession()
 
   useEffect(() => {
     getStats(data?.user.token)
-      .then(res => setStats(res))
+      .then(res => {
+        const daysMonthViews = res.daysMonthViews
+
+        const lastDay = Math.max(...Object.keys(daysMonthViews).map(Number))
+
+        for (let i = 1; i < lastDay; i++) {
+          if (!daysMonthViews[i]) daysMonthViews[i] = 0;
+        }
+
+        setStats(res)
+      })
       .catch(() => setError(true))
   }, [])
 
