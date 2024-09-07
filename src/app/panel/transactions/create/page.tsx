@@ -96,8 +96,8 @@ export default function page(): JSX.Element {
 
   return (
     <section className='p-2 flex-1'>
-      <div className="h-full min-h-full bg-gradient-to-br text-black flex md:items-center md:justify-center p-1 md:p-4 from-gray-100 to-gray-300 dark:from-transparent items-center justify-center transition-colors duration-300">
-        <div className="bg-white rounded-xl shadow-2xl p-8 max-w-full md:max-w-4xl w-full overflow-y-auto py-3 pb-5 max-h-[95%] dark:bg-gray-800 transition-colors duration-300">
+      <div className="h-full min-h-full bg-gradient-to-br text-black flex md:items-center md:justify-center p-1 md:p-4 from-gray-100 to-gray-300 dark:from-transparent transition-colors duration-300">
+        <div className="bg-white rounded-xl shadow-2xl p-3 md:p-8 max-w-full md:max-w-4xl w-full overflow-y-auto py-3 pb-5 max-h-[95%] dark:bg-gray-800 transition-colors duration-300">
         <div className="flex items-center space-x-4 my-6">
               <Button onClick={() => router.back()} className='rounded-full px-2 py-2 bg-transparent ring ring-black/10 dark:ring-white/20 dark:hover:bg-black hover:bg-gray-200' aria-label="Volver a la lista de transacciones">
                 <BsArrowLeft className="h-5 w-5 text-black dark:text-white" />

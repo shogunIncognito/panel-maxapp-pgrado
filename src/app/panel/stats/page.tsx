@@ -95,7 +95,7 @@ const optionsDays = {
     },
     y: {
       beginAtZero: true,
-      max: 100,
+      max: 50,
       title: {
         display: true,
         text: 'Visitas',
