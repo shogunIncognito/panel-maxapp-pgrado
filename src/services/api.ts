@@ -28,7 +28,7 @@ export const getCars = async (page: number, filter?: string | {
   option: string
 }, showSold = false): Promise<ApiCarDTO> => {
   const filterValue = filter === undefined ? '' : typeof filter === 'string' ? filter : `${filter.option}=${filter.value}`
-  const response = await api.get(`/cars?page=${page}&limit=${carsItemsPerPage}&${filterValue}&sold=${showSold}`)
+  const response = await api.get(`/cars?page=${page}&limit=${carsItemsPerPage}&sold=${showSold}&${filterValue}`)
   return response.data
 }
 
@@ -135,5 +135,10 @@ export const getTransactions = async (token: string | undefined): Promise<Transa
 
 export const createTransaction = async (token: string | undefined, values: CreateTransactionDTO): Promise<TransactionDTO> => {
   const response = await api.post('/transactions', values)
+  return response.data
+}
+
+export const deleteTransaction = async (id: string, token: string | undefined): Promise<TransactionDTO> => {
+  const response = await api.delete(`/transactions/${id}`, auth(token))
   return response.data
 }
