@@ -2,6 +2,7 @@
 
 import Button from '@/components/Button'
 import ModalBackdrop from '@/components/ModalBackdrop'
+import TransactionPDFDownload from '@/components/pdf/TransactionPDFDownload'
 import Spinner from '@/components/Spinner'
 import { transactionsTableHeaders } from '@/helpers/data'
 import { getTransactions, deleteTransaction as deleteTransactionAPI } from '@/services/api'
@@ -48,10 +49,12 @@ export default function page(): JSX.Element {
 
   return (
     <>
-      <div className='m-4'>
+      <div className='m-4 flex justify-between'>
         <Link href='/panel/transactions/create'>
           <Button>Crear transacción</Button>
         </Link>
+
+        <TransactionPDFDownload />
       </div>
 
       <div className='relative flex-1 w-full h-full max-h-max overflow-auto'>
